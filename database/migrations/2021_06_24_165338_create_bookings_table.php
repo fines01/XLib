@@ -15,6 +15,9 @@ class CreateBookingsTable extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('user_id')->unsigned();
+            $table->boolean('status'); // ?? // ok, 1: durchführen & mail senden. 0: im cart speichern
+            //$table->boolean('confirmation_mail_sent'); // ?? // Buchungsbestätugung Leiher. Sendebestätigung?, Zeitpkt? Emailadr? ???
             $table->timestamps();
         });
     }

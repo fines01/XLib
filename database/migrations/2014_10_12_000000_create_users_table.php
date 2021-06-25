@@ -16,10 +16,15 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('username')->unique();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('country')->nullable();
+            $table->string('state')->nullable();
+            $table->string('address')->nullable();
             $table->rememberToken();
+            $table->boolean('admin')->default('false'); //is admin? | default 0 oder false? notwendig?
             $table->timestamps();
         });
     }
