@@ -32,7 +32,7 @@ class CreateTitlesTable extends Migration
             $table->char('isbn_13',17)->nullable();
             $table->char('asin',10)->nullable(); //Amazons ASIN wird auch immer wichtiger.
             $table->string('title_img')->nullable();
-            $table->integer('amount');
+            //$table->integer('amount'); //title_user ...->count() dh nicht notwendig?
             
             $table->timestamps();
         });

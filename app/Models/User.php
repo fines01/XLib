@@ -18,8 +18,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
+        'country',
+        'state',
+        'address', //oder user addresse -> $hidden ??
     ];
 
     /**
@@ -40,4 +44,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // titles : users == n:m
+    public function titles()
+    {
+        return $this->belongsToMany(Title::class, 'title_user', 'title_id', 'user_id', 'id', 'id'); //PIVOT TABELLE NACHSCHL
+    }
+
+    // Bookings : users == n:1
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'user_id', 'id');
+    }
 }
