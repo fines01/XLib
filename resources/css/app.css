@@ -4,4 +4,100 @@
 
 @import "tailwindcss/utilities";
 
-/* @import 'node_modules/@fortawesome/fontawesome-free/css/all.css'; */
+/* @import "./resources/css/styles.css"; */
+
+.test{
+ /* TEST: tailwind @apply direktive: FUNKTIONIERT, endlich */
+ @apply bg-black border-pink-500 border-4;
+}
+
+/* space-y-8, sm:, container @apply direktive fkt so nicht für responsive Klassen*/
+/* https://v1.tailwindcss.com/docs/functions-and-directives */
+/* .main-container{
+ @apply sm:mx-auto sm:max-w-lg sm:mt-10;
+} */
+
+@screen sm {
+ .main-container{
+  @apply mx-auto max-w-lg mt-10;
+ }
+ .form-container{
+  @apply rounded-md shadow-sm shadow-lg w-3/5 mx-auto;
+  /* oder w-4/6 */
+ }
+ .form{
+  @apply px-10;
+ }
+ .form-header{
+  @apply rounded-t-md;
+ }
+ .form-label{
+  @apply mb-4;
+ }
+ .form-button{
+  @apply py-4;
+ }
+ .form-link-text{
+  @apply text-sm my-8;
+ }
+}
+
+.form-container{
+ @apply flex flex-col break-words;
+ /* background-color: #dae2ec; */
+ background-color: #d2c8c8;
+}
+
+.form-header{
+ @apply font-semibold text-gray-700 py-5 px-6;
+ /*bg-gray-200  */
+ /* --clr-grey-9: #dae2ec , --clr-taupe: #625261; --clr-silver: #d2c8c8; --clr-soft-blue: #929AAB; --clr-grey-8: #bcccdc;*/
+ /* background-color: #bcccdc; */
+ background-color:  #929AAB; 
+}
+
+.form{
+ @apply w-full px-6;
+}
+
+.form-label{
+ @apply block text-gray-700 text-sm font-bold mb-2;
+}
+
+.form-input{
+ outline-color: #929aab;
+}
+
+.error-msg{
+ @apply text-red-500 text-xs italic mt-4;
+}
+
+.form-check{
+ @apply inline-flex items-center text-sm text-gray-700;
+}
+
+.form-link{
+ @apply text-blue-500 no-underline;
+}
+
+.form-link:hover{
+ @apply underline text-blue-900;
+}
+
+.form-button{
+ @apply w-full select-none font-bold whitespace-no-wrap p-3 rounded-lg text-base leading-normal no-underline text-gray-100;
+ /* bg-blue-300 */
+ background-color: #929AAB; 
+}
+
+.form-button:hover{
+ @apply bg-blue-900;
+}
+
+.form-link-text{
+ @apply w-full text-xs text-center text-gray-700 my-6;
+}
+
+.alert-ok{
+ @apply text-sm border border-t-8 rounded text-green-700 border-green-600 bg-green-100  px-3 py-4 mb-4;
+}

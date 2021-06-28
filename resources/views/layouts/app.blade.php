@@ -15,6 +15,7 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
+
 <body class="bg-gray-100 h-screen antialiased leading-none font-sans">
     <div id="app">
         <header class="bg-blue-900 py-6">
@@ -24,6 +25,7 @@
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
+                {{-- NAVBAR --}}
                 <nav class="space-x-4 text-gray-300 text-sm sm:text-base">
                     @guest
                         <a class="no-underline hover:underline" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -44,6 +46,7 @@
                 </nav>
             </div>
         </header>
+
 
         @yield('content')
     </div>

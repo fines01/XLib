@@ -1,19 +1,19 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('content')
-<main class="sm:container sm:mx-auto sm:max-w-lg sm:mt-10">
+<main class="sm:container main-container">
     <div class="flex">
         <div class="w-full">
 
             @if (session('resent'))
-            <div class="text-sm border border-t-8 rounded text-green-700 border-green-600 bg-green-100  px-3 py-4 mb-4"
+            <div class="alert-ok"
                 role="alert">
                 {{ __('A fresh verification link has been sent to your email address.') }}
             </div>
             @endif
 
-            <section class="flex flex-col break-words bg-white sm:border-1 sm:rounded-md sm:shadow-sm sm:shadow-lg">
-                <header class="font-semibold bg-gray-200 text-gray-700 py-5 px-6 sm:py-6 sm:px-8 sm:rounded-t-md">
+            <section class="form-container">
+                <header class="form-header">
                     {{ __('Verify Your Email Address') }}
                 </header>
 
@@ -23,8 +23,8 @@
                     </p>
 
                     <p>
-                        {{ __('If you did not receive the email') }}, <a
-                            class="text-blue-500 hover:text-blue-700 no-underline hover:underline cursor-pointer"
+                        {{ __('Resend Verification Email') }}, <a
+                            class="form-link cursor-pointer"
                             onclick="event.preventDefault(); document.getElementById('resend-verification-form').submit();">{{ __('click here to request another') }}</a>.
                     </p>
 
