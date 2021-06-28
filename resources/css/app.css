@@ -21,8 +21,11 @@
  .main-container{
   @apply mx-auto max-w-lg mt-10;
  }
+ .form-container, .dashboard-container{
+  @apply rounded-md shadow-sm shadow-lg mx-auto;
+ }
  .form-container{
-  @apply rounded-md shadow-sm shadow-lg w-3/5 mx-auto;
+  @apply w-3/5;
   /* oder w-4/6 */
  }
  .form{
@@ -42,9 +45,12 @@
  }
 }
 
-.form-container{
+.form-container, .dashboard-container{
  @apply flex flex-col break-words;
- /* background-color: #dae2ec; */
+}
+
+.form-container{
+ /* background-color: #dae2ec; taupe2*/
  background-color: #d2c8c8;
 }
 
@@ -85,7 +91,7 @@
 }
 
 .form-button{
- @apply w-full select-none font-bold whitespace-no-wrap p-3 rounded-lg text-base leading-normal no-underline text-gray-100;
+ @apply w-full select-none font-bold whitespace-no-wrap p-3 rounded-lg text-base leading-normal no-underline text-gray-100 w-4/5 mx-auto;
  /* bg-blue-300 */
  background-color: #929AAB; 
 }
@@ -100,4 +106,8 @@
 
 .alert-ok{
  @apply text-sm border border-t-8 rounded text-green-700 border-green-600 bg-green-100  px-3 py-4 mb-4;
+}
+
+.home-container{
+ @apply 
 }

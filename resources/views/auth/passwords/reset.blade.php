@@ -33,7 +33,7 @@
 
                     <div class="flex flex-wrap">
                         <label for="password" class="block text-gray-700 text-sm font-bold mb-2 sm:mb-4">
-                            {{ __('Password') }}:
+                            {{ __('Password') }}
                         </label>
 
                         <input id="password" type="password"

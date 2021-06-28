@@ -73,9 +73,9 @@ https://coolors.co/bb2525-dd5555-f6ad7b-87d68d-bcebcb
   /* gräulicheres Puderblau*/
   --clr-midnight: #0A065D;
 
-  --clr-silver: #d2c8c8;
   /* hell braun-grau 80*/
-  --clr-taupe: #625261;
+  --clr-taupe-1: #625261;
+  --clr-taupe-2: #d2c8c8;
   --clr-brown-1: #766161;
   --clr-brown-2: #a3816a;
   /*53*/
@@ -123,7 +123,7 @@ https://perishablepress.com/a-killer-collection-of-global-css-reset-styles/
 
 body {
   font-family: var(--ff-secondary);
-  background: var(--clr-grey-10);
+  background: var(--clr-grey-9);
   /* background: var(--clr-primary-10); */
   line-height: 1.5;
   min-height: 100vh;
@@ -184,7 +184,7 @@ p {
   /* padding: 0 1.25rem; */
 }
 
-p:hover{
+.txt-hero:hover{
   color: var(--clr-midnight);
 }
 
@@ -254,15 +254,15 @@ td .btn:hover {
   transform: scale(1.5);
 }
 
-.container-col, .form-container{
-  /* border-radius: var(--radius); */
-  /* background-color: var(--clr-grey-7); */
-  /* padding: 4rem; */
-  /* margin: auto 4rem; */
-  /* width: 90vw; */
-  /* margin-left: auto;
-  margin-right:auto; */
-}
+/* .container-col, .form-container{
+  border-radius: var(--radius);
+  background-color: var(--clr-grey-7);
+  padding: 4rem;
+  margin: auto 4rem;
+  width: 90vw;
+  margin-left: auto;
+  margin-right:auto;
+} */
 
 @media screen and (min-width: 1300px){
   .container-col{
@@ -327,7 +327,7 @@ Navbar
 ===============
 */
 nav {
-  background: var(--clr-silver);
+  background: var(--clr-taupe-2);
   box-shadow: var(--dark-shadow);
   /* border-bottom: 4px solid var(--clr-midnight); */
   border-bottom: 4px solid var(--clr-midnight);
@@ -587,7 +587,7 @@ input[name="search"] {
     top: 4rem;
     padding:1rem 0;
     z-index: 1;
-    background-color: var(--clr-silver);
+    background-color: var(--clr-taupe-2);
     border-radius: var(--radius);
   }
 
@@ -668,23 +668,29 @@ adding darker transparent overlay */
   z-index: -1;
 } */
 
+/*********Books Section Home*********/
+
+#books{
+ background-color: var(--clr-grey-5);
+}
+
 /********* Table ***************/
 
 table {
   /* border: 0.5px solid var(--clr-primary-3); */
   border-collapse: collapse;
-  box-shadow: var(--light-shadow);
-  padding: 4rem 4rem 4rem 0;
+  box-shadow: var(--dark-shadow);
+  /* padding: 4rem 4rem 4rem 0; */
   /* margin: 4rem; */
   margin: auto;
   /* margin-top: 1rem; */
 }
 
-@media screen and (max-width: 1300px) {
+/* @media screen and (max-width: 1300px) {
   table {
     width: 90vw;
   }
-}
+} */
 
 th,
 td {
@@ -693,20 +699,37 @@ td {
 }
 
 th {
-  background-color: var(--clr-grey-7);
+  background-color: var(--clr-soft-blue);
   color: var(--clr-midnight);
+}
+ /* tr:first-child{
+   border-radius: var(--radius) var(--radius) 0 0;
+ } */
+th:first-child{
+  border-radius: var(--radius) 0 0 0;
+}
+
+th:last-child{
+  border-radius: 0 var(--radius) 0 0;
+}
+
+tr:last-child td:first-child{
+  border-radius: 0 0 0 var(--radius);
+}
+tr:last-child td:last-child{
+  border-radius: 0 0 var(--radius) 0;
 }
 
 tr:nth-child(even) {
   /* --clr-soft-blue : #929AAB; transparent (noch def?) */
   /* --clr-brown-3  #B68973* -brown-4 #eabf9f */
-  background-color: var(--clr-grey-7);
+  background-color: var(--clr-soft-blue);
   color: var(--clr-grey-3);
 }
 
 tr:nth-child(odd) {
-  background-color: var(--clr-silver);
-  /* var(--clr-silver); */
+  background-color: var(--clr-taupe-2);
+  /* var(--clr-taupe-2); */
 }
 
 /* tbody, th{
@@ -719,7 +742,7 @@ FOOTER
 ===============
 */
 footer {
-  background-color: var(--clr-taupe);
+  background-color: var(--clr-taupe-1);
   padding: 1.5rem;
   box-shadow: var(--dark-shadow);
   /* s.d. footer unten bleibt, aber keine dynamische footer-höhe mgl? */
@@ -757,7 +780,7 @@ footer ul {
 }
 
 .fa-arrow-up {
-  color: var(--clr-brown-4);
+  color: var(--clr-taupe-2);
   animation: bounce ease-in-out 2.33s infinite;
 }
 
@@ -768,7 +791,7 @@ footer ul {
 
 .fa-heart {
   color: var(--clr-red-dark);
-  animation: bounce ease-in-out s infinite;
+  animation:  bounce 2.33s ease-in-out infinite;
 }
 
 .fa-heart:hover {

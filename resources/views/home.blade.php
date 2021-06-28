@@ -1,114 +1,102 @@
-@extends('layouts.app')
+@extends('layouts.main')
 {{-- @extends('layouts.main') --}}
 
 @section('content')
-    <main class="sm:container sm:mx-auto sm:mt-10">
+
+    {{-- HERO picture --}}
+    @guest
+        <section id="hero">
+
+            <div>
+                <p class="txt-hero">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                <p class="txt-hero">Minima, voluptates? Lorem ipsum dolor sit. Dolorum, consectetur vel!</p>
+            </div>
+        </section>
+    @endguest
+
+    {{-- aber kein max-w-lg --}}
+    <main class="sm:container main-container max-w-full">
+
         <div class="w-full sm:px-6">
 
             @if (session('status'))
-                <div class="text-sm border border-t-8 rounded text-green-700 border-green-600 bg-green-100 px-3 py-4 mb-4"
-                    role="alert">
+                <div class="alert-ok" role="alert">
                     {{ session('status') }}
                 </div>
             @endif
 
-            <section class="flex flex-col break-words bg-white sm:border-1 sm:rounded-md sm:shadow-sm sm:shadow-lg">
-
-                <header class="font-semibold bg-gray-200 text-gray-700 py-5 px-6 sm:py-6 sm:px-8 sm:rounded-t-md">
-                    Dashboard
+            <section class="dashboard-container">
+                <header class="form-header">
+                    @auth
+                        Dashboard
+                    @else
+                        Info
+                    @endauth
                 </header>
-
                 <div class="w-full p-6">
-                    <p class="text-gray-700">
-                        You are logged in!
-                    </p>
+                    @auth
+                        <p>
+                            Hallo! Das ist dein Dashboard!
+                        </p>
+                    @else
+                        <h3>Lorem, ipsum? <i class="fas fa-heart"></i></h3>
+                        <p>System zum gegenseitigen Teilen und zur Verwaltung von Büchern.
+                        </p>
+                        <p>Mutual book sharing and book management system. Lorem ipsum, dolor sit amet consectetur adipisicing
+                            elit. Laudantium delectus eos porro est harum quo
+                            et consectetur officiis omnis facere.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi voluptate ut maxime non ipsum
+                            asperiores unde nesciunt voluptatem enim voluptatibus alias, architecto ullam sunt deserunt eaque ad
+                            quasi, mollitia laudantium facilis. Eos quae qui, tempora repudiandae quisquam repellendus,
+                            accusantium nobis atque similique maiores magnam quam hic amet sit natus esse.</p>
+                    @endauth
                 </div>
+            </section>
 
-                {{-- my test- content: --}}
+            {{-- my test- content: --}}
 
-                {{-- <section id="hero">
+            <section id="books" class="dashboard-container mt-12">
 
-                    <div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
-                        <p>Minima, voluptates? Lorem ipsum dolor sit. Dolorum, consectetur vel!</p>
-                    </div>
+                @guest
+                    <header class="form-header">
+                        Showcase
+                    </header>
+                    <table class="m-12">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Titel</th>
+                                <th>Autor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="https://picsum.photos/100/150" alt=""></td>
+                                <td>Lorem ipsum dolor sit.</td>
+                                <td>Lorem Ipsum.</td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://picsum.photos/100/150" alt=""></td>
+                                <td>Lorem ipsum dolor sit. Lorem, ipsum.</td>
+                                <td>Autor Autor</td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://picsum.photos/100/150" alt=""></td>
+                                <td>Lorem, ipsum dolor.</td>
+                                <td>Jane Doe</td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://picsum.photos/100/150" alt=""></td>
+                                <td>Lorem ipsum dolor sit amet.</td>
+                                <td>Joe Doe</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                @endguest
+            </section>
 
-                </section> --}}
+    </main>
 
-                {{-- <main class="grid-parent-2"> --}}
-                {{-- <main class="grid grid-cols-1 xl:grid-cols-2">
-
-                    <section id="info" class="grid-element">
-
-                        <div class="container-col">
-                            <h3>Lorem, ipsum? <i class="fas fa-heart"></i></h3>
-                            <p>System zum gegenseitigen Teilen und zur Verwaltung von Büchern.
-                            </p>
-                            <p>Mutual book sharing and book management system. Lorem ipsum dolor sit amet consectetur
-                                adipisicing
-                                elit. Vero corrupti ut explicabo laborum, optio corporis
-                                sunt adipisci, minima eaque ipsum ipsa dolore. Ducimus perferendis architecto culpa
-                                quibusdam
-                                recusandae
-                                itaque.
-                                Ducimus perferendis laudantium excepturi, obcaecati dolorem voluptates minus cum modi
-                                doloribus aut
-                                quos ut,
-                                quasi commodi sit cumque officiis tenetur. Cupiditate!</p>
-
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, repellendus.
-                                Doloremque,
-                                repellat
-                                soluta, officiis totam sunt porro dolorem commodi enim laboriosam, aliquid similique
-                                pariatur
-                                quaerat omnis
-                                autem asperiores sapiente dicta? Amet voluptates veritatis dignissimos modi ullam odit
-                                reiciendis
-                                obcaecati,
-                                nobis cumque veniam porro consequatur sequi minima praesentium assumenda doloremque
-                                molestiae!</p>
-                        </div>
-                    </section>
-
-                    <section id="books" class="grid-element">
-
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Titel</th>
-                                    <th>Autor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><img src="https://picsum.photos/100/150" alt=""></td>
-                                    <td>Lorem ipsum dolor sit.</td>
-                                    <td>Lorem Ipsum.</td>
-                                </tr>
-                                <tr>
-                                    <td><img src="https://picsum.photos/100/150" alt=""></td>
-                                    <td>Lorem ipsum dolor sit. Lorem, ipsum.</td>
-                                    <td>Autor Autor</td>
-                                </tr>
-                                <tr>
-                                    <td><img src="https://picsum.photos/100/150" alt=""></td>
-                                    <td>Lorem, ipsum dolor.</td>
-                                    <td>Jane Doe</td>
-                                </tr>
-                                <tr>
-                                    <td><img src="https://picsum.photos/100/150" alt=""></td>
-                                    <td>Lorem ipsum dolor sit amet.</td>
-                                    <td>Joe Doe</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    </section>
-
-                </main>
-
-            </section> --}}
-        </div>
+    </div>
     </main>
 @endsection
