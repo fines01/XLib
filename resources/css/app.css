@@ -78,7 +78,7 @@
  @apply text-red-500 text-xs italic mt-4;
 }
 
-.form-check{
+.form-check-label{
  @apply inline-flex items-center text-sm text-gray-700;
 }
 

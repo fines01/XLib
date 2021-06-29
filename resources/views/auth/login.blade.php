@@ -15,7 +15,7 @@
                     </header>
 
                     {{-- <form class="w-full px-6 space-y-6 sm:px-10 sm:space-y-8" method="POST" action="{{ route('login') }}"> --}}
-                    <form class="form space-y-8" method="POST"
+                    <form class="form space-y-6 sm:space-y-8" method="POST"
                         action="{{ route('login') }}">
                         @csrf
 
@@ -30,6 +30,7 @@
                             value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                         @error('email')
+                        {{-- <p class="text-red-500 text-xs italic mt-4"> --}}
                         <p class="error-msg">
                             {{ $message }}
                         </p>
@@ -54,14 +55,14 @@
                     </div>
 
                     <div class="flex items-center">
-                        <label class="form-check" for="remember">
+                        <label class="form-check-label" for="remember">
                             <input type="checkbox" name="remember" id="remember" class="form-checkbox"
                                 {{ old('remember') ? 'checked' : '' }}>
                             <span class="ml-2">{{ __('Remember Me') }}</span>
                         </label>
 
                         @if (Route::has('password.request'))
-                        {{-- <a class="text-sm text-blue-500 hover:text-blue-700 whitespace-no-wrap no-underline hover:underline ml-auto"
+                        {{-- <a class="text-sm whitespace-no-wrap ml-auto ( text-blue-500 hover:text-blue-700 no-underline hover:underline)"
                             href="{{ route('password.request') }}"> --}}
                             <a class="form-link text-sm whitespace-no-wrap ml-auto"
                             href="{{ route('password.request') }}">
@@ -77,8 +78,6 @@
                         class="form-button">
                             {{ __('Login') }}
                         </button>
-                        {{-- <button type="submit"
-                        class="w-full select-none font-bold whitespace-no-wrap p-3 btn">
                             {{ __('Login') }}
                         </button> --}}
 

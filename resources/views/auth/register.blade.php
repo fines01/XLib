@@ -11,7 +11,7 @@
                     {{ __('Register') }}
                 </header>
 
-                <form class="form space-y-8" method="POST"
+                <form class="form sm:space-y-8 space-y-6" method="POST"
                     action="{{ route('register') }}">
                     @csrf
 

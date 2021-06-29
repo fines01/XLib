@@ -9,7 +9,7 @@ module.exports = {
       current: 'currentColor',
       taupe2: '#d2c8c8',
 
-    }
+    },
     extend: {}
   },
   variants: {},
