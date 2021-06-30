@@ -44,7 +44,7 @@ Route::get('/authors/{author}', 'AuthorController@show')->name('authors.show');
 
 // BUCHUNGEN: index, [create->kein eig Formular, Buchung über button in items liste?], store, show,
 Route::get('/bookings', 'BookingController@index')->name('bookings.index');
-Route::post('/bookings','BookinController@store')->name('bookings.store');
+Route::post('/bookings','BookingController@store')->name('bookings.store');
 Route::get('/bookings/{booking}', 'BookingController@show')->name('bookings.show');
 // // edit,update,destroy der Buchungen innerhalb eines gewissen Zeitrahmens: Stornos etc. -> ev. später hinzufügen (resource).
 // Route::edit('/bookings/{booking}/edit', 'BookingController@edit');

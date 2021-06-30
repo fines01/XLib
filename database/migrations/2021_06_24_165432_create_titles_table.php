@@ -30,7 +30,7 @@ class CreateTitlesTable extends Migration
             $table->enum('publication_format', ['hardcover','softcover', 'other']); //hardcover, softcover, paperback ?  & other für spezielle Ausgaben (Leder etc). [Einige Verlage vergeben nur eine ISBN-Nummer und verwenden diese für Hardcover- und  Paperback-Ausgaben, aber heute immer noch häufig?]
             $table->char('isbn_10',13)->nullable(); //Nummern plus Bindestriche, und "X"?
             $table->char('isbn_13',17)->nullable();
-            $table->char('asin',10)->nullable(); //Amazons ASIN wird auch immer wichtiger.
+            // $table->char('asin',10)->nullable(); //Amazons ASIN wird auch immer wichtiger, dh ev später hinzufügen.
             $table->string('title_img')->nullable();
             //$table->integer('amount'); //title_user ...->count() dh nicht notwendig?
             
