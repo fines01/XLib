@@ -160,13 +160,13 @@
                         <div class="flex items-center">
                             <legend class="form-label">{{ __('Publication format') }}</legend>
 
-                            <input class="form-checkbox" type="radio" id="hardcover" name="format" value="hardcover">
+                            <input class="form-checkbox" type="radio" id="hardcover" name="format" value="hardcover" @if(old('format', $book->format)=='hardcover') checked @endif>
                             <label class="form-check-label" for="hardcover">{{ __('Hardcover') }}</label>
 
-                            <input class="form-checkbox" type="radio" id="softcover" name="format" value="softcover">
+                            <input class="form-checkbox" type="radio" id="softcover" name="format" value="softcover"  @if(old('format', $book->format)=='softcover') checked @endif>
                             <label class="form-check-label" for="softcover">{{ __('Softcover') }}</label>
 
-                            <input class="form-checkbox" type="radio" id="other" name="format" value="other">
+                            <input class="form-checkbox" type="radio" id="other" name="format" value="other"  @if(old('format', $book->format)=='other') checked @endif>
                             <label class="form-check-label" for="other">{{ __('Other') }}</label>
                         </div>
 
@@ -219,9 +219,9 @@
                         <div class="flex flex-wrap">
                             <legend class="form-label">{{ __('Choose your possible transfer methods') }}:</legend>
                             <label for="in-person" class="form-check-label">{{ __('In person') }}:</label>
-                            <input type="checkbox" id="in-person" name="delivery" class="form-checkbox">
+                            <input type="checkbox" id="in-person" name="delivery" class="form-checkbox" value="in-person" @if (is_array(old('delivery')) && in_array('in-person', old('delivery'))) checked @endif>
                             <label for="postal" class="form-check-label">{{ __('Postal delivery') }}:</label>
-                            <input type="checkbox" id="postal" name="delivery" class="form-checkbox">
+                            <input type="checkbox" id="postal" name="delivery" class="form-checkbox" value="postal" @if (is_array(old('delivery')) && in_array('postal', old('delivery'))) checked @endif>
                             @error('delivery')
                                 <p class="error-msg">
                                     {{ $message }}
