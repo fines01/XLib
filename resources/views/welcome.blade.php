@@ -19,7 +19,7 @@
                     {{ session('status') }}
                 </div>
             @endif
-            <section class="dashboard-container">
+            <section id="info" class="dashboard-container">
                 <header class="form-header">
                     Info
                 </header>

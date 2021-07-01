@@ -30,8 +30,8 @@
             <ul class="links links-left">
                 <li><a href="{{ url('/') }}" class="active">{{ config('app.name', 'Welcome') }}</a></li>
                 @guest
-                    <li><a href="#info">Info</a></li>
-                    <li><a href="#">{{ __('Books') }}</a></li>
+                    <li><a href="{{ url('/') }}#info">Info</a></li>
+                    <li><a href="{{ url('/') }}#showcase">{{ __('Books') }}</a></li>
                 @else
                     <!-- Dropdown- Menü: -->
                     <div class="nav-dropdown">

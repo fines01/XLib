@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,7 +20,7 @@ class CreateTitleUserTable extends Migration
             $table->bigInteger('status_id')->unsigned();
             
             $table->primary(['title_id','user_id']);
-            $table->foreign('title_id')->on('titles')->references('id')->onUpdate('cascade'); // ist onDelete(restrict) default?
+            $table->foreign('title_id')->on('titles')->references('id')->onUpdate('cascade')->onDelete('restrict'); // ist onDelete(restrict) default?
             $table->foreign('user_id')->on('users')->references('id')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('status_id')->on('statuses')->references('id')->onUpdate('cascade')->onDelete('restrict');
 
