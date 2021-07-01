@@ -16,7 +16,7 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['fiction', 'non-fiction']);
-            $table->string('category_name'); //nur Admin kann Kategorien bearbeiten
+            $table->string('category_name');
             $table->timestamps();
         });
     }

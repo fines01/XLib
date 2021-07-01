@@ -33,7 +33,7 @@ class Title extends Model
     //titles : users == 1:m
     public function users()
     {
-        return $this->belongsToMany(User::class, 'title_user', 'user_id', 'title_id', 'id', 'id');
+        return $this->belongsToMany(User::class, 'title_user', 'user_id', 'title_id', 'id', 'id')->withPivot('condition','max_loan_days','possible_delivery_methods');
     }
     
     // titles : authors == n:1 (so kange keine Co- Autoren etc. erl.)

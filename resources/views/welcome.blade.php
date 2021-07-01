@@ -1,68 +1,78 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.main')
+{{-- @extends('layouts.main') --}}
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+@section('content')
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    {{-- HERO picture --}}
 
-    <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-</head>
-<body class="bg-gray-100 h-screen antialiased leading-none font-sans">
-<div class="flex flex-col">
-    @if(Route::has('login'))
-        <div class="absolute top-0 right-0 mt-4 mr-4 space-x-4 sm:mt-6 sm:mr-6 sm:space-x-6">
-            @auth
-                <a href="{{ url('/home') }}" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase">{{ __('Home') }}</a>
-            @else
-                <a href="{{ route('login') }}" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase">{{ __('Login') }}</a>
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase">{{ __('Register') }}</a>
-                @endif
-            @endauth
+    <section id="hero">
+        <div>
+            <p class="txt-hero">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+            <p class="txt-hero">Minima, voluptates? Lorem ipsum dolor sit. Dolorum, consectetur vel!</p>
         </div>
-    @endif
-
-    <div class="min-h-screen flex items-center justify-center">
-        <div class="flex flex-col justify-around h-full">
-            <div>
-                <h1 class="mb-6 text-gray-600 text-center font-light tracking-wider text-4xl sm:mb-8 sm:text-6xl">
-                    {{ config('app.name', 'Laravel') }}
-                </h1>
-                <ul class="flex flex-col space-y-2 sm:flex-row sm:flex-wrap sm:space-x-8 sm:space-y-0">
-                    <li>
-                        <a href="https://laravel.com/docs" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Documentation">Documentation</a>
-                    </li>
-                    <li>
-                        <a href="https://laracasts.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Laracasts">Laracasts</a>
-                    </li>
-                    <li>
-                        <a href="https://laravel-news.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="News">News</a>
-                    </li>
-                    <li>
-                        <a href="https://nova.laravel.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Nova">Nova</a>
-                    </li>
-                    <li>
-                        <a href="https://forge.laravel.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Forge">Forge</a>
-                    </li>
-                    <li>
-                        <a href="https://vapor.laravel.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Vapor">Vapor</a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/laravel/laravel" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="GitHub">GitHub</a>
-                    </li>
-                    <li>
-                        <a href="https://tailwindcss.com" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase" title="Tailwind Css">Tailwind CSS</a>
-                    </li>
-                </ul>
-            </div>
+    </section>
+    {{-- aber kein max-w-lg --}}
+    <main class="sm:container main-container max-w-full">
+        <div class="w-full sm:px-6">
+            @if (session('status'))
+                <div class="alert-ok" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
+            <section class="dashboard-container">
+                <header class="form-header">
+                    Info
+                </header>
+                <div class="w-full p-6">
+                    <h3>Lorem, ipsum? <i class="fas fa-heart"></i></h3>
+                    <p>System zum gegenseitigen Teilen und zur Verwaltung von Büchern.
+                    </p>
+                    <p>Mutual book sharing and book management system. Lorem ipsum, dolor sit amet consectetur adipisicing
+                        elit. Laudantium delectus eos porro est harum quo
+                        et consectetur officiis omnis facere.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sequi voluptate ut maxime non ipsum
+                        asperiores unde nesciunt voluptatem enim voluptatibus alias, architecto ullam sunt deserunt eaque ad
+                        quasi, mollitia laudantium facilis. Eos quae qui, tempora repudiandae quisquam repellendus,
+                        accusantium nobis atque similique maiores magnam quam hic amet sit natus esse.</p>
+                </div>
+            </section>
+            {{-- my test- content: --}}
+            <section id="showcase" class="dashboard-container mt-12">
+                <header class="form-header">
+                    Showcase
+                </header>
+                <table class="m-12">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Titel</th>
+                            <th>Autor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="https://picsum.photos/100/150" alt=""></td>
+                            <td>Lorem ipsum dolor sit.</td>
+                            <td>Lorem Ipsum.</td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://picsum.photos/100/150" alt=""></td>
+                            <td>Lorem ipsum dolor sit. Lorem, ipsum.</td>
+                            <td>Autor Autor</td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://picsum.photos/100/150" alt=""></td>
+                            <td>Lorem, ipsum dolor.</td>
+                            <td>Jane Doe</td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://picsum.photos/100/150" alt=""></td>
+                            <td>Lorem ipsum dolor sit amet.</td>
+                            <td>Joe Doe</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
         </div>
-    </div>
-</div>
-</body>
-</html>
+    </main>
+@endsection

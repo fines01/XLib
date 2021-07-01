@@ -4,12 +4,6 @@ module.exports = {
     './resources/css/**/*.css',
   ],
   theme: {
-    colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
-      taupe2: '#d2c8c8',
-
-    },
     extend: {}
   },
   variants: {},

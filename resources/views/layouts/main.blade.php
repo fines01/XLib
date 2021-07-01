@@ -14,7 +14,7 @@
     <!-- custom stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
     {{-- <link rel="stylesheet" href="{{ mix('css/all.css') }}" /> --}}
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name') }}</title>
 
 </head>
 
@@ -28,20 +28,23 @@
             </div>
             <!-- links left side-->
             <ul class="links links-left">
-                <li><a href="#" class="active">Home</a></li>
-                <li><a href="#info">Info</a></li>
-                <!-- Dropdown- Menü: -->
-                <div class="nav-dropdown">
-                    <li class=""><a class="dropdown-open">Bücher<i class="dropbtn fas fa-caret-down"></a></i></li>
-                    <div class="nav-dropdown-content">
-                        <ul class="links-dropdown">
-                            <li><a href="">Alle Bücher</a></li>
-                            <li><a href="useritems.index.html">Meine Bücher</a></li>
-                        </ul>
+                <li><a href="{{ url('/') }}" class="active">{{ config('app.name', 'Welcome') }}</a></li>
+                @guest
+                    <li><a href="#info">Info</a></li>
+                    <li><a href="#">{{ __('Books') }}</a></li>
+                @else
+                    <!-- Dropdown- Menü: -->
+                    <div class="nav-dropdown">
+                        <li class=""><a class="dropdown-open">{{ __('Books') }}<i
+                                    class="dropbtn fas fa-caret-down"></a></i></li>
+                        <div class="nav-dropdown-content">
+                            <ul class="links-dropdown">
+                                <li><a href="">{{ __('My Books') }}</a></li>
+                                <li><a href="useritems.index.html">{{ __('All Titles') }}</a></li>
+                            </ul>
+                        </div>
                     </div>
-
-                </div>
-
+                @endguest
             </ul>
             <!-- links rechte Seite -->
             <ul class="links links-right">
@@ -55,9 +58,19 @@
                     </div>
                 </li>
                 <!-- <li><a href="dashboard.html">Profil</a></li>
-          <li><a href="">Logout</a></li> -->
-                <li><a href="login.html">Login</a></li>
-                <li><a href="user.create.html">Registrieren</a></li>
+                <li><a href="">Logout</a></li> -->
+                @guest
+                    <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
+                    <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                @else
+                <li><a href="{{ route('users.show') }}">{{ Auth::user()->name }}</a></li>
+                <li><a href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                            {{ csrf_field() }}
+                        </form></li>
+                @endguest
             </ul>
 
         </div>
@@ -68,7 +81,7 @@
     <!-- END NAVBAR -->
     {{-- <div class="sm:container sm:mx-auto sm:mt-10 sm:max-w-lg"> --}}
 
-        @yield('content')
+    @yield('content')
 
     {{-- </div> --}}
 

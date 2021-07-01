@@ -231,7 +231,7 @@
 
                         <div class="flex flex-wrap">
                             <button type="submit" class="form-button">
-                                {{ __('Register') }}
+                                {{ __('Save') }}
                             </button>
                         </div>
                     </form>

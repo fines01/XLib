@@ -48,7 +48,7 @@ class User extends Authenticatable
     // titles : users == n:m
     public function titles()
     {
-        return $this->belongsToMany(Title::class, 'title_user', 'title_id', 'user_id', 'id', 'id'); //PIVOT TABELLE NACHSCHL
+        return $this->belongsToMany(Title::class, 'title_user', 'title_id', 'user_id', 'id', 'id');//->withPivot('condition','max_loan_days','possible_delivery_methods');
     }
 
     // Bookings : users == n:1

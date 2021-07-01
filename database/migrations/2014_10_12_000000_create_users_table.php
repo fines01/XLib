@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('state')->nullable();
             $table->string('address')->nullable();
             $table->rememberToken();
-            $table->boolean('admin')->default(0); //is admin? | default 0 oder false? notwendig?
+            $table->boolean('admin')->default(0); //is admin
             $table->timestamps();
         });
     }

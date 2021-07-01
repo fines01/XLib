@@ -78,9 +78,6 @@
                         class="form-button">
                             {{ __('Login') }}
                         </button>
-                            {{ __('Login') }}
-                        </button> --}}
-
 
                         @if (Route::has('register'))
                             {{-- <p class="w-full text-xs text-center text-gray-700 my-6 sm:text-sm sm:my-8"> --}}
@@ -89,7 +86,7 @@
                                 
                                 {{-- <a class="text-blue-500 hover:text-blue-700 no-underline hover:underline"
                                     href="{{ route('register') }}">
-                                    {{ __('Register') }}
+                                   
                                 </a> --}}
                                 <a class="form-link"
                                     href="{{ route('register') }}">
