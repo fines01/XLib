@@ -10,7 +10,7 @@ class CategoryController extends Controller
 
     public $rules = [
         'type' =>'required',
-        'category_name' => 'required|min:2'
+        'category' => 'min:2|unique:categories,category_name'
     ];
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('type');
+        $categories = Category::orderBy('type')->orderBy('category_name')->get();
         //dd($categories)
         return view('categories.index', compact('categories'));
     }
@@ -44,11 +44,17 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $rules = $this->rules;
-
+       
+        //dd($request->category, $request->type);
         $request->validate($rules);
 
-        $category= Category::create($request->all());
-        // $category->save();
+        $category= Category::create([
+            'type' => $request->type,
+            'category_name' => $request->category,
+        ]); //create($request->all());
+        //$category->save();
+        //dd($category);
+        
         return redirect()->route('categories.index')->with('success', 'New category '.$request->category_name.' was saved successfully.'); // zweisprachig: msg. wo nochmal?
         
     }
@@ -61,8 +67,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $categories = Category::select('id','type','category_type')->get();
-        return view('categories.edit', compact('categories'));
+        
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -75,11 +81,15 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $rules = $this->rules;
-        
         $request->validate($rules);
         
+        //$category->update([
+        //     'type' => $request->type,
+        //     'category_name' => $request->category
+        // ]);
         $category->update($request->all());
-        return redirect()->route('category.index')->with('success', 'Category updated successfully');
+        
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully');
     }
 
     /**

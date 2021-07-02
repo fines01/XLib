@@ -14,7 +14,7 @@
     <!-- custom stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}"/>
     {{-- <link rel="stylesheet" href="{{ mix('css/all.css') }}" /> --}}
-    <title>{{ config('app.name') }}</title>
+    <title>@yield('pageTitle',config('app.name'))</title>
 
 </head>
 

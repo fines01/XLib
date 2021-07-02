@@ -1,5 +1,5 @@
 @extends('layouts.main')
-
+@section('pageTitle', 'create category')
 @section('content')
     <main class="sm:container main-container">
         <div class="flex">
@@ -36,6 +36,11 @@
                             {{-- @if (old('type', $category->type) == 'non-fiction') checked @endif --}}
                             >
                             <label class="form-check-label ml-1 mr-4" for="non-fiction">{{ __('Non-fiction') }}</label>
+                            @error('type')
+                                <p class="error-msg">
+                                    {{ $message }}
+                                </p>
+                            @enderror
                         </div>
                         <div class="flex flex-wrap">
                             <button type="submit" class="form-button mb-8">

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-
+@section('pageTitle', 'categories')
 @section('content')
     <main class="sm:container main-container">
         <div class="flex">
@@ -20,28 +20,35 @@
                                 <th scope="col">#</th>
                                 <th scope="col">{{ __('Type') }}</th>
                                 <th scope="col">{{ __('Name') }}</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categories as $category)
-                                <tr>
-                                    <th scope="row">{{ $category->id }}</th>
-                                    <td>{{ $category->type }}</td>
-                                    <td>{{ $category->category_name }}</td>
-                                    <td><a href="{{ route('categories.edit', $category->id) }}"
-                                            class="btn fa fa-edit"></a></td>
-                                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST" ,
-                                        class="" data-title="" data-body="">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn fa fa-trash"></button>
-                                    </form>
+                            @foreach ($categories as $i => $category)
+                            
+                            <tr>
+                                {{-- ev. besser fortlaufenden Zähler verwenden als id der DB: --}}
+                                <td>{{ $i+1 }}</td>
+                                <td>{{ $category->type }}</td>
+                                <td>{{ $category->category_name }}</td>
+                                <td><a href="{{ route('categories.edit', $category->id) }}"
+                                    class="btn fa fa-edit"></a></td>
+                                    <td>
+                                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST" ,
+                                            class="" data-title="" data-body="">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn fa fa-trash"></button>
+                                        </form>
+                                    </td>
                                 </tr>
-                            @endforeach
+                                
+                                @endforeach
                         </tbody>
                     </table>
                 </section>
-                
+
             </div>
         </div>
     </main>
