@@ -6,8 +6,8 @@
             <div class="w-full">
 
                 <h1>{{ __('All categories') }}</h1>
-                <div>
-                    <a href="{{ route('categories.create') }}" class="form-button mt-4">{{ __('Create a new category') }}</a>
+                <div class="mt-8">
+                    <a href="{{ route('categories.create') }}" class="form-button">{{ __('Create a new category') }}</a>
                 </div>
 
                 <section id="" class="dashboard-container mt-12">
@@ -32,7 +32,8 @@
                                             class="btn fa fa-edit"></a></td>
                                     <form action="{{ route('categories.destroy', $category->id) }}" method="POST" ,
                                         class="" data-title="" data-body="">
-                                        @csrf@method('delete')
+                                        @csrf
+                                        @method('delete')
                                         <button type="submit" class="btn fa fa-trash"></button>
                                     </form>
                                 </tr>

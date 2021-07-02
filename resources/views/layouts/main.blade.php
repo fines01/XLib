@@ -10,9 +10,9 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
-    <link rel="stylesheet" href="css/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/fontawesome-free/css/all.min.css') }}">
     <!-- custom stylesheet -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}"/>
     {{-- <link rel="stylesheet" href="{{ mix('css/all.css') }}" /> --}}
     <title>{{ config('app.name') }}</title>
 
@@ -23,7 +23,7 @@
     <nav>
         <div class="nav-center">
             <div class="nav-header">
-                <img src="src/logo.svg" alt="logo" class="logo">
+                <img src="{{ asset('src/logo.svg') }}" alt="logo" class="logo">
                 <button class="nav-toggle"><i class="fas fa-bars"></i></button>
             </div>
             <!-- links left side-->

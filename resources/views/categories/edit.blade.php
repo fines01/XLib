@@ -13,8 +13,8 @@
                         {{ __('Edit category') }}
                     </header>
                     <form class="form sm:space-y-8 space-y-6" method="POST" action="{{ route('categories.update', $category->id) }}">
-                        @method('put')
                         @csrf
+                        @method('put')
                         {{-- CATEORY NAME --}}
                         <div class="flex flex-wrap">
                             <label for="title" class="form-label">
