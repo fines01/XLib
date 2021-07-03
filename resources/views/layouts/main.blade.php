@@ -11,8 +11,9 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/toastr-master/build/toastr.min.css') }}">
     <!-- custom stylesheet -->
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
     {{-- <link rel="stylesheet" href="{{ mix('css/all.css') }}" /> --}}
     <title>@yield('pageTitle',config('app.name'))</title>
 
@@ -63,13 +64,13 @@
                     <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
                     <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
                 @else
-                <li><a href="{{ route('users.show') }}">{{ Auth::user()->name }}</a></li>
-                <li><a href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                    <li><a href="{{ route('users.show') }}">{{ Auth::user()->name }}</a></li>
+                    <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                             {{ csrf_field() }}
-                        </form></li>
+                        </form>
+                    </li>
                 @endguest
             </ul>
 
@@ -79,11 +80,47 @@
         </div>
     </nav>
     <!-- END NAVBAR -->
+
     {{-- <div class="sm:container sm:mx-auto sm:mt-10 sm:max-w-lg"> --}}
 
     @yield('content')
 
     {{-- </div> --}}
+
+    {{-- MODAL --}}
+    <div class="hidden flex bg-transparent bg-indigo-500 bg-opacity-50 inset-0 justify-center items-center fixed top-0 left-0 "
+        id="overlay">
+        <div class="bg-gray-300 max-w-sm py-4 px-5 rounded shadow-2xl text-gray-800">
+            <div class="flex justify-between items-center">
+                <h4 class="text-lg font-bold" id="deleteModalLabel">
+                    {{ __('Confirm delete') }}?
+                </h4>
+                <!-- *** close "x" -Button, od ev statdessen Font awesome? *** -->
+                <svg class="h-6 w-6 ml-2 cursor-pointer p-1 hover:bg-gray-400 rounded-full" id="close-modal"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                        clip-rule="evenodd"></path>
+                </svg>
+                <!-- *** End x Button *** -->
+            </div>
+            <div class="mt-2 text-sm">
+                <p id="deleteModalBody">
+                    {{ __('Are you sure') }}?
+                </p>
+            </div>
+            <div class="mt-3 flex justify-end space-x-3">
+                <button
+                    class="dismiss-btn px-3 py-1 rounded hover:bg-indigo-900 hover:bg-opacity-50 hover:text-gray-200">
+                    Cancel
+                </button>
+                <button class="delete-btn-modal px-3 py-1 bg-red-800 text-gray-200 hover:bg-red-600 rounded">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+    {{-- END MODAL --}}
 
     <!-- footer  -->
     <footer>
@@ -104,8 +141,22 @@
     <!-- end footer -->
 
     <!-- Scripts -->
+    <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
+    <script src="{{ asset('js/toastr-master/build/toastr.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     {{-- <script src="{{ asset('js/index.js') }}"></script> --}}
+
+    @if (View::hasSection('jsScript'))
+        <script>
+            "use strict";
+            (function($) {
+                $(document).ready(function() {
+                    @yield('jsScript')
+                })
+            })(jQuery)
+        </script>
+    @endif
+
 </body>
 
 </html>

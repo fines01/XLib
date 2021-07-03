@@ -26,25 +26,26 @@
                         </thead>
                         <tbody>
                             @foreach ($categories as $i => $category)
-                            
-                            <tr>
-                                {{-- ev. besser fortlaufenden Zähler verwenden als id der DB: --}}
-                                <td>{{ $i+1 }}</td>
-                                <td>{{ $category->type }}</td>
-                                <td>{{ $category->category_name }}</td>
-                                <td><a href="{{ route('categories.edit', $category->id) }}"
-                                    class="btn fa fa-edit"></a></td>
+
+                                <tr>
+                                    {{-- ev. besser fortlaufenden Zähler verwenden als id der DB: --}}
+                                    <td>{{ $i + 1 }}</td>
+                                    <td>{{ $category->type }}</td>
+                                    <td>{{ $category->category_name }}</td>
+                                    <td><a href="{{ route('categories.edit', $category->id) }}"
+                                            class="btn fa fa-edit"></a></td>
                                     <td>
                                         <form action="{{ route('categories.destroy', $category->id) }}" method="POST" ,
-                                            class="" data-title="" data-body="">
+                                            class="delete-form" data-title="{{ $category->category_name }}"
+                                            data-body="{{ __('Do you really want to delete the category') }}?">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="btn fa fa-trash"></button>
                                         </form>
                                     </td>
                                 </tr>
-                                
-                                @endforeach
+
+                            @endforeach
                         </tbody>
                     </table>
                 </section>
@@ -54,3 +55,9 @@
     </main>
 
 @endsection
+
+@if (session('success'))
+    @section('jsScript')
+        myToastr('success','{{ session('success') }}');
+    @endsection
+@endif
