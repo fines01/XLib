@@ -108,6 +108,21 @@
  @apply text-sm border border-t-8 rounded text-green-700 border-green-600 bg-green-100  px-3 py-4 mb-4;
 }
 
-/* .home-container{
- @apply 
-} */
+.pagination div{
+ @apply leading-none mb-2 mx-6 ;
+}
+.pagination div span{
+ @apply bg-transparent font-extrabold;
+}
+.pagination > a{
+ @apply: bg-gray-100;
+}
+.pagination a:hover{
+ @apply bg-indigo-400 bg-opacity-50 text-blue-900;
+}
+.pagination span{
+ @apply bg-gray-200;
+}
+.pagination p{
+ @apply my-auto text-gray-500;
+}

@@ -326,7 +326,7 @@ ev. BS vor FA einbinden?*/
 Navbar
 ===============
 */
-nav {
+.main-nav {
   background: var(--clr-taupe-2);
   box-shadow: var(--dark-shadow);
   /* border-bottom: 4px solid var(--clr-midnight); */

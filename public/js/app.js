@@ -1990,16 +1990,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
       e.preventDefault();
       var form = $(this);
       console.log(form);
-      $("#overlay").removeClass("hidden");
-      $("#deleteModalLabel").html($(".delete-form").data("title"));
-      $("#deleteModalBody").html($(".delete-form").data("body")); // $("#deleteModalLabel").html(form.data("title"));
-      // $("#deleteModalBody").html(form.data("body"));
+      $("#overlay").removeClass("hidden"); // $("#deleteModalLabel").html($(".delete-form").data("title"));
+      // $("#deleteModalBody").html($(".delete-form").data("body"));
 
-      $(".dismiss-btn, .close-modal").on("click", function () {
+      $("#deleteModalLabel").html(form.data("title"));
+      $("#deleteModalBody").html(form.data("body"));
+      $(".dismiss-btn, #close-modal").on("click", function () {
         console.log("you clicked cancel");
         $("#overlay").addClass("hidden");
-      }); //$(".fa-trash").on("click", function () {});
-
+      });
       $(".delete-btn-modal").off().on("click", function () {
         $("#overlay").addClass("hidden"); // console.log("you clicked delete");
         // console.log(form);

@@ -21,7 +21,7 @@
 
 <body>
     <!-- NAVBAR -->
-    <nav>
+    <nav class="main-nav">
         <div class="nav-center">
             <div class="nav-header">
                 <img src="{{ asset('src/logo.svg') }}" alt="logo" class="logo">
@@ -66,7 +66,7 @@
                 @else
                     <li><a href="{{ route('users.show') }}">{{ Auth::user()->name }}</a></li>
                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+                                                document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                             {{ csrf_field() }}
                         </form>
@@ -95,14 +95,17 @@
                 <h4 class="text-lg font-bold" id="deleteModalLabel">
                     {{ __('Confirm delete') }}?
                 </h4>
-                <!-- *** close "x" -Button, od ev statdessen Font awesome? *** -->
-                <svg class="h-6 w-6 ml-2 cursor-pointer p-1 hover:bg-gray-400 rounded-full" id="close-modal"
+                <!-- *** close "x" -Button, SVG od ev statdessen Font awesome? *** -->
+                {{-- <svg class="h-6 w-6 ml-2 cursor-pointer p-1 hover:bg-gray-400 rounded-full" id="close-modal"
                     fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd"
                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                         clip-rule="evenodd"></path>
-                </svg>
-                <!-- *** End x Button *** -->
+                </svg> --}}
+                {{-- *** close- Button FA --}}
+                <i class="fas fa-window-close h-6 w-6 ml-2 cursor-pointer text-gray-400 hover:text-indigo-900 hover:text-opacity-50"
+                    id="close-modal"></i>
+                <!-- *** End close- Button *** -->
             </div>
             <div class="mt-2 text-sm">
                 <p id="deleteModalBody">

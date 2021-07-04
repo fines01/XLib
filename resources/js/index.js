@@ -96,12 +96,12 @@
     console.log(form);
 
     $("#overlay").removeClass("hidden");
-    $("#deleteModalLabel").html($(".delete-form").data("title"));
-    $("#deleteModalBody").html($(".delete-form").data("body"));
-    // $("#deleteModalLabel").html(form.data("title"));
-    // $("#deleteModalBody").html(form.data("body"));
+    // $("#deleteModalLabel").html($(".delete-form").data("title"));
+    // $("#deleteModalBody").html($(".delete-form").data("body"));
+    $("#deleteModalLabel").html(form.data("title"));
+    $("#deleteModalBody").html(form.data("body"));
   
-    $(".dismiss-btn, .close-modal").on("click", function () {
+    $(".dismiss-btn, #close-modal").on("click", function () {
       console.log("you clicked cancel");
       $("#overlay").addClass("hidden");
     });

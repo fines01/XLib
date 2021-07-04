@@ -46,8 +46,12 @@
                                 </tr>
 
                             @endforeach
+                            {{-- output Pagination- Links (In laravel standardmässig mittels Tailwind gestaltet? ) --}}
                         </tbody>
                     </table>
+                    <div class="pagination">
+                    {{ $categories->links() }}
+                    </div>
                 </section>
 
             </div>
