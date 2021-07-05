@@ -4,14 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
 
-    public $rules = [
-        'type' =>'required',
-        'category' => 'min:2|unique:categories,category_name'
-    ];
+    // public $rules = [
+    //     'type' =>'required',
+    //     'category' => 'required|min:2|unique:categories,category_name',
+    //     // // Kategorienname ev nur unique bei gleichem Typ
+        
+    //  ];
+        
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +25,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderBy('type')->orderBy('category_name')->paginate(10);
-        //dd($categories)
+        //dd($categories->total());
         return view('categories.index', compact('categories'));
     }
 
@@ -43,10 +48,21 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = $this->rules;
+        //$rules = $this->rules;
+        //$request->validate($rules);
        
         //dd($request->category, $request->type);
-        $request->validate($rules);
+        
+        $request->validate([
+             'type' =>'required',
+            //'category' => 'required|min:2|unique:categories,category_name',
+            // Kategorienname nur unique bei gleichem Typ:
+            'category' => 'required|min:2|unique:categories,category_name,NULL,id,type,'.$request->type,
+        
+            // 'category' => ['required', 'min:2', Rule::unique('categories')->where(function($query) use ($request){
+            //     return $query->where('type', $request->type);
+            // })],
+        ]);
 
         $category= Category::create([
             'type' => $request->type,
@@ -80,8 +96,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $rules = $this->rules;
-        $request->validate($rules);
+        // $rules = $this->rules;
+        // $request->validate($rules);
+        
+         $request->validate([
+             'type' =>'required',
+            //'category' => 'required|min:2|unique:categories,category_name',
+            // Kategorienname nur unique bei gleichem Typ:
+            'category' => 'required|min:2|unique:categories,category_name,NULL,id,type,'.$request->type,
+            // 'category' => ['required', 'min:2', Rule::unique('categories')->where(function($query) use ($request){
+            //     return $query->where('type', $request->type);
+            // })],
+        ]);
         
         //$category->update([
         //     'type' => $request->type,
@@ -110,7 +136,7 @@ class CategoryController extends Controller
             $category->delete(); //Category::destroy($category->id);
             $status=200;
             $key='success';
-            $msg='Category '.$category->category_name. ' '.'successfully deleted.';
+            $msg='Category '.$category->type.': '.$category->category_name.' deleted.';
         }
 
         // Modalboxen noch einfügen!

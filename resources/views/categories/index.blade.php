@@ -26,26 +26,27 @@
                         </thead>
                         <tbody>
                             @foreach ($categories as $i => $category)
-
+                            {{-- geht nicht wg pagination, dh.: --}}
                                 <tr>
-                                    {{-- ev. besser fortlaufenden Zähler verwenden als id der DB: --}}
-                                    <td>{{ $i + 1 }}</td>
+                                    {{-- ev. besser fortlaufenden Zähler verwenden als ID der DB: --}}
+                                    {{-- wg pagination: firstItem() methode: https://laravel.com/docs/8.x/pagination#cursor-paginator-instance-methods --}}
+                                    <td>{{ $i + $categories->firstItem() }}</td>
                                     <td>{{ $category->type }}</td>
                                     <td>{{ $category->category_name }}</td>
                                     <td><a href="{{ route('categories.edit', $category->id) }}"
-                                            class="btn fa fa-edit"></a></td>
-                                    <td>
-                                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST" ,
-                                            class="delete-form" data-title="{{ $category->category_name }}"
-                                            data-body="{{ __('Do you really want to delete the category') }}?">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn fa fa-trash"></button>
-                                        </form>
-                                    </td>
-                                </tr>
-
+                                        class="btn fa fa-edit"></a></td>
+                                        <td>
+                                            <form action="{{ route('categories.destroy', $category->id) }}" method="POST" ,
+                                                class="delete-form" data-title="{{ $category->type.': '.$category->category_name }}"
+                                                data-body="{{ __('Do you really want to delete the category') }}?">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="btn fa fa-trash"></button>
+                                            </form>
+                                        </td>
+                                    </tr>
                             @endforeach
+                            
                             {{-- output Pagination- Links (In laravel standardmässig mittels Tailwind gestaltet? ) --}}
                         </tbody>
                     </table>
