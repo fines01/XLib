@@ -16,7 +16,7 @@
                 </header>
                 <div class="w-full p-6">
                     <p>
-                        Hallo! Das ist dein Dashboard!
+                        {{ __('Welcome '. Auth::user()->username .'! This is your Dashboard') }}
                     </p>
                 </div>
             </section>
