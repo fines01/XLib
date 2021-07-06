@@ -64,7 +64,7 @@
                     <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
                     <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
                 @else
-                    <li><a href="{{ route('users.show') }}">{{ Auth::user()->name }}</a></li>
+                    {{-- <li><a href="{{ route('users.show', $user->id) }}">{{ Auth::user()->name }}</a></li> --}}
                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">

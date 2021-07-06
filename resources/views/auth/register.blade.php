@@ -15,7 +15,7 @@
                     action="{{ route('register') }}">
                     @csrf
 
-                    <div class="flex flex-wrap">
+                    {{-- <div class="flex flex-wrap">
                         <label for="name" class="form-label">
                             {{ __('Name') }}:
                         </label>
@@ -28,7 +28,7 @@
                             {{ $message }}
                         </p>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="flex flex-wrap">
                         <label for="username" class="form-label">
