@@ -2021,6 +2021,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
           }
         });
       });
+    }); // TEST
+
+    $("a .sort-btn").on("cick", function (e) {
+      e.preventDefault();
+      console.log("you clicked sort"); //console.log($this);
     });
   });
 })(jQuery);

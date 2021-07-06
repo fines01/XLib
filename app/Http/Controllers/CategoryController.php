@@ -25,7 +25,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderBy('type')->orderBy('category_name')->paginate(10);
-        //dd($categories->total());
+        // ... Category::orderBy('type', $request->sort ?? 'asc')->...->get();
+        
+        //ddd($categories->total()); //or dd() or dump()
         return view('categories.index', compact('categories'));
     }
 
@@ -71,8 +73,7 @@ class CategoryController extends Controller
         //$category->save();
         //dd($category);
         
-        return redirect()->route('categories.index')->with('success', 'New category '.$request->category_name.' was saved successfully.'); // zweisprachig: msg. wo nochmal?
-        
+        return redirect()->route('categories.index')->with('success', 'New category '.$request->category_name.' was saved successfully.'); // msg: zweisprachig de fehlt noch
     }
 
     /**

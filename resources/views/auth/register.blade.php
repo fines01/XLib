@@ -31,6 +31,21 @@
                     </div>
 
                     <div class="flex flex-wrap">
+                        <label for="username" class="form-label">
+                            {{ __('Username') }}:
+                        </label>
+
+                        <input id="username" type="text" class="form-input w-full @error('username')  border-red-500 @enderror"
+                            name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+
+                        @error('username')
+                        <p class="error-msg">
+                            {{ $message }}
+                        </p>
+                        @enderror
+                    </div>
+
+                    <div class="flex flex-wrap">
                         <label for="email" class="form-label">
                             {{ __('Email Address') }}:
                         </label>

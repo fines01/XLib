@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
+use App\Models\Title;
+use App\Models\TitleUser;
 use Illuminate\Http\Request;
 
 class TitleUserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +20,11 @@ class TitleUserController extends Controller
      */
     public function index()
     {
-        //
+        //dd(auth()->id) //user-id des jew auth users.
+        //all items des jew. auth. User anzeigen
+        $books= TitleUser::with('titles','authors')->where('title_id', auth()->id)->orderBy('titles')->get();
+        
+        return view('books.index', compact('books'));
     }
 
     /**
@@ -23,7 +34,8 @@ class TitleUserController extends Controller
      */
     public function create()
     {
-        //
+        $books= TitleUser::with('titles','authors')->select()->get();
+        return view('books.create', compact('books')); 
     }
 
     /**
@@ -34,7 +46,12 @@ class TitleUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([]);
+        $books= TitleUser::create([]);
+        $titles= Title::create([]);
+        $authors= Author::create([]);
+
+        return redirect()->route('books.index')->with('success', 'New book registered successfully.');
     }
 
     /**

@@ -228,7 +228,7 @@ button:focus{
   color: var(--clr-midnight);
   border-radius: var(--radius);
   border: 1px solid grey;
-  margin: 1rem 0;
+  /* margin: 1rem 0; */
   display: inline-block;
   /* rest v bootstrap, da ev nicht verw.: */
   /* display: inline-block; */
