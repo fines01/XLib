@@ -1,5 +1,5 @@
 @extends('layouts.main')
-{{-- @extends('layouts.main') --}}
+@section('pageTitle', 'Dashboard')
 
 @section('content')
 
@@ -23,7 +23,7 @@
             {{-- test- content: --}}
             <section id="books" class="dashboard-container mt-12">
                 <header class="form-header">
-                    {{ __('My Books') }}
+                    {{ __('My favorite books | Wishlist | Calendar | Reminders') }}
                 </header>
                 <table class="m-12">
                     <thead>

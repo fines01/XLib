@@ -1,5 +1,5 @@
 @extends('layouts.main')
-
+@section('pageTitle', 'Register a book')
 @section('content')
     <main class="sm:container main-container">
         <div class="flex">

@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('js/toastr-master/build/toastr.min.css') }}">
+    {{-- Favicon --}}
+    <link rel="icon" href="{{ asset('Designcontest-Ecommerce-Business-Research.ico') }}" type="image/x-icon"/>
     <!-- custom stylesheet -->
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
     {{-- <link rel="stylesheet" href="{{ mix('css/all.css') }}" /> --}}
@@ -64,7 +66,7 @@
                     <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
                     <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
                 @else
-                    <li><a href="{{ route('users.show', Auth::user() ) }}">{{ Auth::user()->username }}</a></li>
+                    <li><a href="{{ route('users.show', Auth::user() ) }}" class="font-bold">{{ Auth::user()->username }}</a></li>
                     <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">

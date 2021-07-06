@@ -1,18 +1,18 @@
 @extends('layouts.main')
-@section('pageTitle', 'books')
+@section('pageTitle', 'My books')
 @section('content')
     <main class="sm:container main-container">
         <div class="flex">
             <div class="w-full">
 
-                <h1>{{ __('All Books') }}</h1>
+                <h1>{{ __('My books: overview') }}</h1>
                 <div class="mt-8">
                     <a href="{{ route('books.create') }}" class="form-button">{{ __('register a new book') }}</a>
                 </div>
 
                 <section id="" class="dashboard-container mt-12">
                     <header class="form-header">
-                        {{ __('Your books') }}
+                        {{ __('My books') }}
                     </header>
                     <table class="m-12">
                         <thead>
