@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
+use Illuminate\Database\DBAL\TimestampType;
 
 return [
 
@@ -142,6 +143,23 @@ return [
             'database' => env('REDIS_CACHE_DB', '1'),
         ],
 
+    ],
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Doctrine DBAL 
+    |--------------------------------------------------------------------------
+    |
+    | The Doctrine DBAL library is used for modifying columns. It determine the current 
+      state of the column and to create the SQL queries needed to make requested changes 
+      to your column.
+    |
+    */
+
+    'dbal' => [
+        'types' => [
+            'timestamp' => TimestampType::class,
+        ],
     ],
 
 ];
