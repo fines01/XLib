@@ -11,11 +11,11 @@
                         {{ __('Register new book') }}
                     </header>
 
-                    <form class="form sm:space-y-8 space-y-6" method="POST" action="{{ route('') }}">
+                    <form class="form sm:space-y-8 space-y-6" method="POST" action="{{ route('books.store') }}">
                         @csrf
                         {{-- AUTHOR --}}
                         <div class="flex flex-wrap">
-                            <legend class="form-label">{{ __('Author') }}</legend>
+                            <h3 class=" w-full form-label mb-16">{{ __('Author') }}:</h3>
                             <div class="w-full sm:w-1/2">
                                 <label for="fname" class="form-label">
                                     {{ __('First name') }}:
@@ -105,7 +105,7 @@
 
                         <div class="flex flex-wrap">
                             <label for="category" class="form-label">
-                                {{ __('Category') }}
+                                {{ __('Category') }}:
                             </label>
                             <select name="category" id="category" class="form-input w-full" @error('category')
                                 border-red-500 @enderror>
@@ -157,21 +157,25 @@
                         </div>
 
                         {{-- PUBLICATION FORM --}}
-                        <div class="flex items-center">
-                            <legend class="form-label">{{ __('Publication format') }}</legend>
+                        <div class="flex flex-wrap">
+                            <h3 class="w-full form-label mb-16">{{ __('Publication format') }}:</h3>
+                            <div class="w-full">
+                                <input class="form-checkbox" type="radio" id="hardcover" name="format" value="hardcover"
+                                    {{-- @if (old('format', $books->format) == 'hardcover') checked @endif --}}>
+                                <label class="form-check-label ml-1 mr-4" for="hardcover">{{ __('Hardcover') }}</label>
 
-                            <input class="form-checkbox" type="radio" id="hardcover" name="format" value="hardcover" @if(old('format', $book->format)=='hardcover') checked @endif>
-                            <label class="form-check-label" for="hardcover">{{ __('Hardcover') }}</label>
+                                <input class="form-checkbox" type="radio" id="softcover" name="format" value="softcover"
+                                    {{-- @if (old('format', $books->format) == 'softcover') checked @endif --}}>
+                                <label class="form-check-label ml-1 mr-4" for="softcover">{{ __('Softcover') }}</label>
 
-                            <input class="form-checkbox" type="radio" id="softcover" name="format" value="softcover"  @if(old('format', $book->format)=='softcover') checked @endif>
-                            <label class="form-check-label" for="softcover">{{ __('Softcover') }}</label>
-
-                            <input class="form-checkbox" type="radio" id="other" name="format" value="other"  @if(old('format', $book->format)=='other') checked @endif>
-                            <label class="form-check-label" for="other">{{ __('Other') }}</label>
+                                <input class="form-checkbox" type="radio" id="other" name="format" value="other"
+                                    {{-- @if (old('format', $books->format) == 'other') checked @endif --}}>
+                                <label class="form-check-label ml-1 mr-4" for="other">{{ __('Other') }}</label>
+                            </div>
                         </div>
 
-                        {{-- ASIN --}}
-                        {{-- <div class="flex flex-wrap">
+            {{-- ASIN --}}
+            {{-- <div class="flex flex-wrap">
                             <label for="asin" class="form-label">
                                 ISBN-10:
                             </label>
@@ -184,8 +188,8 @@
                             @enderror
                         </div> --}}
 
-                        {{-- MAX LOAN PERIOD default 60 days --}}
-                        {{-- <div class="flex flex-wrap">
+            {{-- MAX LOAN PERIOD default 60 days --}}
+            {{-- <div class="flex flex-wrap">
                             <label for="max-loan" class="form-label">
                                 {{ __('maximum lending time') }}:
                             </label>
@@ -199,45 +203,44 @@
                             @enderror
                         </div> --}}
 
-                        {{-- CONDITION --}}
-                        <div class="flex flex-wrap">
-                            <label for="condition" class="form-label">
-                                {{ __('Condition') }}:
-                            </label>
-                            <input id="condition" type="text"
-                                class="form-input w-full @error('isbn-10') border-red-500 @enderror" name="condition"
-                                value="{{ old('condition') }}" autocomplete="condition">
-                            @error('condition')
-                                <p class="error-msg">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
-                        {{-- POSSIBLE DELIVERY/ TRANSFER METHODS --}}
-
-                        <div class="flex flex-wrap">
-                            <legend class="form-label">{{ __('Choose your possible transfer methods') }}:</legend>
-                            <label for="in-person" class="form-check-label">{{ __('In person') }}:</label>
-                            <input type="checkbox" id="in-person" name="delivery" class="form-checkbox" value="in-person" @if (is_array(old('delivery')) && in_array('in-person', old('delivery'))) checked @endif>
-                            <label for="postal" class="form-check-label">{{ __('Postal delivery') }}:</label>
-                            <input type="checkbox" id="postal" name="delivery" class="form-checkbox" value="postal" @if (is_array(old('delivery')) && in_array('postal', old('delivery'))) checked @endif>
-                            @error('delivery')
-                                <p class="error-msg">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
-                        <div class="flex flex-wrap">
-                            <button type="submit" class="form-button">
-                                {{ __('Save') }}
-                            </button>
-                        </div>
-                    </form>
-
-                </section>
+            {{-- CONDITION --}}
+            <div class="flex flex-wrap">
+                <label for="condition" class="form-label">
+                    {{ __('Please describe the condition') }}:
+                </label>
+                <input id="condition" type="text" class="form-input w-full @error('isbn-10') border-red-500 @enderror"
+                    name="condition" value="{{ old('condition') }}" autocomplete="condition">
+                @error('condition')
+                    <p class="error-msg">
+                        {{ $message }}
+                    </p>
+                @enderror
             </div>
+
+            {{-- POSSIBLE DELIVERY/ TRANSFER METHODS --}}
+
+            <div class="flex flex-wrap">
+                <h3 class="form-label w-full mb-4">{{ __('Choose your possible transfer methods') }}:</h3>
+                <input type="checkbox" id="in-person" name="delivery" class="form-checkbox" value="in-person" @if (is_array(old('delivery')) && in_array('in-person', old('delivery'))) checked @endif>
+                <label for="in-person" class="form-check-label ml-1 mr-4">{{ __('In person') }}</label>
+                <input type="checkbox" id="postal" name="delivery" class="form-checkbox" value="postal" @if (is_array(old('delivery')) && in_array('postal', old('delivery'))) checked @endif>
+                <label for="postal" class="form-check-label ml-1 mr-4">{{ __('Postal delivery') }}</label>
+                @error('delivery')
+                    <p class="error-msg">
+                        {{ $message }}
+                    </p>
+                @enderror
+            </div>
+
+            <div class="flex flex-wrap">
+                <button type="submit" class="form-button mb-12">
+                    {{ __('Save') }}
+                </button>
+            </div>
+            </form>
+
+            </section>
+        </div>
         </div>
     </main>
 @endsection

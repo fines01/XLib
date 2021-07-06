@@ -37,13 +37,13 @@ class Title extends Model
     }
     
     // titles : authors == n:1 (so kange keine Co- Autoren etc. erl.)
-    public function author()
+    public function authors()
     {
         return $this->belongsTo(Author::class);
     }
 
     // titles : category == n:1
-    public function category()
+    public function categories()
     {
         return $this->belongsTo(Category::class);
     } 

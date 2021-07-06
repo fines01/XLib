@@ -40,8 +40,8 @@
                                     class="dropbtn fas fa-caret-down"></a></i></li>
                         <div class="nav-dropdown-content">
                             <ul class="links-dropdown">
-                                <li><a href="">{{ __('My Books') }}</a></li>
-                                <li><a href="useritems.index.html">{{ __('All Titles') }}</a></li>
+                                <li><a href="{{ route('books.index') }}">{{ __('My Books') }}</a></li>
+                                <li><a href="{{ route('titles.index') }}">{{ __('All Titles') }}</a></li>
                             </ul>
                         </div>
                     </div>

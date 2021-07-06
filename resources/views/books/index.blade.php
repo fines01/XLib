@@ -7,39 +7,44 @@
 
                 <h1>{{ __('All Books') }}</h1>
                 <div class="mt-8">
-                    <a href="{{ route('categories.create') }}" class="form-button">{{ __('Create a new category') }}</a>
+                    <a href="{{ route('books.create') }}" class="form-button">{{ __('register a new book') }}</a>
                 </div>
 
                 <section id="" class="dashboard-container mt-12">
                     <header class="form-header">
-                        {{ __('All categories') }}
+                        {{ __('Your books') }}
                     </header>
                     <table class="m-12">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">{{ __('Type') }}</th>
-                                <th scope="col">{{ __('Name') }}</th>
+                                <th scope="col"></th>
+                                <th scope="col">{{ __('Title') }}</th>
+                                <th scope="col">{{ __('Author') }}</th>
+                                <th scope="col"></th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categories as $i => $category)
+                            @foreach ($books as $i => $item)
                                 {{-- geht nicht wg pagination, dh.: --}}
                                 <tr>
-                                    {{-- ev. besser fortlaufenden Zähler verwenden als ID der DB: --}}
-                                    {{-- wg pagination: firstItem() methode: https://laravel.com/docs/8.x/pagination#cursor-paginator-instance-methods --}}
-                                    <td>{{ $i + $categories->firstItem() }}</td>
-                                    <td>{{ $category->type }}</td>
-                                    <td>{{ $category->category_name }}</td>
-                                    <td><a href="{{ route('categories.edit', $category->id) }}"
+                                    <td></td>
+                                    <td>{{ $i + $books->firstItem() }}</td>
+                                    <td>{{ $item->title }}</td>
+                                    <td>{{ $item->authors->first_name . ' ' . $item->last_mame }}</td>
+
+                                    {{-- edit, show and delete buttons, oder edit in show --}}
+                                    <td><a href="{{ route('books.show', $item->id) }}"
+                                            class="btn fa fa-eye"></a></td>
+                                    <td><a href="{{ route('books.edit', $item->id) }}"
                                             class="btn fa fa-edit"></a></td>
                                     <td>
-                                        <form action="{{ route('categories.destroy', $category->id) }}" method="POST" ,
+                                        <form action="{{ route('books.destroy', $item->id) }}" method="POST" ,
                                             class="delete-form"
-                                            data-title="{{ $category->type . ': ' . $category->category_name }}"
-                                            data-body="{{ __('Do you really want to delete the category') }}?">
+                                            data-title="{{ $item->title }}"
+                                            data-body="{{ __('Do you really want to delete this book') }}?">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="btn fa fa-trash"></button>
@@ -51,9 +56,9 @@
                             {{-- output Pagination- Links (In laravel standardmässig mittels Tailwind gestaltet? ) --}}
                         </tbody>
                     </table>
-                    <div class="pagination">
-                        {{ $categories->links() }}
-                    </div>
+                    {{-- <div class="pagination">
+                        {{ $books->links() }}
+                    </div> --}}
                 </section>
 
             </div>

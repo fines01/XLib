@@ -26,6 +26,6 @@ class ModifyNameOnUsersTable extends Migration
      */
     public function down()
     {
-        DB::statement('ALTER TABLE `users` MODIFY `name` varchar NOT NULL;');
+       // DB::statement('ALTER TABLE `users` MODIFY `name` varchar NOT NULL;');
     }
 }

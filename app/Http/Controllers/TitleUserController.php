@@ -20,9 +20,14 @@ class TitleUserController extends Controller
      */
     public function index()
     {
-        //dd(auth()->id) //user-id des jew auth users.
+        //dd(auth()->user()->id); //user-id des jew auth users.
+        $userId = auth()->user()->id;
         //all items des jew. auth. User anzeigen
-        $books= TitleUser::with('titles','authors')->where('title_id', auth()->id)->orderBy('titles')->get();
+        $books= TitleUser::with('authors','categories')
+        ->where('title_id' ,$userId)
+        ->get();
+        
+        //dd($books);
         
         return view('books.index', compact('books'));
     }
@@ -34,7 +39,7 @@ class TitleUserController extends Controller
      */
     public function create()
     {
-        $books= TitleUser::with('titles','authors')->select()->get();
+        $books= TitleUser::with('authors','categories')->select()->get();
         return view('books.create', compact('books')); 
     }
 
