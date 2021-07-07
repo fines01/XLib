@@ -25,6 +25,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        /* 
+        * Gates ( https://laravel.com/docs/8.x/authorization#gates )
+        */
+        Gate::define('admin', function($user){
+            return $user->admin;
+        });
     }
 }

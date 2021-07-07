@@ -31,7 +31,21 @@
             </div>
             <!-- links left side-->
             <ul class="links links-left">
-                <li><a href="{{ url('/') }}" class="active">{{ config('app.name', 'Welcome') }}</a></li>
+                @can('admin')
+                 <!-- Dropdown- Admin- Menü: -->
+                    <div class="nav-dropdown">
+                        <li class=""><a class="dropdown-open">{{ __('Admin') }}<i
+                                    class="dropbtn fas fa-caret-down"></a></i></li>
+                        <div class="nav-dropdown-content">
+                            <ul class="links-dropdown">
+                                <li><a href="{{ route('categories.index') }}">{{ __('categories') }}</a></li>
+                                <li><a href="{{ route('users.index') }}">{{ __('Users') }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                @else
+                    <li><a href="{{ url('/') }}" class="active">{{ config('app.name', 'Welcome') }}</a></li>
+                @endcan
                 @guest
                     <li><a href="{{ url('/') }}#info">Info</a></li>
                     <li><a href="{{ url('/') }}#showcase">{{ __('Books') }}</a></li>

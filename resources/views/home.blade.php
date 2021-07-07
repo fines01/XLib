@@ -16,8 +16,11 @@
                 </header>
                 <div class="w-full p-6">
                     <p>
-                        {{ __('Welcome '. Auth::user()->username .'! This is your Dashboard') }}
+                        {{ __('Welcome '. Auth::user()->username .'! This is your Dashboard') }}.
                     </p>
+                        @can('admin')
+                           <p>{{ __('You are logged in as Admin') }}.</p>
+                        @endcan
                 </div>
             </section>
             {{-- test- content: --}}

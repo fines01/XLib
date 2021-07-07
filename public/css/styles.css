@@ -82,8 +82,10 @@ https://coolors.co/bb2525-dd5555-f6ad7b-87d68d-bcebcb
   --clr-brown-3: #B68973;
   --clr-brown-4: #eabf9f;
 
-  --clr-red-dark: #961b1b;
-  --clr-red-light: #DD5555;
+  --clr-red-dark: #742a2a; 
+  /* #612121; */
+  --clr-red-light: #d82f19;
+  /* #fa4040; */
   --clr-orange-light: #c56829;
   --clr-green: #87D68D;
   --clr-green-light: #BCEBCB;
@@ -271,7 +273,7 @@ td .btn:hover {
 }
 
 .fa-trash{
-  color: var(--clr-orange-light);
+  color: var(--clr-red-dark);
   /* color: orangered; */
 }
 
@@ -281,7 +283,7 @@ td .btn:hover {
 }
 
 .fa-trash:hover {
-  color: var(--clr-red-dark);
+  color: var(--clr-red-light);
 }
 
 /* aus FA: all.css sonst vom BS überschrieben (ff:400) & fa-trash nicht sichtbar? 
