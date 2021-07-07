@@ -16,7 +16,7 @@ class CreateStatusesTable extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('booking_id')->nullable();
-            $table->foreign('booking_id')->on('bookings')->references('id')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('booking_id')->on('bookings')->references('id')->onUpdate('cascade')->onDelete('cascade');//->nullable()
             $table->boolean('available'); //->default(1)?
             // $table->string('booking_status')->nullable(); //delivered, received, returned, locked || available, booked, locked
             $table->date('booking_date')->nullable();
