@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use App\Models\Category;
+use App\Models\Status;
 use App\Models\Title;
 use App\Models\TitleUser;
 use Carbon\Carbon;
@@ -57,30 +58,35 @@ class TitleUserController extends Controller
     {
         $currentYear = Carbon::tomorrow()->year; // Zeitdifferenzen berücksichtigen
         
+        //dd($request->all());
+        
         $request->validate([
             'title' => 'required|min:1',
             'subtitle' => 'nullable|min:1',
             'fname' => 'required|min:1',
-            'lname' => 'required|min:1',
+            'lname' => 'nullable|min:1',
             'isbn10' => 'nullable|regex:',
             'isbn13' => 'nullable|regex:',
             'category' => 'required',
             'publisher' => 'required',
-            'year'=> ['required', 'integer','digits:4','min: 0001' , 'max:'.$currentYear], //SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'publication_year' at row 1 für zB 1900 !!!
+            //'year'=> ['required', 'integer','digits:4','min: 0001' , 'max:'.$currentYear], //SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'publication_year' at row 1 für Daten von zB 1900 !!!
+            'year' => 'required',
             'edition'=> 'min:1|integer',
             'format' => 'required',
-            'condition' => 'min:2|string',
+            'condition' => 'nullable|min:2|string',
             'delivery' => 'required'
         ]);
-                
-        $authors= Author::create([
+        
+        dd($request->all());
+        
+        // nur wenn der Datensatz in der Datenbank noch nicht existiert (firstOrCreate, updateOrCreate, upsert ...?)
+        $authors= Author::firstOrCreate([
             'first_name' => $request->fname,
             'last_name' => $request->lname
         ]);
-
-        //dd($request->all());
         
-        $titles= Title::create([
+        // oder mit upsert falls unvollständige db- einträge (fehlende isbn etc) -> n. derweil nicht, später ev durch api ergänzt?
+        $titles= Title::firstOrCreate([
             'title' => $request->title,
             'subtitle' => $request->subtitle,
             'edition' => $request->edition,
@@ -94,16 +100,18 @@ class TitleUserController extends Controller
             'category_id' => $request->category
         ]);
         
+        $statuses = Status::create();
+        //dd($statuses->id);
+        
         $books= TitleUser::create([
             'condition' => $request->condition,
             'possible_delivery_methods' => $request->delivery,
-
+            
             'title_id' => $titles->id,
             'user_id' => $request->user()->id,
-            'status_id' => ''
+            'status_id' => $statuses->id
         ]);
         
-
         return redirect()->route('books.index')->with('success', 'New book registered successfully.');
     }
 

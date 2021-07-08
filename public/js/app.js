@@ -1914,24 +1914,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         e.preventDefault();
         var width = $(window).height(); //console.log(width);
 
+        var content = $(this).parent().next(".nav-dropdown-content"); //console.log(content);
+
         if (width < 1225) {
-          $(".nav-dropdown-content").toggleClass("show-dropdown");
+          content.toggleClass("show-dropdown");
         } else {
-          $(".nav-dropdown-content").removeClass("dropdown-content");
+          content.removeClass("dropdown-content");
         }
       });
-    }); // $(".dropdown-open").on("click", function(e){
-    //   e.preventDefault();
-    //   var width = $(window).height();
-    //   //console.log(width);
-    //   if (width < 1225) {
-    //     $(".nav-dropdown-content").toggleClass("show-dropdown");
-    //   }
-    //   else {
-    //     $(".nav-dropdown-content").removeClass("dropdown-content");
-    //   }
-    // });
-    // in Vanilla JS:
+    }); // in Vanilla JS:
     // const navToggle = document.querySelector(".nav-toggle");
     // const links = document.querySelectorAll(".links");
     // const dropdownContent = document.querySelector(".nav-dropdown-content");

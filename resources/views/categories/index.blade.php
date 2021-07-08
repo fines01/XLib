@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('pageTitle', 'categories')
+@section('pageTitle', 'Categories')
 @section('content')
     <main class="sm:container main-container">
         <div class="flex">
@@ -26,7 +26,6 @@
                         </thead>
                         <tbody>
                             @foreach ($categories as $i => $category)
-                            {{-- geht nicht wg pagination, dh.: --}}
                                 <tr>
                                     {{-- ev. besser fortlaufenden Zähler verwenden als ID der DB: --}}
                                     {{-- wg pagination: firstItem() methode: https://laravel.com/docs/8.x/pagination#cursor-paginator-instance-methods --}}

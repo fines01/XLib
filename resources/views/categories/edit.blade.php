@@ -34,10 +34,10 @@
                         {{-- TYPE --}}
                         <div class="flex items-center">
                             {{-- <legend class="form-label">{{ __('Type') }}</legend> --}}
-                            <input class="form-checkbox" type="radio" id=fiction" name="type" value="fiction" @if (old('type', $category->type) == 'fiction') checked @endif>
+                            <input class="form-checkbox" type="radio" id="fiction" name="type" value="fiction" @if (old('type') == 'fiction') checked @endif>
                             <label class="form-check-label ml-1 mr-4" for="fiction">{{ __('Fiction') }}</label>
 
-                            <input class="form-checkbox" type="radio" id="non-fiction" name="type" value="non-fiction" @if (old('type', $category->type) == 'non-fiction') checked @endif>
+                            <input class="form-checkbox" type="radio" id="non-fiction" name="type" value="non-fiction" @if (old('type') == 'non-fiction') checked @endif>
                             <label class="form-check-label ml-1 mr-4" for="non-fiction">{{ __('Non-fiction') }}</label>
                         </div>
                         <div class="flex flex-wrap">
