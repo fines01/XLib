@@ -15,7 +15,7 @@ class CreateCategoriesTable extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['fiction', 'non-fiction']);
+            $table->enum('type', ['Fiction', 'Non-fiction']);
             $table->string('category_name');
             $table->timestamps();
         });

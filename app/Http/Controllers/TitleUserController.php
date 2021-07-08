@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Author;
+use App\Models\Category;
 use App\Models\Title;
 use App\Models\TitleUser;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+
 
 class TitleUserController extends Controller
 {
@@ -40,7 +43,8 @@ class TitleUserController extends Controller
     public function create()
     {
         $books= TitleUser::with('authors','categories')->select()->get();
-        return view('books.create', compact('books')); 
+        $categories= Category::orderBy('type')->orderBy('category_name')->get();
+        return view('books.create', compact('books','categories')); 
     }
 
     /**
@@ -51,10 +55,54 @@ class TitleUserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([]);
-        $books= TitleUser::create([]);
-        $titles= Title::create([]);
-        $authors= Author::create([]);
+        $currentYear = Carbon::tomorrow()->year; // Zeitdifferenzen berücksichtigen
+        
+        $request->validate([
+            'title' => 'required|min:1',
+            'subtitle' => 'nullable|min:1',
+            'fname' => 'required|min:1',
+            'lname' => 'required|min:1',
+            'isbn10' => 'nullable|regex:',
+            'isbn13' => 'nullable|regex:',
+            'category' => 'required',
+            'publisher' => 'required',
+            'year'=> ['required', 'integer','digits:4','min: 0001' , 'max:'.$currentYear], //SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'publication_year' at row 1 für zB 1900 !!!
+            'edition'=> 'min:1|integer',
+            'format' => 'required',
+            'condition' => 'min:2|string',
+            'delivery' => 'required'
+        ]);
+                
+        $authors= Author::create([
+            'first_name' => $request->fname,
+            'last_name' => $request->lname
+        ]);
+
+        //dd($request->all());
+        
+        $titles= Title::create([
+            'title' => $request->title,
+            'subtitle' => $request->subtitle,
+            'edition' => $request->edition,
+            'publisher' => $request->publisher,
+            'publication_year'=> $request->year,
+            'publication_format' => $request->format,
+            'isbn_10' => $request->isbn10,
+            'isbn_13' => $request->isbn13,
+            
+            'author_id' => $authors->id,
+            'category_id' => $request->category
+        ]);
+        
+        $books= TitleUser::create([
+            'condition' => $request->condition,
+            'possible_delivery_methods' => $request->delivery,
+
+            'title_id' => $titles->id,
+            'user_id' => $request->user()->id,
+            'status_id' => ''
+        ]);
+        
 
         return redirect()->route('books.index')->with('success', 'New book registered successfully.');
     }
@@ -67,7 +115,8 @@ class TitleUserController extends Controller
      */
     public function show($id)
     {
-        //
+        $books= TitleUser::with('authors', 'categories');
+        return view('books.show', compact('books'));
     }
 
     /**

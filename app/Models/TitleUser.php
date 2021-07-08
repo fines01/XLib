@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+// use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class TitleUser extends Model //extends Pivot?
+class TitleUser extends Pivot
 {
     use HasFactory;
 
@@ -24,10 +24,23 @@ class TitleUser extends Model //extends Pivot?
         'possible_delivery_methods',
     ];
     
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = true;
+    
     // items : statuses == 1:1
     public function status()
     {
-    return $this->hasOne(Status::class);
+    return $this->belongsTo(Status::class);
+    }
+
+    // items : titles == n:1
+    public function title()
+    {
+        return $this->belongsTo(Title::class);//
     }
 
     // items : users == n:1

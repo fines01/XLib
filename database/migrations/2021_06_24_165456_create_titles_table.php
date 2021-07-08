@@ -24,7 +24,7 @@ class CreateTitlesTable extends Migration
             $table->string('subtitle')->nullable();
             $table->string('description')->nullable();
 
-            $table->integer('edition')->nullable();
+            $table->integer('edition');
             $table->string('publisher');
             $table->year('publication_year');
             $table->enum('publication_format', ['hardcover','softcover', 'other']); //hardcover, softcover, paperback ?  & other für spezielle Ausgaben (Leder etc). [Einige Verlage vergeben nur eine ISBN-Nummer und verwenden diese für Hardcover- und  Paperback-Ausgaben, aber heute immer noch häufig?]

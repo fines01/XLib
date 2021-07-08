@@ -15,9 +15,9 @@ class CreateTitleUserTable extends Migration
     {
         Schema::create('title_user', function (Blueprint $table) {
             //$table->id();
-            $table->bigInteger('title_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('status_id')->unsigned();
+            $table->unsignedBigInteger('title_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('status_id'); //->nullable()?
             
             $table->primary(['title_id','user_id']);
             $table->foreign('title_id')->on('titles')->references('id')->onUpdate('cascade')->onDelete('restrict'); // ist onDelete(restrict) default?
@@ -25,8 +25,8 @@ class CreateTitleUserTable extends Migration
             $table->foreign('status_id')->on('statuses')->references('id')->onUpdate('cascade')->onDelete('restrict');
 
             $table->integer('max_loan_days')->default(60); //max loan period in in days. Später ev vom User selber definierbar.
-            $table->string('condition'); //enum, radio-btns (sher gut, mittel, sehr mitgenommen etc.), oder string mit user- beschreibung?
-            $table->string('possible_delivery_methods')->nullable(); // personal, mail-delivery. personal: only possible if user has country & state deposited & agreed.
+            $table->string('condition')->default("o.k.")->nullable(); //enum, radio-btns (sher gut, mittel, sehr mitgenommen etc.), oder string mit user- beschreibung? //->nullable()
+            $table->string('possible_delivery_methods')->nullable(); // personal, mail-delivery. personal: nur mögl wenn User Adresse und Namen hinterlegt hat.
             
             $table->timestamps();
         });

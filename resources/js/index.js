@@ -14,17 +14,31 @@
     // $(".links").toggleClass("show-links");
   })
 
-  $(".dropdown-open").on("click", function(e){
-    e.preventDwfault();
-    var width = $(window).height();
-    //console.log(width);
-    if (width < 1225) {
-      $(".nav-dropdown-content").toggleClass("show-dropdown");
-    }
-    else {
-      $(".nav-dropdown-content").removeClass("dropdown-content");
-    }
-  });
+  $(".dropdown-open").each(function(){
+    $(this).on("click", function(e){
+      e.preventDefault();
+      var width = $(window).height();
+      //console.log(width);
+      if (width < 1225) {
+        $(".nav-dropdown-content").toggleClass("show-dropdown");
+      }
+      else {
+        $(".nav-dropdown-content").removeClass("dropdown-content");
+      }
+      });
+  })
+
+  // $(".dropdown-open").on("click", function(e){
+  //   e.preventDefault();
+  //   var width = $(window).height();
+  //   //console.log(width);
+  //   if (width < 1225) {
+  //     $(".nav-dropdown-content").toggleClass("show-dropdown");
+  //   }
+  //   else {
+  //     $(".nav-dropdown-content").removeClass("dropdown-content");
+  //   }
+  // });
 
   // in Vanilla JS:
   

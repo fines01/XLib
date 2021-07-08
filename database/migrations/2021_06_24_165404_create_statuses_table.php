@@ -16,13 +16,13 @@ class CreateStatusesTable extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('booking_id')->nullable();
-            $table->foreign('booking_id')->on('bookings')->references('id')->onUpdate('cascade')->onDelete('cascade');//->nullable()
-            $table->boolean('available'); //->default(1)?
+            $table->foreign('booking_id')->on('bookings')->references('id')->onUpdate('cascade')->onDelete('set null')->nullable();
+            $table->boolean('available')->default(1);
             // $table->string('booking_status')->nullable(); //delivered, received, returned, locked || available, booked, locked
             $table->date('booking_date')->nullable();
             $table->date('return_date')->nullable();
-            $table->boolean('notification_sent')->nullable(); // ?? // Email Eigentümer bei Buchung.
-            $table->set('delivery_method', ['mail', 'personal']); // enum(...)->nullable(); ? & mehrere mögl Werte          
+            $table->boolean('notification_sent')->nullable(); // ?? Email Eigentümer bei Buchung.
+            $table->enum('delivery_method', ['mail', 'personal'])->nullable();          
             $table->timestamps();
         });
     }

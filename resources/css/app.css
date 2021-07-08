@@ -70,8 +70,10 @@
  @apply block text-gray-700 text-sm font-bold mb-2;
 }
 
-.form-input{
+.form-input, .select-input{
  outline-color: #929aab;
+ border-color: #d2d6dc;
+ border-width: 1px;
 }
 
 .error-msg{

@@ -832,7 +832,7 @@ select {
   /* box-sizing: border-box; */
   /* Umrandung beim "fokussierten" Textfeld: */
 
-  outline-color: var(--clr-midnight);
+  /* outline-color: var(--clr-light-blue); */
 }
 
 .register button[type="submit"]:hover {

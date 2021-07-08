@@ -73,26 +73,26 @@
                         {{-- ISBN --}}
                         <div class="flex flex-wrap">
                             <div class="w-full sm:w-1/2">
-                                <label for="isbn-10" class="form-label">
+                                <label for="isbn10" class="form-label">
                                     ISBN-10:
                                 </label>
-                                <input id="isbn-10" type="text"
-                                    class="form-input w-full block @error('isbn-10') border-red-500 @enderror"
-                                    name="isbn-10" value="{{ old('isbn-10') }}" autocomplete="isbn-10">
-                                @error('isbn-10')
+                                <input id="isbn10" type="text"
+                                    class="form-input w-full block @error('isbn10') border-red-500 @enderror"
+                                    name="isbn10" value="{{ old('isbn10') }}" autocomplete="isbn10">
+                                @error('isbn10')
                                     <p class="error-msg">
                                         {{ $message }}
                                     </p>
                                 @enderror
                             </div>
                             <div class="w-full sm:w-1/2">
-                                <label for="isbn-13" class="form-label">
+                                <label for="isbn13" class="form-label">
                                     ISBN-13:
                                 </label>
-                                <input id="isbn-13" type="text"
-                                    class="form-input w-full block @error('isbn-13') border-red-500 @enderror"
-                                    name="isbn-13" value="{{ old('isbn-13') }}" autocomplete=isbn-13">
-                                @error('isbn-13')
+                                <input id="isbn13" type="text"
+                                    class="form-input w-full block @error('isbn13') border-red-500 @enderror"
+                                    name="isbn13" value="{{ old('isbn13') }}" autocomplete="isbn13">
+                                @error('isbn13')
                                     <p class="error-msg">
                                         {{ $message }}
                                     </p>
@@ -107,9 +107,14 @@
                             <label for="category" class="form-label">
                                 {{ __('Category') }}:
                             </label>
-                            <select name="category" id="category" class="form-input w-full" @error('category')
+                            <select name="category" id="category" class="bg-white focus:shadow-outline focus:outline-none w-full" @error('category')
                                 border-red-500 @enderror>
-                                <option value="something" @if (old('category') == 'something') selected @endif>{{ __('') }}</option>
+                                <option value="">{{ __('Select...') }}</option>
+                                @foreach($categories as $cat)
+                                    <option value="{{ $cat->id }}" 
+                                    @if(old('category')== $cat->id ) selected @endif
+                                    > {{ $cat->type .': '. $cat->category_name }} </option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -120,7 +125,7 @@
                             </label>
                             <input id="publisher" type="text"
                                 class="form-input w-full @error('publisher') border-red-500 @enderror" name="publisher"
-                                value="{{ old('publisher') }}" required autocomplete=publisher">
+                                value="{{ old('publisher') }}" autocomplete=publisher">
                             @error('publisher')
                                 <p class="error-msg">
                                     {{ $message }}

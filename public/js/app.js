@@ -1909,16 +1909,29 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
       }); // TEST implicit iteration:
       // $(".links").toggleClass("show-links");
     });
-    $(".dropdown-open").on("click", function (e) {
-      e.preventDwfault();
-      var width = $(window).height(); //console.log(width);
+    $(".dropdown-open").each(function () {
+      $(this).on("click", function (e) {
+        e.preventDefault();
+        var width = $(window).height(); //console.log(width);
 
-      if (width < 1225) {
-        $(".nav-dropdown-content").toggleClass("show-dropdown");
-      } else {
-        $(".nav-dropdown-content").removeClass("dropdown-content");
-      }
-    }); // in Vanilla JS:
+        if (width < 1225) {
+          $(".nav-dropdown-content").toggleClass("show-dropdown");
+        } else {
+          $(".nav-dropdown-content").removeClass("dropdown-content");
+        }
+      });
+    }); // $(".dropdown-open").on("click", function(e){
+    //   e.preventDefault();
+    //   var width = $(window).height();
+    //   //console.log(width);
+    //   if (width < 1225) {
+    //     $(".nav-dropdown-content").toggleClass("show-dropdown");
+    //   }
+    //   else {
+    //     $(".nav-dropdown-content").removeClass("dropdown-content");
+    //   }
+    // });
+    // in Vanilla JS:
     // const navToggle = document.querySelector(".nav-toggle");
     // const links = document.querySelectorAll(".links");
     // const dropdownContent = document.querySelector(".nav-dropdown-content");
@@ -2023,7 +2036,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
       });
     }); // TEST
 
-    $("a .sort-btn").on("cick", function (e) {
+    $(".sort-btn").on("cick", function (e) {
       e.preventDefault();
       console.log("you clicked sort"); //console.log($this);
     });

@@ -31,29 +31,16 @@
             </div>
             <!-- links left side-->
             <ul class="links links-left">
-                @can('admin')
-                 <!-- Dropdown- Admin- Menü: -->
-                    <div class="nav-dropdown">
-                        <li class=""><a class="dropdown-open">{{ __('Admin') }}<i
-                                    class="dropbtn fas fa-caret-down"></a></i></li>
-                        <div class="nav-dropdown-content">
-                            <ul class="links-dropdown">
-                                <li><a href="{{ route('categories.index') }}">{{ __('categories') }}</a></li>
-                                <li><a href="{{ route('users.index') }}">{{ __('Users') }}</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                @else
-                    <li><a href="{{ url('/') }}" class="active">{{ config('app.name', 'Welcome') }}</a></li>
-                @endcan
                 @guest
-                    <li><a href="{{ url('/') }}#info">Info</a></li>
-                    <li><a href="{{ url('/') }}#showcase">{{ __('Books') }}</a></li>
+                <li><a href="{{ url('/') }}" class="active">{{ config('app.name', 'Welcome') }}</a></li>
+                <li><a href="{{ url('/') }}#info">Info</a></li>
+                <li><a href="{{ url('/') }}#showcase">{{ __('Books') }}</a></li>
                 @else
-                    <!-- Dropdown- Menü: -->
-                    <div class="nav-dropdown">
-                        <li class=""><a class="dropdown-open">{{ __('Books') }}<i
-                                    class="dropbtn fas fa-caret-down"></a></i></li>
+                <li><a href="{{ route('home') }}" class="active">{{ config('app.name', 'Dashboard') }}</a></li>
+                <!-- Dropdown- Menü: -->
+                <div class="nav-dropdown">
+                    <li class=""><a class="dropdown-open">{{ __('Books') }}<i
+                        class="dropbtn fas fa-caret-down"></a></i></li>
                         <div class="nav-dropdown-content">
                             <ul class="links-dropdown">
                                 <li><a href="{{ route('books.index') }}">{{ __('My Books') }}</a></li>
@@ -61,7 +48,20 @@
                             </ul>
                         </div>
                     </div>
-                @endguest
+                    @endguest
+                    @can('admin')
+                     <!-- Dropdown- Admin- Menü: -->
+                        <div class="nav-dropdown">
+                            <li class=""><a class="dropdown-open">{{ __('Admin') }}<i
+                                        class="dropbtn fas fa-caret-down"></a></i></li>
+                            <div class="nav-dropdown-content">
+                                <ul class="links-dropdown">
+                                    <li><a href="{{ route('categories.index') }}">{{ __('categories') }}</a></li>
+                                    <li><a href="{{ route('users.index') }}">{{ __('Users') }}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    @endcan
             </ul>
             <!-- links rechte Seite -->
             <ul class="links links-right">
