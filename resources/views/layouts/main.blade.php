@@ -153,6 +153,7 @@
             <li><a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a></li>
             <li><a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a></li>
             <li><a href="https://www.linkedin.com/"><i class="fab fa-linkedin"></i></a></li>
+            <li><a href="https:://www.youtube.com"><i class="fab fa-youtube"></i></a></li>
             <li><a href="https://gitlab.com/fines/xlib"><i class="fab fa-gitlab"></i></a></li>
             <li><a href="https://app.diagrams.net/"><i class="fas fa-project-diagram"></i></a></li>
             <li><a href="#"><i class="fas fa-arrow-up"></i></a></li>

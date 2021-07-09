@@ -18,27 +18,22 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col"></th>
                                 <th scope="col">{{ __('Title') }}</th>
                                 <th scope="col">{{ __('Author') }}</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($books as $i => $item)
-                                {{-- geht nicht wg pagination, dh.: --}}
                                 <tr>
-                                    <td></td>
+                                    
                                     <td>{{ $i + $books->firstItem() }}</td>
-                                    <td>{{ $item->title }}</td>
-                                    <td>{{ $item->authors->first_name . ' ' . $item->last_mame }}</td>
-
-                                    {{-- edit, show and delete buttons, oder edit in show --}}
-                                    <td><a href="{{ route('books.show', $item->id) }}"
+                                    <td>{{ $item->title->title }}</td>
+                                    <td>{{ $item->title->author->first_name . ' ' . $item->title->author->last_name }}</td>
+                                    {{--show button, edit und delete in show.blade.php ID: auf pivot verweisen (title_id des jew auth users (==title_id wo user_id == user))--}}
+                                    <td><a href="{{ route('books.show', $item->title_id) }}"
                                             class="btn fa fa-eye"></a></td>
-                                    <td><a href="{{ route('books.edit', $item->id) }}"
+                                    {{-- <td><a href="{{ route('books.edit', $item->id) }}"
                                             class="btn fa fa-edit"></a></td>
                                     <td>
                                         <form action="{{ route('books.destroy', $item->id) }}" method="POST" ,
@@ -49,7 +44,7 @@
                                             @method('delete')
                                             <button type="submit" class="btn fa fa-trash"></button>
                                         </form>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
 

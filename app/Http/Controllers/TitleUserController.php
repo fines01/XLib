@@ -27,9 +27,7 @@ class TitleUserController extends Controller
         //dd(auth()->user()->id); //user-id des jew auth users.
         $userId = auth()->user()->id;
         //all items des jew. auth. User anzeigen
-        $books= TitleUser::with('authors','categories')
-        ->where('title_id' ,$userId)
-        ->get();
+        $books= TitleUser::with('status','title')->where('user_id' ,$userId)->paginate(10);
         
         //dd($books);
         
@@ -43,7 +41,7 @@ class TitleUserController extends Controller
      */
     public function create()
     {
-        $books= TitleUser::with('authors','categories')->select()->get();
+        $books= TitleUser::select()->with('status','title')->get();
         $categories= Category::orderBy('type')->orderBy('category_name')->get();
         return view('books.create', compact('books','categories')); 
     }
@@ -70,14 +68,14 @@ class TitleUserController extends Controller
             'category' => 'required',
             'publisher' => 'required',
             //'year'=> ['required', 'integer','digits:4','min: 0001' , 'max:'.$currentYear], //SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'publication_year' at row 1 für Daten von zB 1900 !!!
-            'year' => 'required',
+            'year' => ['required','max:'.$currentYear],
             'edition'=> 'min:1|integer',
             'format' => 'required',
             'condition' => 'nullable|min:2|string',
             'delivery' => 'required'
         ]);
         
-        dd($request->all());
+        //dd($request->all());
         
         // nur wenn der Datensatz in der Datenbank noch nicht existiert (firstOrCreate, updateOrCreate, upsert ...?)
         $authors= Author::firstOrCreate([
@@ -103,7 +101,8 @@ class TitleUserController extends Controller
         $statuses = Status::create();
         //dd($statuses->id);
         
-        $books= TitleUser::create([
+        //mom kann ein User so nur ein gl Buch registrieren, ändern?
+        $books= TitleUser::firstOrCreate([ 
             'condition' => $request->condition,
             'possible_delivery_methods' => $request->delivery,
             
@@ -123,7 +122,7 @@ class TitleUserController extends Controller
      */
     public function show($id)
     {
-        $books= TitleUser::with('authors', 'categories');
+        $books= TitleUser::with('title', 'status')->get();
         return view('books.show', compact('books'));
     }
 
@@ -135,7 +134,9 @@ class TitleUserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $books= TitleUser::select()->with('status','title')->get();
+        $categories= Category::orderBy('type')->orderBy('category_name')->get();
+        return view('books.edit', compact('books','categories'));
     }
 
     /**

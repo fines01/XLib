@@ -282,10 +282,17 @@ td .btn:hover {
   padding: 0.5rem;
 }
 
-.fa-trash:hover {
+.fa-trash:hover{
   color: var(--clr-red-light);
 }
 
+.delete-btn{
+  background-color: var(--clr-red-dark);
+}
+
+.delete-btn:hover{
+  background-color: var(--clr-red-light);
+}
 /* aus FA: all.css sonst vom BS überschrieben (ff:400) & fa-trash nicht sichtbar? 
 ev. BS vor FA einbinden?*/
 .fa,
@@ -676,7 +683,7 @@ adding darker transparent overlay */
  background-color: var(--clr-grey-7);
 }
 
-/********* Table ***************/
+/********* Tables ***************/
 
 table {
   /* border: 0.5px solid var(--clr-primary-3); */
@@ -722,7 +729,7 @@ tr:last-child td:last-child{
   border-radius: 0 0 var(--radius) 0;
 }
 
-tr:nth-child(even) {
+tr:nth-child(even){
   /* --clr-soft-blue : #929AAB; transparent (noch def?) */
   /* --clr-brown-3  #B68973* -brown-4 #eabf9f */
   background-color: var(--clr-soft-blue);
@@ -733,6 +740,23 @@ tr:nth-child(odd) {
   background-color: var(--clr-taupe-2);
   /* var(--clr-taupe-2); */
 }
+
+.detail-table{
+  border-radius: var(--radius);
+}
+.detail-table tr, .detail-table th{
+  background-color: transparent;
+  /* border: 1px dashed var(--clr-soft-blue); */
+  border-radius: var(--radius);
+   /* box-shadow: var(--light-shadow); */
+}
+
+.detail-table th{
+  border-radius: 0; 
+}
+/* .detail-table th:first-child{
+  border-radius: var(--radius) 0 0 0;
+} */
 
 /* tbody, th{
   border-radius: var(--radius);
