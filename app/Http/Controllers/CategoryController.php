@@ -105,19 +105,18 @@ class CategoryController extends Controller
         
          $request->validate([
              'type' =>'required',
-            //'category' => 'required|min:2|unique:categories,category_name',
             // Kategorienname nur unique bei gleichem Typ:
             'category' => 'required|min:2|unique:categories,category_name,NULL,id,type,'.$request->type,
             // 'category' => ['required', 'min:2', Rule::unique('categories')->where(function($query) use ($request){
             //     return $query->where('type', $request->type);
             // })],
         ]);
-        
-        //$category->update([
-        //     'type' => $request->type,
-        //     'category_name' => $request->category
-        // ]);
-        $category->update($request->all());
+        //dd($request->all());
+        $category->update([
+            'type' => $request->type,
+            'category_name' => $request->category
+        ]);
+        //$category->update($request->all());
         
         return redirect()->route('categories.index')->with('success', 'Category updated successfully');
     }
@@ -130,16 +129,23 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        //bed einfügen falls kat nicht gelöscht werden kann, status key msg anp.
         $category = Category::find($id);
+        
         if (!$category){
-            $status= 404;
-            $msg= 'Category not found';
+            $key= 404;
             $status = 'error';
+            $msg= 'Category not found';
+        }
+        else if (isset($category->titles) ){
+            $key = 409; //??
+            $status='warning';
+            $msg= "Category can't be deleted";
         }
         else{
             $category->delete(); //Category::destroy($category->id);
-            $status=200;
-            $key='success';
+            $kex=200;
+            $status='success';
             $msg='Category '.$category->type.': '.$category->category_name.' deleted.';
         }
 
@@ -151,6 +157,6 @@ class CategoryController extends Controller
             ]);
         }
 
-        return redirect()->route('categories.index')->with([$key=>$msg]);
+        return redirect()->route('categories.index')->with([$status=>$msg]);
     }
 }

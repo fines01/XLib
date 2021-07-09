@@ -58,6 +58,7 @@ class TitleUserController extends Controller
         
         //dd($request->all());
         
+        //besser via Validator kl? 
         $request->validate([
             'title' => 'required|min:1',
             'subtitle' => 'nullable|min:1',
@@ -102,6 +103,7 @@ class TitleUserController extends Controller
         //dd($statuses->id);
         
         //mom kann ein User so nur ein gl Buch registrieren, ändern?
+        //alert wenn buch bereits registriert einfügen, oder counter in tabelle --> zB wasRecentlyCreated attribut
         $books= TitleUser::firstOrCreate([ 
             'condition' => $request->condition,
             'possible_delivery_methods' => $request->delivery,
@@ -110,6 +112,7 @@ class TitleUserController extends Controller
             'user_id' => $request->user()->id,
             'status_id' => $statuses->id
         ]);
+        // dd oder var_dump($books->wasRecentlyCreated);
         
         return redirect()->route('books.index')->with('success', 'New book registered successfully.');
     }

@@ -1,7 +1,7 @@
 "use strict";
 
-(function($){
-  $(document).ready(function(){
+// (function($){
+//   $(document).ready(function(){
 
   // *** NAVBAR ***
 
@@ -31,7 +31,7 @@
       });
   })
 
-  // in Vanilla JS:
+  // Vanilla JS:
   
   // const navToggle = document.querySelector(".nav-toggle");
   // const links = document.querySelectorAll(".links");
@@ -85,13 +85,13 @@
   window.myToastr = function(typ,msg,title=undefined){
       switch(typ){
           case 'success' : toastr.success(msg, title || 'Success!'); break;
-          case 'info' : toastr.info(msg, title || 'Success'); break;
-          case 'warning' : toastr.warning(msg, title || 'Success'); break;
-          case 'error' : toastr.error(msg, title || 'Success'); break;
+          case 'info' : toastr.info(msg, title || 'Info'); break;
+          case 'warning' : toastr.warning(msg, title || 'Warning'); break;
+          case 'error' : toastr.error(msg, title || 'Error'); break;
       }
   }
 
-  // *** DELETE- MODAL (test) ***
+  // *** DELETE- MODAL ***
 
   $(".delete-form").on("submit", function (e) {
     e.preventDefault();
@@ -99,8 +99,6 @@
     console.log(form);
 
     $("#overlay").removeClass("hidden");
-    // $("#deleteModalLabel").html($(".delete-form").data("title"));
-    // $("#deleteModalBody").html($(".delete-form").data("body"));
     $("#deleteModalLabel").html(form.data("title"));
     $("#deleteModalBody").html(form.data("body"));
   
@@ -145,5 +143,5 @@
     });
     
  
-});
-})(jQuery);
+// });
+// })(jQuery);

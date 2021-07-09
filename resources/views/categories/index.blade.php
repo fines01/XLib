@@ -18,7 +18,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">{{ __('Type') }}<a href="" class="sort-btn"><i class="fas fa-sort btn"></i></a></th>
+                                <th scope="col">{{ __('Type') }}<a href="" class="sort-btn fas fa-sort-btn"><i class="fas fa-sort btn"></i></a></th>
                                 <th scope="col">{{ __('Name') }}</th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>

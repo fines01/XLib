@@ -23,7 +23,7 @@
                                 {{ __('Category name') }}:
                             </label>
                             <input id="category" type="text"
-                                class="form-input w-full @error('category') border-red-500 @enderror" name="category_name"
+                                class="form-input w-full @error('category') border-red-500 @enderror" name="category"
                                 value="{{ old('category', $category->category_name) }}">
                             @error('category')
                                 <p class="error-msg">
@@ -34,11 +34,18 @@
                         {{-- TYPE --}}
                         <div class="flex items-center">
                             {{-- <legend class="form-label">{{ __('Type') }}</legend> --}}
-                            <input class="form-checkbox" type="radio" id="fiction" name="type" value="fiction" @if (old('type') == 'fiction') checked @endif>
+                            <input class="form-checkbox" type="radio" id="fiction" name="type" value="fiction" @if (old('type') == 'fiction') checked @endif
+                            @error('type') border-red-500 @enderror>
                             <label class="form-check-label ml-1 mr-4" for="fiction">{{ __('Fiction') }}</label>
 
-                            <input class="form-checkbox" type="radio" id="non-fiction" name="type" value="non-fiction" @if (old('type') == 'non-fiction') checked @endif>
+                            <input class="form-checkbox" type="radio" id="non-fiction" name="type" value="non-fiction" @if (old('type') == 'non-fiction') checked @endif
+                            @error('type') border-red-500 @enderror @error('type') border-red-500 @enderror>
                             <label class="form-check-label ml-1 mr-4" for="non-fiction">{{ __('Non-fiction') }}</label>
+                            @error('type')
+                            <p class="error-msg">
+                                {{ $message }}
+                            </p>
+                            @enderror
                         </div>
                         <div class="flex flex-wrap">
                             <button type="submit" class="form-button mb-8">
