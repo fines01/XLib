@@ -58,7 +58,7 @@ class TitleUserController extends Controller
         
         //dd($request->all());
         
-        //besser via Validator kl? 
+        //besser eigene Validator instanz? 
         $request->validate([
             'title' => 'required|min:1',
             'subtitle' => 'nullable|min:1',
@@ -125,8 +125,8 @@ class TitleUserController extends Controller
      */
     public function show($id)
     {
-        $books= TitleUser::with('title', 'status')->get();
-        return view('books.show', compact('books'));
+        $book= TitleUser::find($id)->with('title', 'status')->get();
+        return view('books.show', compact('book'));
     }
 
     /**
@@ -137,7 +137,7 @@ class TitleUserController extends Controller
      */
     public function edit($id)
     {
-        $books= TitleUser::select()->with('status','title')->get();
+        $book= TitleUser::find($id)->with('status','title')->get();
         $categories= Category::orderBy('type')->orderBy('category_name')->get();
         return view('books.edit', compact('books','categories'));
     }

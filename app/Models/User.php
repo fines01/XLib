@@ -20,12 +20,12 @@ class User extends Authenticatable
         'name',
         'username',
         'email',
-        'password',
         'country',
         'state',
         'address', //oder user addresse -> $hidden ??
+        //'password',
     ];
-
+    
     /**
      * The attributes that should be hidden for arrays.
      *
