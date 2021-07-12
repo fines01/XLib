@@ -93,7 +93,7 @@
 }
 
 .form-button{
- @apply w-full select-none font-bold whitespace-no-wrap p-3 rounded-lg text-base leading-normal no-underline text-gray-100 w-4/5 mx-auto;
+ @apply w-full select-none font-bold whitespace-no-wrap p-3 rounded-lg text-base leading-normal no-underline text-gray-100 mx-auto;
  /* bg-blue-300 */
  background-color: #929AAB; 
 }

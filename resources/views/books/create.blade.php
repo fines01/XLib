@@ -229,7 +229,8 @@
                             <label for="in-person" class="form-check-label ml-1 mr-4">{{ __('In person') }}</label>
 
                             {{-- @if (isset(Auth::user()->name) && isset(Auth::user()->address)) --}}
-                            <input type="checkbox" id="postal" name="delivery" class="form-checkbox" value="postal" @if (is_array(old('delivery')) && in_array('postal', old('delivery'))) checked @endif>
+                            <input type="checkbox" id="postal" name="delivery" class="form-checkbox" value="postal" 
+                                @if (is_array(old('delivery')) && in_array('postal', old('delivery'))) checked @endif>
                             <label for="postal" class="form-check-label ml-1 mr-4">{{ __('Postal delivery') }}</label>
                             {{-- @endif --}}
 

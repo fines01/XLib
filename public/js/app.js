@@ -2024,7 +2024,7 @@ $(".delete-form").on("submit", function (e) {
   });
 }); // TEST
 
-$(".sort-btn").off().on("cick", function (e) {
+$(".sort-btn").on("cick", function (e) {
   e.preventDefault();
   console.log("you clicked sort"); //console.log($this);
 }); // });

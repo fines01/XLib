@@ -4,7 +4,7 @@
     <main class="sm:container main-container">
         <div class="flex">
             <div class="w-full">
-                <h1>{{ __('Authors of currently registered books') }}</h1>
+                <h1>{{ __('Authors of all currently registered books') }}</h1>
                 <section id="" class="dashboard-container mt-12">
                     <header class="form-header">
                         {{ __('Authors') }}

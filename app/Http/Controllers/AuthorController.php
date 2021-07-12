@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Author;
+use App\Models\Title;
+use App\Models\TitleUser;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -21,12 +23,14 @@ class AuthorController extends Controller
      /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  App\Models\Author $author
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Author $author)
     {
-        $author = Author::find($id)->with('titles')->get();
-        return view('authors.show', compact('author'));
+        $titles = Title::with('users')->where('author_id',$author->id)->get(); //with users ->us leer
+        //$books = TitleUser::with('users')->get();
+        //dd($author, $titles);
+        return view('authors.show', compact('author','titles'));
     }
 }

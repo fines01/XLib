@@ -9,7 +9,7 @@ use App\Models\Title;
 use App\Models\TitleUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 
 class TitleUserController extends Controller
 {
@@ -17,6 +17,27 @@ class TitleUserController extends Controller
     {
         $this->middleware(['auth']);
     }
+    
+    /**
+     * Get the current year.
+     *
+     * @return \Carbon\Carbon 
+     */
+    public function currentYear()
+    {
+        return Carbon::tomorrow()->year; // Zeitdifferenzen berücksichtigen
+    } 
+    
+    /**
+     * Get the currently authenticated User.
+     *
+     * @return int 
+     */
+    public function userId() // haha, geht wsl. auch einfach über Request --> $request->user()->id 
+    {
+        return auth()->user()->id; 
+    }
+     
     /**
      * Display a listing of the resource.
      *
@@ -25,9 +46,9 @@ class TitleUserController extends Controller
     public function index()
     {
         //dd(auth()->user()->id); //user-id des jew auth users.
-        $userId = auth()->user()->id;
+        //$userId = auth()->user()->id;
         //all items des jew. auth. User anzeigen
-        $books= TitleUser::with('status','title')->where('user_id' ,$userId)->paginate(10);
+        $books= TitleUser::with('status','title')->where('user_id' ,$this->userId() )->paginate(10);
         
         //dd($books);
         
@@ -55,10 +76,8 @@ class TitleUserController extends Controller
     public function store(Request $request)
     {
         $currentYear = Carbon::tomorrow()->year; // Zeitdifferenzen berücksichtigen
-        
         //dd($request->all());
-        
-        //besser eigene Validator instanz? 
+        //besser in eigene Funktion auslagern? eigene Validator Instanz? andere bessere Lösung? (2x ,auch in update)
         $request->validate([
             'title' => 'required|min:1',
             'subtitle' => 'nullable|min:1',
@@ -69,11 +88,11 @@ class TitleUserController extends Controller
             'category' => 'required',
             'publisher' => 'required',
             //'year'=> ['required', 'integer','digits:4','min: 0001' , 'max:'.$currentYear], //SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'publication_year' at row 1 für Daten von zB 1900 !!!
-            'year' => ['required','max:'.$currentYear],
+            'year' => ['required','min:0001', 'max:'.$this->currentYear()], // TEST
             'edition'=> 'min:1|integer',
             'format' => 'required',
             'condition' => 'nullable|min:2|string',
-            'delivery' => 'required'
+            'delivery' => 'required' ////todo: postal nur wenn adr hinterlegt.
         ]);
         
         //dd($request->all());
@@ -85,8 +104,8 @@ class TitleUserController extends Controller
         ]);
         
         // oder mit upsert falls unvollständige db- einträge (fehlende isbn etc) -> n. derweil nicht, später ev durch api ergänzt?
-        $titles= Title::firstOrCreate([
-            'title' => $request->title,
+        $titles= Title::firstOrCreate([ //umständlich? 
+            'title' => $request->title, //in Funktionen auslagern?
             'subtitle' => $request->subtitle,
             'edition' => $request->edition,
             'publisher' => $request->publisher,
@@ -102,8 +121,8 @@ class TitleUserController extends Controller
         $statuses = Status::create();
         //dd($statuses->id);
         
-        //mom kann ein User so nur ein gl Buch registrieren, ändern?
-        //alert wenn buch bereits registriert einfügen, oder counter in tabelle --> zB wasRecentlyCreated attribut
+        //momentan kann ein User so nur ein gl. Buch registrieren, ev ändern? Od. counter in tabelle?
+        //ToDo: alert wenn buch bereits registriert einfügen --> zB wasRecentlyCreated attribut
         $books= TitleUser::firstOrCreate([ 
             'condition' => $request->condition,
             'possible_delivery_methods' => $request->delivery,
@@ -120,13 +139,15 @@ class TitleUserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $book= TitleUser::find($id)->with('title', 'status')->get();
-        return view('books.show', compact('book'));
+        $title= Title::where('id',$id)->with('author', 'category', 'users')->get();
+        $item= TitleUser::with('status')->where('title_id',$id)->where('user_id',$this->userId())->get();
+        // dd($title, $title[0]->author->first_name);
+        return view('books.show', compact('title','item'));
     }
 
     /**
@@ -135,11 +156,13 @@ class TitleUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id) //title_id
     {
-        $book= TitleUser::find($id)->with('status','title')->get();
+        //dd($id);
+        $book= TitleUser::where('title_id',$id)->where('user_id',$this->userId())->with('status','title')->get();
         $categories= Category::orderBy('type')->orderBy('category_name')->get();
-        return view('books.edit', compact('books','categories'));
+        //dd($book);
+        return view('books.edit', compact('book','categories'));
     }
 
     /**
@@ -149,9 +172,66 @@ class TitleUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) //
     {
-        //
+        //dd($id, $request->all());
+        
+        $request->validate([
+            'title' => 'required|min:1',
+            'subtitle' => 'nullable|min:1',
+            'fname' => 'required|min:1',
+            'lname' => 'nullable|min:1',
+            'isbn10' => 'nullable|regex:',
+            'isbn13' => 'nullable|regex:',
+            'category' => 'required',
+            'publisher' => 'required',
+            'year' => ['required','min:0001', 'max:'.$this->currentYear()],
+            'edition'=> 'min:1|integer',
+            'format' => 'required',
+            'condition' => 'nullable|min:2|string',
+            'delivery' => 'required'
+        ]);
+
+        //update Models, $authors, $titles, $books
+        //******************
+
+        //$author: wenn existiert->updaten! Betrifft dann aber alle Bücher in DB (bsp. User schreibt namen falsch etc). Wenn nicht: neuen Autor speichern??? nein
+        
+        //$authorId = Title::where('id',$id)->select('author_id')->first()->author_id; //umständlich? notwendig?
+        $authorId= Title::find($id)->select('author_id')->first()->author_id; //umständlich? notwendig?
+        //ddd($authorId);
+        
+        // $author = Author::find($authorId); 
+        // dd($author);
+        $author = Author::find($authorId)->update([ //achtung wenn Autor geändert, orig. DB verändert mit allen Tabellen
+            'first_name' => $request->fname,
+            'last_name' => $request->lname
+        ]);
+        
+        // $title= Title::find($id); 
+        // dd($title);  
+            
+        $title = Title::find($id)->update([
+            'title' => $request->title,
+            'subtitle' => $request->subtitle,
+            'edition' => $request->edition,
+            'publisher' => $request->publisher,
+            'publication_year'=> $request->year,
+            'publication_format' => $request->format,
+            'isbn_10' => $request->isbn10,
+            'isbn_13' => $request->isbn13,
+            
+            //'author_id' => $author->id,
+            'category_id' => $request->category
+        ]);
+        
+        TitleUser::where('title_id',$id)->where('user_id', $this->userId())->update([ 
+            'condition' => $request->condition,
+            'possible_delivery_methods' => $request->delivery,
+            //'title_id' => $title->id,
+        ]);
+        
+        return redirect()->route('books.index')->with('success', 'Book updated successfully');
     }
 
     /**
@@ -162,6 +242,6 @@ class TitleUserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //delete TitleUser ($book)
     }
 }

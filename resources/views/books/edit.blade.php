@@ -11,11 +11,14 @@
                     <header class="form-header">
                         {{ __('Update book') }}
                     </header>
-
-                    <form class="form sm:space-y-8 space-y-6" method="POST" action="{{ route('books.store') }}">
+                    
+                    @foreach ($book as $book)
+                    @endforeach
+                    <form class="form sm:space-y-8 space-y-6" method="POST" action="{{ route('books.update', $book->title_id) }}">
                         @csrf
                         @method('put')
                         {{-- AUTHOR --}}
+                        {{ var_dump($book->title_id, $book->user_id, Auth::user()->id) }}
                         <div class="flex flex-wrap">
                             <h3 class=" w-full form-label mb-16">{{ __('Author') }}:</h3>
                             <div class="w-full sm:w-1/2">
@@ -24,7 +27,8 @@
                                 </label>
                                 <input id="fname" type="text"
                                     class="form-input w-full block @error('name')  border-red-500 @enderror" name="fname"
-                                    value="{{ old('fname') }}" autocomplete="fname" autofocus>
+                                    value="{{ old('fname', $book->title->author->first_name) }}" autocomplete="fname"
+                                    autofocus>
                                 @error('fname')
                                     <p class="error-msg">
                                         {{ $message }}
@@ -37,7 +41,8 @@
                                 </label>
                                 <input id="lname" type="text"
                                     class="form-input w-full block @error('lname')  border-red-500 @enderror" name="lname"
-                                    value="{{ old('lname') }}" autocomplete="name" autofocus>
+                                    value="{{ old('lname', $book->title->author->last_name) }}" autocomplete="name"
+                                    autofocus>
                                 @error('lname')
                                     <p class="error-msg">
                                         {{ $message }}
@@ -51,7 +56,7 @@
                                 {{ __('Title') }}:
                             </label>
                             <input id="title" type="text" class="form-input w-full @error('title') border-red-500 @enderror"
-                                name="title" value="{{ old('title') }}" autocomplete="title">
+                                name="title" value="{{ old('title', $book->title->title) }}" autocomplete="title">
                             @error('title')
                                 <p class="error-msg">
                                     {{ $message }}
@@ -65,7 +70,7 @@
                             </label>
                             <input id="subtitle" type="text"
                                 class="form-input w-full @error('subtitle') border-red-500 @enderror" name="subtitle"
-                                value="{{ old('subtitle') }}" autocomplete="subtitle">
+                                value="{{ old('subtitle', $book->title->subtitle) }}" autocomplete="subtitle">
                             @error('subtitle')
                                 <p class="error-msg">
                                     {{ $message }}
@@ -80,7 +85,7 @@
                                 </label>
                                 <input id="isbn10" type="text"
                                     class="form-input w-full block @error('isbn10') border-red-500 @enderror" name="isbn10"
-                                    value="{{ old('isbn10') }}" autocomplete="isbn10">
+                                    value="{{ old('isbn10', $book->title->isbn_10) }}" autocomplete="isbn10">
                                 @error('isbn10')
                                     <p class="error-msg">
                                         {{ $message }}
@@ -93,7 +98,7 @@
                                 </label>
                                 <input id="isbn13" type="text"
                                     class="form-input w-full block @error('isbn13') border-red-500 @enderror" name="isbn13"
-                                    value="{{ old('isbn13') }}" autocomplete="isbn13">
+                                    value="{{ old('isbn13', $book->title->isbn_13) }}" autocomplete="isbn13">
                                 @error('isbn13')
                                     <p class="error-msg">
                                         {{ $message }}
@@ -112,7 +117,7 @@
                             <select name="category" id="category"
                                 class="bg-white focus:shadow-outline focus:outline-none w-full" @error('category')
                                 border-red-500 @enderror>
-                                <option value="">{{ __('Select...') }}</option>
+
                                 @foreach ($categories as $cat)
                                     <option value="{{ $cat->id }}" @if (old('category') == $cat->id) selected @endif>
                                         {{ $cat->type . ': ' . $cat->category_name }} </option>
@@ -127,7 +132,7 @@
                             </label>
                             <input id="publisher" type="text"
                                 class="form-input w-full @error('publisher') border-red-500 @enderror" name="publisher"
-                                value="{{ old('publisher') }}" autocomplete=publisher">
+                                value="{{ old('publisher', $book->title->publisher) }}" autocomplete=publisher">
                             @error('publisher')
                                 <p class="error-msg">
                                     {{ $message }}
@@ -142,7 +147,7 @@
                                 </label>
                                 <input id="year" type="text"
                                     class="form-input w-full @error('year') border-red-500 @enderror" name="year"
-                                    value="{{ old('year') }}" autocomplete="publisher">
+                                    value="{{ old('year', $book->title->publication_year) }}" autocomplete="publisher">
                                 @error('year')
                                     <p class="error-msg">
                                         {{ $message }}
@@ -154,7 +159,8 @@
                                     {{ __('Edition') }}:
                                 </label>
                                 <input id="edition" type="text" class="form-input w-full" @error('edition') border-red-500
-                                    @enderror name="edition" value="{{ old('edition') }}" autocomplete="edition">
+                                    @enderror name="edition" value="{{ old('edition', $book->title->edition) }}"
+                                    autocomplete="edition">
                                 @error('edition')
                                     <p class="error-msg">
                                         {{ $message }}
@@ -167,13 +173,13 @@
                         <div class="flex flex-wrap">
                             <h3 class="w-full form-label mb-16">{{ __('Publication format') }}:</h3>
                             <div class="w-full">
-                                <input class="form-checkbox" type="radio" id="hardcover" name="format" value="hardcover" @if (old('format') == 'hardcover') checked @endif>
+                                <input class="form-checkbox" type="radio" id="hardcover" name="format" value="hardcover" @if (old('format', $book->title->publication_format) == 'hardcover') checked @endif>
                                 <label class="form-check-label ml-1 mr-4" for="hardcover">{{ __('Hardcover') }}</label>
 
-                                <input class="form-checkbox" type="radio" id="softcover" name="format" value="softcover" @if (old('format') == 'softcover') checked @endif>
+                                <input class="form-checkbox" type="radio" id="softcover" name="format" value="softcover" @if (old('format', $book->title->publication_format) == 'softcover') checked @endif>
                                 <label class="form-check-label ml-1 mr-4" for="softcover">{{ __('Softcover') }}</label>
 
-                                <input class="form-checkbox" type="radio" id="other" name="format" value="other" @if (old('format') == 'other') checked @endif>
+                                <input class="form-checkbox" type="radio" id="other" name="format" value="other" @if (old('format', $book->title->publication_format) == 'other') checked @endif>
                                 <label class="form-check-label ml-1 mr-4" for="other">{{ __('Other') }}</label>
                             </div>
                         </div>
@@ -185,7 +191,8 @@
                             </label>
                             <input id="condition" type="text"
                                 class="form-input w-full @error('isbn-10') border-red-500 @enderror" name="condition"
-                                value="{{ old('condition') }}" autocomplete="condition" placeholder="o.k.">
+                                value="{{ old('condition', $book->condition) }}" autocomplete="condition"
+                                placeholder="o.k.">
                             @error('condition')
                                 <p class="error-msg">
                                     {{ $message }}
@@ -198,11 +205,13 @@
                         <div class="flex flex-wrap">
                             <h3 class="form-label w-full mb-4">{{ __('Choose your possible transfer methods') }}:</h3>
                             <input type="checkbox" id="in-person" name="delivery" class="form-checkbox" value="in-person"
-                                @if (is_array(old('delivery')) && in_array('in-person', old('delivery'))) checked @endif>
+                                @if (old('delivery', $book->possible_delivery_methods) == 'in-person') checked @endif>
                             <label for="in-person" class="form-check-label ml-1 mr-4">{{ __('In person') }}</label>
 
                             {{-- @if (isset(Auth::user()->name) && isset(Auth::user()->address)) --}}
-                            <input type="checkbox" id="postal" name="delivery" class="form-checkbox" value="postal" @if (is_array(old('delivery')) && in_array('postal', old('delivery'))) checked @endif>
+                            <input type="checkbox" id="postal" name="delivery" class="form-checkbox" value="postal" @if (old('delivery', $book->possible_delivery_methods) == 'postal') checked @endif>
+                            {{-- Datentyp in DB auf set('in-person','postal') ändern, anstelle string --}}
+                            {{-- @if (is_array(old('delivery')) && in_array('in-person', old('delivery'))) checked @endif> --}}
                             <label for="postal" class="form-check-label ml-1 mr-4">{{ __('Postal delivery') }}</label>
                             {{-- @endif --}}
 
