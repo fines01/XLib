@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class AuthorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of all Authors.
      *
      * @return \Illuminate\Http\Response
      */
@@ -21,7 +21,7 @@ class AuthorController extends Controller
     }
 
      /**
-     * Display the specified resource.
+     * Display the specified Author.
      *
      * @param  App\Models\Author $author
      * @return \Illuminate\Http\Response
@@ -30,7 +30,7 @@ class AuthorController extends Controller
     {
         $titles = Title::with('users')->where('author_id',$author->id)->get(); //with users ->us leer
         //$books = TitleUser::with('users')->get();
-        //dd($author, $titles);
+        //dd($titles, $books);
         return view('authors.show', compact('author','titles'));
     }
 }

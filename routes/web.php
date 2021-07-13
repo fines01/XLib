@@ -57,4 +57,5 @@ Route::get('/bookings/{booking}', 'BookingController@show')->name('bookings.show
 // TITEL
 // index
 Route::get('/titles', 'TitleController@index')->name('titles.index');
+Route::get('/titles', 'TitleController@show')->name('titles.show');
 // ***create, store & edit, update, destroy: wenn items hinzugefügt/ gelöscht werden, über items, ***show =-> item.index für jew Titel.
