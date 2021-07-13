@@ -162,7 +162,7 @@ class TitleUserController extends Controller
         $book= TitleUser::where('title_id',$id)->where('user_id',$this->userId())->with('status','title')->get();
         $categories= Category::orderBy('type')->orderBy('category_name')->get();
         //dd($book);
-        return view('books.edit', compact('book','categories'));
+        return view('books.edit', compact('book','categories')); //view: vorselektierte Kategorie fkt.n. (mehr?)
     }
 
     /**
@@ -191,19 +191,11 @@ class TitleUserController extends Controller
             'condition' => 'nullable|min:2|string',
             'delivery' => 'required'
         ]);
-
-        //update Models, $authors, $titles, $books
-        //******************
-
-        //$author: wenn existiert->updaten! Betrifft dann aber alle Bücher in DB (bsp. User schreibt namen falsch etc). Wenn nicht: neuen Autor speichern??? nein
         
-        //$authorId = Title::where('id',$id)->select('author_id')->first()->author_id; //umständlich? notwendig?
-        $authorId= Title::find($id)->select('author_id')->first()->author_id; //umständlich? notwendig?
+        //$authorId= Title::find($id)->select('author_id')->first()->author_id; //umständlich? notwendig?
         //ddd($authorId);
         
-        // $author = Author::find($authorId); 
-        // dd($author);
-        $author = Author::find($authorId)->update([ //achtung wenn Autor geändert, orig. DB verändert mit allen Tabellen
+        Author::where('id' ,Title::find($id)->select('author_id')->first()->author_id)->update([  //fkt. plz. n.m. ?
             'first_name' => $request->fname,
             'last_name' => $request->lname
         ]);
@@ -211,7 +203,7 @@ class TitleUserController extends Controller
         // $title= Title::find($id); 
         // dd($title);  
             
-        $title = Title::find($id)->update([
+        Title::find($id)->update([
             'title' => $request->title,
             'subtitle' => $request->subtitle,
             'edition' => $request->edition,
@@ -220,7 +212,6 @@ class TitleUserController extends Controller
             'publication_format' => $request->format,
             'isbn_10' => $request->isbn10,
             'isbn_13' => $request->isbn13,
-            
             //'author_id' => $author->id,
             'category_id' => $request->category
         ]);
@@ -242,6 +233,33 @@ class TitleUserController extends Controller
      */
     public function destroy($id)
     {
-        //delete TitleUser ($book)
+        $book = TitleUser::where('user_id', $this->userId())->where('title_id',$id);
+        $title = Title::find($id); //if title->users->count() < 1 delete oder automatisch?
+        $author = Author::find($title->author->id);
+
+        $x =TitleUser::where('title_id',$id)->count(); //wie oft titel noch in title_user pivot, dh wie viele user den titlel haben, da $title->user->count() n.g.
+        
+        if (!$book){
+            $key=404;
+            $status='error';
+            $msg='Book not found';
+        }
+        else{
+            $book->delete();
+            if ($x < 1) { $title->delete(); } //$title->user->count() geht nicht, ller
+            if ($author->titles->count() < 1 ){ $author->delete(); }
+            $key=200;
+            $status='success';
+            $msg='Book '.$book->first()->title->title.' deleted';
+        }
+        
+        if( request()->ajax() ){
+            return response()->json([
+                'status' => $status,
+                'msg' =>$msg
+            ]);
+        }
+        
+        return redirect()->route('books.index')->with([$status => $msg]); //kein redirect etc.
     }
 }

@@ -131,25 +131,24 @@ class CategoryController extends Controller
     {
         //bed einfügen falls kat nicht gelöscht werden kann, status key msg anp.
         $category = Category::find($id);
-        
+                
         if (!$category){
             $key= 404;
             $status = 'error';
             $msg= 'Category not found';
         }
-        else if (isset($category->titles) ){
+        if ($category->titles->count() > 0 ){
             $key = 409; //??
             $status='warning';
             $msg= "Category can't be deleted";
         }
         else{
             $category->delete(); //Category::destroy($category->id);
-            $kex=200;
+            $key=200;
             $status='success';
             $msg='Category '.$category->type.': '.$category->category_name.' deleted.';
         }
 
-        // Modalboxen noch einfügen!
         if( request()->ajax() ){
             return response()->json([
                 'status' => $status,

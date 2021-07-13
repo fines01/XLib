@@ -55,7 +55,6 @@ Route::get('/bookings/{booking}', 'BookingController@show')->name('bookings.show
 // create & store (bei Buchung), show (in books show), edit,update,destroy (über Buchung); ev. kein Controller ???????
 
 // TITEL
-// index
 Route::get('/titles', 'TitleController@index')->name('titles.index');
-Route::get('/titles', 'TitleController@show')->name('titles.show');
+Route::get('/titles/{title}', 'TitleController@show')->name('titles.show');
 // ***create, store & edit, update, destroy: wenn items hinzugefügt/ gelöscht werden, über items, ***show =-> item.index für jew Titel.

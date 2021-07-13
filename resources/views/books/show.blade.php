@@ -53,7 +53,7 @@
                                         </tr>
                                         <tr>
                                             <th scope="row">{{ __('Category') }}</th>
-                                            <td>{{ $title->category->type . ': ' . $title->category->category_name }}
+                                            <td colspan="2">{{ $title->category->type . ': ' . $title->category->category_name }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -95,7 +95,7 @@
                                         <tr>
                                             <th scope="row">{{ __(' Booking status') }}</th>
                                             <th>{{ __('Status') }}</th>
-                                            <th scope="col">{{ __('Preferred delivery methods')}} </th>
+                                            <th scope="col">{{ __('Preferred delivery')}} </th>
                                         </tr>
                                         
                                         <tr>
@@ -136,9 +136,8 @@
                             {{-- $item->title_id sn mit title_id üb ??? --}}
                             <a href="{{ route('books.edit', $title->id) }}"
                                 class="form-button">{{ __('Edit') }}</a>
-                            {{-- <a href="{{ route('books.index') }}" class="form-button delete-btn">{{ __('Delete') }}</a> --}}
 
-                             <form action="{{ route('books.index') }}" method="POST" ,
+                             <form action="{{ route('books.destroy', $title->id) }}" method="POST" ,
                                 class="inline-flex delete-form" data-title="{{ $item->title }}"
                                 data-body="{{ __('Do you really want to delete the book') }}?">
                                 @csrf

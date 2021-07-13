@@ -27,7 +27,7 @@
                                 </label>
                                 <input id="fname" type="text"
                                     class="form-input w-full block @error('name')  border-red-500 @enderror" name="fname"
-                                    value="{{ old('fname', $book->title->author->first_name) }}" autocomplete="fname"
+                                    value="{{ old('fname', $book->title->author->first_name) }}" 
                                     autofocus>
                                 @error('fname')
                                     <p class="error-msg">
@@ -41,7 +41,7 @@
                                 </label>
                                 <input id="lname" type="text"
                                     class="form-input w-full block @error('lname')  border-red-500 @enderror" name="lname"
-                                    value="{{ old('lname', $book->title->author->last_name) }}" autocomplete="name"
+                                    value="{{ old('lname', $book->title->author->last_name) }}" 
                                     autofocus>
                                 @error('lname')
                                     <p class="error-msg">
@@ -56,7 +56,7 @@
                                 {{ __('Title') }}:
                             </label>
                             <input id="title" type="text" class="form-input w-full @error('title') border-red-500 @enderror"
-                                name="title" value="{{ old('title', $book->title->title) }}" autocomplete="title">
+                                name="title" value="{{ old('title', $book->title->title) }}" >
                             @error('title')
                                 <p class="error-msg">
                                     {{ $message }}
@@ -70,7 +70,7 @@
                             </label>
                             <input id="subtitle" type="text"
                                 class="form-input w-full @error('subtitle') border-red-500 @enderror" name="subtitle"
-                                value="{{ old('subtitle', $book->title->subtitle) }}" autocomplete="subtitle">
+                                value="{{ old('subtitle', $book->title->subtitle) }}" >
                             @error('subtitle')
                                 <p class="error-msg">
                                     {{ $message }}
@@ -117,11 +117,16 @@
                             <select name="category" id="category"
                                 class="bg-white focus:shadow-outline focus:outline-none w-full" @error('category')
                                 border-red-500 @enderror>
-
+                                <option value="">{{ __('Select') }}...</option>
                                 @foreach ($categories as $cat)
-                                    <option value="{{ $cat->id }}" @if (old('category') == $cat->id) selected @endif>
+                                    <option value="{{ $cat->id }}" @if (old('category') === $cat->id) selected @endif>
                                         {{ $cat->type . ': ' . $cat->category_name }} </option>
                                 @endforeach
+                                @error('category')
+                                    <p class="error-msg">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </select>
                         </div>
 

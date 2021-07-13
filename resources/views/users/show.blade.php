@@ -1,0 +1,1 @@
+users/{user} kann hier eigenes Profil einsehen und bearbeiten: <a href="">users.edit</a>  zB zusätzlich Namen & Adresse hinterlegen zum Bücher versenden.

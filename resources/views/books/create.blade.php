@@ -115,6 +115,11 @@
                                     <option value="{{ $cat->id }}" @if (old('category') == $cat->id) selected @endif>
                                         {{ $cat->type . ': ' . $cat->category_name }} </option>
                                 @endforeach
+                                @error('category')
+                                    <p class="error-msg">
+                                        {{ $message }}
+                                    </p>
+                                @enderror
                             </select>
                         </div>
 
