@@ -1,6 +1,8 @@
 @extends('layouts.main')
+
 @section('pageTitle', 'Register a book')
 @section('content')
+
     <main class="sm:container main-container">
         <div class="flex">
             <div class="w-full">
@@ -13,8 +15,8 @@
 
                     <form class="form sm:space-y-8 space-y-6" method="POST" action="{{ route('books.store') }}">
                         @csrf
-                        {{-- AUTHOR --}}
-                        <div class="flex flex-wrap">
+
+                        {{-- <div class="flex flex-wrap">
                             <h3 class=" w-full form-label mb-16">{{ __('Author') }}:</h3>
                             <div class="w-full sm:w-1/2">
                                 <label for="fname" class="form-label">
@@ -42,7 +44,7 @@
                                     </p>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
                         {{-- TITLE --}}
                         <div class="flex flex-wrap">
                             <label for="title" class="form-label">
@@ -70,6 +72,34 @@
                                 </p>
                             @enderror
                         </div>
+
+                        {{-- AUTHOR --}}
+                        {{-- 1.: Dropdown. Besser über ajax & autocomplete, später --}}
+                        <div class="flex flex-wrap">
+                            <label for="author" class="form-label">
+                                {{ __('Author') }}:
+                            </label>
+                            <select name="author" id="author"
+                                class="bg-white focus:shadow-outline focus:outline-none w-full" @error('author')
+                                border-red-500 @enderror>
+                                <option value="">{{ __('Select...') }}</option>
+                                @foreach ($authors as $author)
+                                    <option value="{{ $author->id }}" @if (old('author') == $author->id) selected @endif>
+                                        {{ $author->first_name . ' ' . $author->last_name }} </option>
+                                @endforeach
+                            </select>
+                            {{-- 2.: author --> create NEW: besser in Modal Feld als eig Seite, später --}}
+                            <p  class="form-link-text font-bold">{{ __('Author not in List?') }}
+                        
+                            <a href="{{ route('authors.create') }}" class="form-link ml-2">{{ __('Register new Author') }}</a>
+                            </p>
+                            @error('author')
+                                <p class="error-msg">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
                         {{-- ISBN --}}
                         <div class="flex flex-wrap">
                             <div class="w-full sm:w-1/2">
@@ -166,7 +196,7 @@
                             </div>
                         </div>
 
-                        {{-- PUBLICATION FORM --}}
+                        {{-- PUBLICATION FORMAT --}}
                         <div class="flex flex-wrap">
                             <h3 class="w-full form-label mb-16">{{ __('Publication format') }}:</h3>
                             <div class="w-full">
@@ -231,12 +261,11 @@
                             <h3 class="form-label w-full mb-4">{{ __('Choose your possible transfer methods') }}:</h3>
                             <input type="checkbox" id="in-person" name="delivery" class="form-checkbox" value="in-person"
                                 @if (is_array(old('delivery')) && in_array('in-person', old('delivery'))) checked @endif>
-                            <label for="in-person" class="form-check-label ml-1 mr-4">{{ __('In person') }}</label>
+                            <label for="in-person" class="form-check-label ml-2 mr-4">{{ __('In person') }}</label>
 
                             {{-- @if (isset(Auth::user()->name) && isset(Auth::user()->address)) --}}
-                            <input type="checkbox" id="postal" name="delivery" class="form-checkbox" value="postal" 
-                                @if (is_array(old('delivery')) && in_array('postal', old('delivery'))) checked @endif>
-                            <label for="postal" class="form-check-label ml-1 mr-4">{{ __('Postal delivery') }}</label>
+                            <input type="checkbox" id="postal" name="delivery" class="form-checkbox" value="postal" @if (is_array(old('delivery')) && in_array('postal', old('delivery'))) checked @endif>
+                            <label for="postal" class="form-check-label ml-2 mr-4">{{ __('Postal delivery') }}</label>
                             {{-- @endif --}}
 
                             @error('delivery')

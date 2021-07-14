@@ -62,9 +62,10 @@ class TitleUserController extends Controller
      */
     public function create()
     {
+        $authors=Author::orderBy('last_name')->orderBy('first_name')->get();
         $books= TitleUser::select()->with('status','title')->get();
         $categories= Category::orderBy('type')->orderBy('category_name')->get();
-        return view('books.create', compact('books','categories')); 
+        return view('books.create', compact('books','categories', 'authors')); 
     }
 
     /**
@@ -77,18 +78,18 @@ class TitleUserController extends Controller
     {
         $currentYear = Carbon::tomorrow()->year; // Zeitdifferenzen berücksichtigen
         //dd($request->all());
-        //besser in eigene Funktion auslagern? eigene Validator Instanz? andere bessere Lösung? (2x ,auch in update)
+        //besser in eigene Funktion auslagern
         $request->validate([
-            'title' => 'required|min:1',
+            'title' => 'required',
             'subtitle' => 'nullable|min:1',
-            'fname' => 'required|min:1',
+            'fname' => 'required',
             'lname' => 'nullable|min:1',
             'isbn10' => 'nullable|regex:',
             'isbn13' => 'nullable|regex:',
             'category' => 'required',
             'publisher' => 'required',
             //'year'=> ['required', 'integer','digits:4','min: 0001' , 'max:'.$currentYear], //SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'publication_year' at row 1 für Daten von zB 1900 !!!
-            'year' => ['required','min:0001', 'max:'.$this->currentYear()], // TEST
+            'year' => ['required','min:0001', 'max:'.$this->currentYear()], // TEST mit "between": 1 statt 0001, current
             'edition'=> 'min:1|integer',
             'format' => 'required',
             'condition' => 'nullable|min:2|string',
@@ -122,7 +123,7 @@ class TitleUserController extends Controller
         //dd($statuses->id);
         
         //momentan kann ein User so nur ein gl. Buch registrieren, ev ändern? Od. counter in tabelle?
-        //ToDo: alert wenn buch bereits registriert einfügen --> zB wasRecentlyCreated attribut
+        //ToDo: alert wenn buch bereits registriert einfügen --> zB wasRecentlyCreated attribut //
         $books= TitleUser::firstOrCreate([ 
             'condition' => $request->condition,
             'possible_delivery_methods' => $request->delivery,
@@ -177,7 +178,7 @@ class TitleUserController extends Controller
         //dd($id, $request->all());
         
         $request->validate([
-            'title' => 'required|min:1',
+            'title' => 'required',
             'subtitle' => 'nullable|min:1',
             'fname' => 'required|min:1',
             'lname' => 'nullable|min:1',
@@ -195,7 +196,7 @@ class TitleUserController extends Controller
         //$authorId= Title::find($id)->select('author_id')->first()->author_id; //umständlich? notwendig?
         //ddd($authorId);
         
-        Author::where('id' ,Title::find($id)->select('author_id')->first()->author_id)->update([  //fkt. plz. n.m. ?
+        Author::where('id' ,Title::find($id)->select('author_id')->first()->author_id)->update([  //fkt.n.? vorerst Pulldown, später ajax autocomplete, rest in AuthorController
             'first_name' => $request->fname,
             'last_name' => $request->lname
         ]);
@@ -246,14 +247,14 @@ class TitleUserController extends Controller
         }
         else{
             $book->delete();
-            if ($x < 1) { $title->delete(); } //$title->user->count() geht nicht, ller
+            if ($x < 1) { $title->delete(); } //$title->user->count() geht nicht, ller //dispatch, detach( obj )
             if ($author->titles->count() < 1 ){ $author->delete(); }
             $key=200;
             $status='success';
             $msg='Book '.$book->first()->title->title.' deleted';
         }
         
-        if( request()->ajax() ){
+        if( request()->ajax() ){ //kein ajax über show
             return response()->json([
                 'status' => $status,
                 'msg' =>$msg

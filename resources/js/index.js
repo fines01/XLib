@@ -96,14 +96,14 @@
   $(".delete-form").on("submit", function (e) {
     e.preventDefault();
     const form = $(this);
-    console.log(form);
+    //console.log(form);
 
     $("#overlay").removeClass("hidden");
     $("#deleteModalLabel").html(form.data("title"));
     $("#deleteModalBody").html(form.data("body"));
   
     $(".dismiss-btn, #close-modal").on("click", function () {
-      console.log("you clicked cancel");
+      //console.log("you clicked cancel");
       $("#overlay").addClass("hidden");
     });
 
@@ -113,7 +113,6 @@
         
         $("#overlay").addClass("hidden");
         // console.log("you clicked delete");
-        // console.log(form);
         // console.log(form.serialize());
         $.ajax({
           url : form.attr('action'),
@@ -135,6 +134,32 @@
       });
   });
 
+// *** CREATE- MODAL ***
+
+  $("#create-modal").on("click", function (e) {
+    e.preventDefault();
+    const form = $(this);
+    //console.log(form);
+
+    $("#createModal").removeClass("hidden");
+    //$("#deleteModalLabel").html(form.data("title"));
+    //$("#deleteModalBody").html(form.data("body"));
+  
+    $(".dismiss-btn, #close-modal").on("click", function () {
+      //console.log("you clicked cancel");
+      $("#createModal").addClass("hidden");
+    });
+
+    $(".delete-btn-modal")
+      .off()
+      .on("click", function () {
+        
+        $("#createModal").addClass("hidden");
+        // console.log("you clicked delete");
+        // console.log(form.serialize());
+      });
+  });
+  
 // TEST
     $(".sort-btn").on("cick", function(e){
       e.preventDefault();

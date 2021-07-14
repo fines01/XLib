@@ -36,10 +36,10 @@ Route::get('home', 'HomeController@index')->name('home');
 Route::resource('/categories', 'CategoryController')->except('show');
 Route::resource('/books', 'TitleUserController');
 Route::resource('/users','UserController');//->excpt('index'); ? od mit index (für Admin?)
+Route::resource('/authors', 'AuthorController');
 
-// AUTOR: index, show
-Route::get('/authors', 'AuthorController@index')->name('authors.index');
-Route::get('/authors/{author}', 'AuthorController@show')->name('authors.show');
+
+
 // Autor: **create, store: über item bzw. user_title, **edit, update: über items, **destroy: automatisch wenn keine items mehr vorhanden sind
 
 // BUCHUNGEN: index, [create->kein eig Formular, Buchung über button in items liste?], store, show,
