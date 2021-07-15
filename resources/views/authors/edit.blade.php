@@ -1,12 +1,12 @@
 @extends('layouts.main')
-@section('pageTitle', 'Create Author')
+@section('pageTitle', 'Update Author')
 @section('content')
 
     <main class="sm:container main-container">
         <div class="flex">
             <div class="w-full">
 
-                <div class="mt-8">
+             <div class="mt-8">
                     <a href="{{ route('books.create') }}" class="form-button"><{{ __('Go back') }}/a>
                     <a href="{{ route('authors.index') }}" class="form-button">{{ __('Show all authors') }}</a>
                 </div>
@@ -16,8 +16,8 @@
                     <header class="form-header">
                         {{ __('Register new author') }}
                     </header>
-                    <form class="form sm:space-y-8 space-y-6 my-8" action="{{ route('authors.store') }}">
-
+                    <form class="form sm:space-y-8 space-y-6 my-8" action="{{ route('authors.update') }}">
+                     @method('put')
                         <div class="flex flex-wrap">
                             
                             <div class="w-full ">
@@ -26,7 +26,7 @@
                                 </label>
                                 <input id="fname" type="text"
                                     class="form-input w-full block @error('name')  border-red-500 @enderror" name="fname"
-                                    value="{{ old('fname') }}" autocomplete="fname" autofocus>
+                                    value="{{ old('fname', $author->first_name) }}" autocomplete="fname" autofocus>
                                 @error('fname')
                                     <p class="error-msg">
                                         {{ $message }}
@@ -39,7 +39,7 @@
                                 </label>
                                 <input id="lname" type="text"
                                     class="form-input w-full block @error('lname')  border-red-500 @enderror" name="lname"
-                                    value="{{ old('lname') }}" autocomplete="name" autofocus>
+                                    value="{{ old('lname', $author->last_name) }}" autocomplete="lname" autofocus>
                                 @error('lname')
                                     <p class="error-msg">
                                         {{ $message }}

@@ -33,7 +33,7 @@ class TitleUserController extends Controller
      *
      * @return int 
      */
-    public function userId() // haha, geht wsl. auch einfach über Request --> $request->user()->id 
+    public function userId() // $request->user()->id  // ev. eigenen Trait def.
     {
         return auth()->user()->id; 
     }
@@ -80,10 +80,9 @@ class TitleUserController extends Controller
         //dd($request->all());
         //besser in eigene Funktion auslagern
         $request->validate([
+            'author' => 'required',
             'title' => 'required',
             'subtitle' => 'nullable|min:1',
-            'fname' => 'required',
-            'lname' => 'nullable|min:1',
             'isbn10' => 'nullable|regex:',
             'isbn13' => 'nullable|regex:',
             'category' => 'required',
@@ -99,13 +98,13 @@ class TitleUserController extends Controller
         //dd($request->all());
         
         // nur wenn der Datensatz in der Datenbank noch nicht existiert (firstOrCreate, updateOrCreate, upsert ...?)
-        $authors= Author::firstOrCreate([
-            'first_name' => $request->fname,
-            'last_name' => $request->lname
-        ]);
+        // $authors= Author::firstOrCreate([
+        //     'first_name' => $request->fname,
+        //     'last_name' => $request->lname
+        // ]);
         
         // oder mit upsert falls unvollständige db- einträge (fehlende isbn etc) -> n. derweil nicht, später ev durch api ergänzt?
-        $titles= Title::firstOrCreate([ //umständlich? 
+        $titles= Title::firstOrCreate([
             'title' => $request->title, //in Funktionen auslagern?
             'subtitle' => $request->subtitle,
             'edition' => $request->edition,
@@ -114,8 +113,7 @@ class TitleUserController extends Controller
             'publication_format' => $request->format,
             'isbn_10' => $request->isbn10,
             'isbn_13' => $request->isbn13,
-            
-            'author_id' => $authors->id,
+            'author_id' => $request->author,
             'category_id' => $request->category
         ]);
         
@@ -127,7 +125,6 @@ class TitleUserController extends Controller
         $books= TitleUser::firstOrCreate([ 
             'condition' => $request->condition,
             'possible_delivery_methods' => $request->delivery,
-            
             'title_id' => $titles->id,
             'user_id' => $request->user()->id,
             'status_id' => $statuses->id
@@ -180,8 +177,7 @@ class TitleUserController extends Controller
         $request->validate([
             'title' => 'required',
             'subtitle' => 'nullable|min:1',
-            'fname' => 'required|min:1',
-            'lname' => 'nullable|min:1',
+            'author' => 'required',
             'isbn10' => 'nullable|regex:',
             'isbn13' => 'nullable|regex:',
             'category' => 'required',
@@ -196,10 +192,10 @@ class TitleUserController extends Controller
         //$authorId= Title::find($id)->select('author_id')->first()->author_id; //umständlich? notwendig?
         //ddd($authorId);
         
-        Author::where('id' ,Title::find($id)->select('author_id')->first()->author_id)->update([  //fkt.n.? vorerst Pulldown, später ajax autocomplete, rest in AuthorController
-            'first_name' => $request->fname,
-            'last_name' => $request->lname
-        ]);
+        // Author::where('id' ,Title::find($id)->select('author_id')->first()->author_id)->update([  //fkt.n.? vorerst Pulldown, später ajax autocomplete, rest in AuthorController
+        //     'first_name' => $request->fname,
+        //     'last_name' => $request->lname
+        // ]);
         
         // $title= Title::find($id); 
         // dd($title);  
@@ -213,7 +209,7 @@ class TitleUserController extends Controller
             'publication_format' => $request->format,
             'isbn_10' => $request->isbn10,
             'isbn_13' => $request->isbn13,
-            //'author_id' => $author->id,
+            'author_id' => $request->author,
             'category_id' => $request->category
         ]);
         

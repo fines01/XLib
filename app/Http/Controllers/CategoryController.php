@@ -149,12 +149,12 @@ class CategoryController extends Controller
             $msg='Category '.$category->type.': '.$category->category_name.' deleted.';
         }
 
-        if( request()->ajax() ){
-            return response()->json([
-                'status' => $status,
-                'msg' =>$msg
-            ]);
-        }
+        // if( request()->ajax() ){
+        //     return response()->json([
+        //         'status' => $status,
+        //         'msg' =>$msg
+        //     ]);
+        // }
 
         return redirect()->route('categories.index')->with([$status=>$msg]);
     }

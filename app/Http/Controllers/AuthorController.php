@@ -38,7 +38,12 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->data);
+        $authors = Author::firstOrCreate([
+            'first_name' => $request->fname,
+            'last_name' => $request->lname
+        ]);
+        return back()->with('success', __('New Author registered') );
     }
     
     /**
@@ -76,7 +81,12 @@ class AuthorController extends Controller
      */
     public function update(Request $request, Author $author)
     {
-        //
+        $request->validate($this->data);
+        $author->update([
+            'first_name' => $request->fname,
+            'last_name' => $request->lname
+        ]);
+        return redirect('authors.index')->with('success', __('Author updated'));
     }
     
     /**
@@ -87,8 +97,35 @@ class AuthorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $author = Author::find($id);
+        if (!$author){
+            $key=404;
+            $status='error';
+            $msg='Author not found';
+        }
+        if( $author->titles->count() > 0 ){
+            $key = 409; //??
+            $status='warning';
+            $msg= "Author can't be deleted";
+        }
+        else {
+            $key=200;
+            $status='success';
+            $msg='Author '.$author->first()->first_name. ' '. $author->last_name .' deleted';
+            $author->delete();
+        }
+        if( request()->ajax() ){ //kein ajax über show
+            return response()->json([
+                'status' => $status,
+                'msg' =>$msg
+            ]);
+        }
+        return redirect()->route('authors.index')->with([$status => $msg]);
     }
     
-    
+    public $data = [
+        'fname' => 'required',
+        'lname' => 'nullable'
+    ];
+
 }
