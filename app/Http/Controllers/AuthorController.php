@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of all Authors.
      *
@@ -114,7 +119,7 @@ class AuthorController extends Controller
             $msg='Author '.$author->first()->first_name. ' '. $author->last_name .' deleted';
             $author->delete();
         }
-        if( request()->ajax() ){ //kein ajax über show
+        if( request()->ajax() ){ 
             return response()->json([
                 'status' => $status,
                 'msg' =>$msg

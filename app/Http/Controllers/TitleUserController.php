@@ -250,12 +250,12 @@ class TitleUserController extends Controller
             $msg='Book '.$book->first()->title->title.' deleted';
         }
         
-        if( request()->ajax() ){ //kein ajax über show
-            return response()->json([
-                'status' => $status,
-                'msg' =>$msg
-            ]);
-        }
+        // if( request()->ajax() ){ //kein ajax über show
+        //     return response()->json([
+        //         'status' => $status,
+        //         'msg' =>$msg
+        //     ]);
+        // }
         
         return redirect()->route('books.index')->with([$status => $msg]); //kein redirect etc.
     }

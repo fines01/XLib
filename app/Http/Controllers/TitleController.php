@@ -28,10 +28,11 @@ class TitleController extends Controller
      */
     public function show(Title $title)
     {
+        // alle items eines Titels, inkl. Status (f. Buchung)
         //ev nur auth. User ?
         
-        $title->with('author','category','users');
-        //$books = TitleUser::with('users')->get();
+        $title->with('author','category','users')->get();
+        //$books = TitleUser::with('users', 'status')->get();
     
         return view('titles.show', compact('title'));
     }
