@@ -44,11 +44,11 @@ class AuthorController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->data);
-        $authors = Author::firstOrCreate([
+        $author = Author::firstOrCreate([
             'first_name' => $request->fname,
             'last_name' => $request->lname
         ]);
-        return back()->with('success', __('New Author registered') );
+        return back()->with('success', __('New Author registered').': '. $author->first_name .' '. $author->last_name );
     }
     
     /**

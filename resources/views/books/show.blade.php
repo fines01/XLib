@@ -138,7 +138,7 @@
                                 class="form-button">{{ __('Edit') }}</a>
 
                              <form action="{{ route('books.destroy', $title->id) }}" method="POST" ,
-                                class="inline-flex delete-form" data-title="{{ $item->title }}"
+                                class="inline-flex " data-title="{{ $item->title }}"
                                 data-body="{{ __('Do you really want to delete the book') }}?">
                                 @csrf
                                 @method('delete')

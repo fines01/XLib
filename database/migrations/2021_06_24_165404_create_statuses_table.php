@@ -18,7 +18,7 @@ class CreateStatusesTable extends Migration
             $table->unsignedBigInteger('booking_id')->nullable();
             $table->foreign('booking_id')->on('bookings')->references('id')->onUpdate('cascade')->onDelete('set null')->nullable();
             $table->boolean('available')->default(1);
-            // $table->string('booking_status')->nullable(); //delivered, received, returned, locked || available, booked, locked
+            // $table->string | set('booking_status')->nullable(); //delivered, received, returned, locked || available, requested (by user), confirmed (by owner), [set_private bzw. locked] ...->default('available');
             $table->date('booking_date')->nullable();
             $table->date('return_date')->nullable();
             $table->boolean('notification_sent')->nullable(); // ?? Email Eigentümer bei Buchung.

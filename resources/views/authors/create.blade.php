@@ -7,8 +7,8 @@
             <div class="w-full">
 
                 <div class="mt-8">
-                    <a href="{{ route('books.create') }}" class="form-button"><{{ __('Go back') }}/a>
-                    <a href="{{ route('authors.index') }}" class="form-button">{{ __('Show all authors') }}</a>
+                    <a href="{{ route('books.create') }}" class="form-button">{{ __('Go back') }}</a>
+                    <a href="{{ route('authors.index') }}" class="form-button">{{ __('All authors') }}</a>
                 </div>
 
                 <section class="form-container">
@@ -16,7 +16,7 @@
                     <header class="form-header">
                         {{ __('Register new author') }}
                     </header>
-                    <form class="form sm:space-y-8 space-y-6 my-8" action="{{ route('authors.store') }}">
+                    <form class="form sm:space-y-8 space-y-6 my-8" action="{{ route('authors.store') }}" method="POST">
 
                         <div class="flex flex-wrap">
                             

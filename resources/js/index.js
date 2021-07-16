@@ -120,7 +120,7 @@
           data : form.serialize(),
           success : function(response){
         if( response.status === 200 ){
-                    form.closest('tr').remove();
+                    form.closest('tr').remove(); //fkt n (Categories) überprüfen, ev in HTML!
                     myToastr('success',response.msg);
                 }
                 else{

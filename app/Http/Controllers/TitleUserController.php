@@ -159,8 +159,9 @@ class TitleUserController extends Controller
         //dd($id);
         $book= TitleUser::where('title_id',$id)->where('user_id',$this->userId())->with('status','title')->get();
         $categories= Category::orderBy('type')->orderBy('category_name')->get();
+        $authors = Author::orderBy('last_name')->orderBy('first_name')->get();
         //dd($book);
-        return view('books.edit', compact('book','categories')); //view: vorselektierte Kategorie fkt.n. (mehr?)
+        return view('books.edit', compact('book','categories', 'authors')); //view: vorselektierte Kategorie fkt.n. (mehr?)
     }
 
     /**
@@ -189,7 +190,7 @@ class TitleUserController extends Controller
             'delivery' => 'required'
         ]);
         
-        //$authorId= Title::find($id)->select('author_id')->first()->author_id; //umständlich? notwendig?
+        // $authorId= Title::find($id)->select('author_id')->first()->author_id; //umständlich? notwendig?
         //ddd($authorId);
         
         // Author::where('id' ,Title::find($id)->select('author_id')->first()->author_id)->update([  //fkt.n.? vorerst Pulldown, später ajax autocomplete, rest in AuthorController
@@ -232,9 +233,8 @@ class TitleUserController extends Controller
     {
         $book = TitleUser::where('user_id', $this->userId())->where('title_id',$id);
         $title = Title::find($id); //if title->users->count() < 1 delete oder automatisch?
-        $author = Author::find($title->author->id);
-
-        $x =TitleUser::where('title_id',$id)->count(); //wie oft titel noch in title_user pivot, dh wie viele user den titlel haben, da $title->user->count() n.g.
+        //dd($title->author->id);
+        $author = Author::find($title->author->id); //gn noch 1
         
         if (!$book){
             $key=404;
@@ -243,11 +243,17 @@ class TitleUserController extends Controller
         }
         else{
             $book->delete();
-            if ($x < 1) { $title->delete(); } //$title->user->count() geht nicht, ller //dispatch, detach( obj )
-            if ($author->titles->count() < 1 ){ $author->delete(); }
+            
+            $x =TitleUser::where('title_id',$id)->count(); //wie oft titel noch in title_user pivot, dh wie viele user den titlel haben, da $title->user->count() n.g.
+            if ($x < 1) { 
+                $title->delete(); 
+            } //$title->user->count() geht nicht, ller //dispatch, detach( obj )
+            
+            if ($author->titles->count() < 1 ) { 
+                $author->delete(); }
             $key=200;
             $status='success';
-            $msg='Book '.$book->first()->title->title.' deleted';
+            $msg='Book '.$title->title.' deleted';
         }
         
         // if( request()->ajax() ){ //kein ajax über show
