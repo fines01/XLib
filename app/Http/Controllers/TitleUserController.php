@@ -234,7 +234,7 @@ class TitleUserController extends Controller
         $book = TitleUser::where('user_id', $this->userId())->where('title_id',$id);
         $title = Title::find($id); //if title->users->count() < 1 delete oder automatisch?
         //dd($title->author->id);
-        $author = Author::find($title->author->id); //gn noch 1
+        $author = Author::find($title->author->id);
         
         if (!$book){
             $key=404;
@@ -263,6 +263,6 @@ class TitleUserController extends Controller
         //     ]);
         // }
         
-        return redirect()->route('books.index')->with([$status => $msg]); //kein redirect etc.
+        return redirect()->route('books.index')->with([$status => $msg]);
     }
 }

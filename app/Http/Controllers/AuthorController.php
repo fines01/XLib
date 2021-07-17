@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Author;
 use App\Models\Title;
 use App\Models\TitleUser;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -13,6 +14,11 @@ class AuthorController extends Controller
     {
         $this->middleware('auth');
     }
+    
+    protected $data = [
+    'fname' => 'required',
+    'lname' => 'nullable'
+    ];
     
     /**
      * Display a listing of all Authors.
@@ -48,7 +54,7 @@ class AuthorController extends Controller
             'first_name' => $request->fname,
             'last_name' => $request->lname
         ]);
-        return back()->with('success', __('New Author registered').': '. $author->first_name .' '. $author->last_name );
+        return redirect()->route('books.create')->with('success', __('New Author registered').': '. $author->first_name .' '. $author->last_name );
     }
     
     /**
@@ -60,10 +66,11 @@ class AuthorController extends Controller
     
     public function show(Author $author)
     {
-        $titles = Title::with('users')->where('author_id',$author->id)->get(); //with users ->us leer
+        $titles = Title::where('author_id',$author->id)->get(); //with users ->us leer
         //$books = TitleUser::with('users')->get();
-        //dd($titles, $books);
-        return view('authors.show', compact('author','titles'));
+        $books = TitleUser::with('title','user')->where('title_id', $titles->first()->id)->get();
+       
+        return view('authors.show', compact('author','books','titles'));
     }
     
     /**
@@ -91,7 +98,7 @@ class AuthorController extends Controller
             'first_name' => $request->fname,
             'last_name' => $request->lname
         ]);
-        return redirect('authors.index')->with('success', __('Author updated'));
+        return redirect()->route('authors.index')->with('success', 'Author updated');
     }
     
     /**
@@ -116,7 +123,7 @@ class AuthorController extends Controller
         else {
             $key=200;
             $status='success';
-            $msg='Author '.$author->first()->first_name. ' '. $author->last_name .' deleted';
+            $msg='Author '.$author->first_name. ' '. $author->last_name .' deleted';
             $author->delete();
         }
         if( request()->ajax() ){ 
@@ -128,9 +135,5 @@ class AuthorController extends Controller
         return redirect()->route('authors.index')->with([$status => $msg]);
     }
     
-    public $data = [
-        'fname' => 'required',
-        'lname' => 'nullable'
-    ];
 
 }

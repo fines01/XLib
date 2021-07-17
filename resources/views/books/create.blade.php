@@ -16,6 +16,33 @@
                     <form class="form sm:space-y-8 space-y-6" method="POST" action="{{ route('books.store') }}">
                         @csrf
 
+                        {{-- AUTHOR --}}
+                        {{-- 1.: Dropdown. Besser über ajax & autocomplete, später --}}
+                        <div class="flex flex-wrap">
+                            <label for="author" class="form-label">
+                                {{ __('Author') }}:
+                            </label>
+                            <select name="author" id="author"
+                                class="bg-white focus:shadow-outline focus:outline-none w-full" @error('author')
+                                border-red-500 @enderror>
+                                <option value="">{{ __('Select...') }}</option>
+                                @foreach ($authors as $author)
+                                    <option value="{{ $author->id }}" @if (old('author') == $author->id) selected @endif>
+                                        {{ $author->first_name . ' ' . $author->last_name }} </option>
+                                @endforeach
+                            </select>
+                            {{-- 2.: author --> create NEW: besser in Modal Feld als eig Seite, ajax, später --}}
+                            <p  class="form-link-text font-bold">{{ __('Author not in List?') }}
+                        
+                            <a href="{{ route('authors.create') }}" class="form-link ml-2">{{ __('Register new Author') }}</a>
+                            </p>
+                            @error('author')
+                                <p class="error-msg">
+                                    {{ $message }}
+                                </p>
+                            @enderror
+                        </div>
+
                         {{-- <div class="flex flex-wrap">
                             <h3 class=" w-full form-label mb-16">{{ __('Author') }}:</h3>
                             <div class="w-full sm:w-1/2">
@@ -67,33 +94,6 @@
                                 class="form-input w-full @error('subtitle') border-red-500 @enderror" name="subtitle"
                                 value="{{ old('subtitle') }}" autocomplete="subtitle">
                             @error('subtitle')
-                                <p class="error-msg">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
-                        {{-- AUTHOR --}}
-                        {{-- 1.: Dropdown. Besser über ajax & autocomplete, später --}}
-                        <div class="flex flex-wrap">
-                            <label for="author" class="form-label">
-                                {{ __('Author') }}:
-                            </label>
-                            <select name="author" id="author"
-                                class="bg-white focus:shadow-outline focus:outline-none w-full" @error('author')
-                                border-red-500 @enderror>
-                                <option value="">{{ __('Select...') }}</option>
-                                @foreach ($authors as $author)
-                                    <option value="{{ $author->id }}" @if (old('author') == $author->id) selected @endif>
-                                        {{ $author->first_name . ' ' . $author->last_name }} </option>
-                                @endforeach
-                            </select>
-                            {{-- 2.: author --> create NEW: besser in Modal Feld als eig Seite, später --}}
-                            <p  class="form-link-text font-bold">{{ __('Author not in List?') }}
-                        
-                            <a href="{{ route('authors.create') }}" class="form-link ml-2">{{ __('Register new Author') }}</a>
-                            </p>
-                            @error('author')
                                 <p class="error-msg">
                                     {{ $message }}
                                 </p>
@@ -287,3 +287,9 @@
         </div>
     </main>
 @endsection
+
+@if (session('success'))
+    @section('jsScript')
+        myToastr('success','{{ session('success') }}');
+    @endsection
+@endif

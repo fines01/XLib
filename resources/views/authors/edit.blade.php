@@ -7,7 +7,7 @@
             <div class="w-full">
 
              <div class="mt-8">
-                    <a href="{{ route('books.create') }}" class="form-button"><{{ __('Go back') }}/a>
+                    <a href="{{ url()->previous() }}" class="form-button">{{ __('Go back') }}</a>
                     <a href="{{ route('authors.index') }}" class="form-button">{{ __('Show all authors') }}</a>
                 </div>
 
@@ -16,8 +16,9 @@
                     <header class="form-header">
                         {{ __('Register new author') }}
                     </header>
-                    <form class="form sm:space-y-8 space-y-6 my-8" action="{{ route('authors.update') }}">
-                     @method('put')
+                    <form class="form sm:space-y-8 space-y-6 my-8" action="{{ route('authors.update', $author->id) }}" method="POST">
+                    @csrf
+                    @method('put')
                         <div class="flex flex-wrap">
                             
                             <div class="w-full ">

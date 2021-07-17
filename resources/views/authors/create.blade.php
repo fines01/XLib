@@ -17,7 +17,7 @@
                         {{ __('Register new author') }}
                     </header>
                     <form class="form sm:space-y-8 space-y-6 my-8" action="{{ route('authors.store') }}" method="POST">
-
+                        @csrf
                         <div class="flex flex-wrap">
                             
                             <div class="w-full ">
@@ -32,7 +32,6 @@
                                         {{ $message }}
                                     </p>
                                 @enderror
-
 
                                 <label for="lname" class="form-label mt-8">
                                     {{ __('Last name') }}:

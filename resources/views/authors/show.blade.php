@@ -4,6 +4,7 @@
     <main class="sm:container main-container">
         <div class="flex">
             <div class="w-full">
+
                 <h1>{{ __('Titles of') }} <strong>{{ $author->first_name . ' ' . $author->last_name }}</strong></h1>
                 <section id="" class="dashboard-container mt-12">
                     <header class="form-header">
@@ -15,34 +16,30 @@
                                 <th scope="col">#</th>
                                 <th scope="col">{{ __('Title') }}</th>
                                 <th scope="col"></th>
-                                <th scope="col">{{ __('Users') }}</th>
-                                {{-- Titles.show --}}
-                                {{-- <th scope="col">{{ __('Show Details') }}</th> --}}
+                                <th scope="col">{{ __('Show all books by users') }}</th>
+                                {{-- TEST: --}}
+                                {{-- <th scope="col">{{ __('Users') }}</th> --}}
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($titles as $i =>$title)
+                            @foreach ($titles as $i => $title)
                                 <tr>
-                                    <td>{{ $i+1 }}</td>
-                                    <td>{{ $title->title }}</td>
-                                    <td>{{ $title->subtitle }}</td>
-
-                                    
-                                    <td>
-                                        {{-- All User anzeigen, welche den Titel haben. Besser in titles.show ? --}}
-                                        {{-- FN ??? --}}
-                                        @foreach ($title->users as $user)
+                                    <td>{{ $i + 1 }}</td>
+                                    <td>{{ $title->title . '. ' . $title->subtitle }}</td>
+                                    <td>{{ $title->edition . '. ' . _('Edition') }}</td>
+                                    <td><a href="{{ route('titles.show', $title->id) }}" class="btn fa fa-eye"></a></td>
+                                    {{-- <td>
+                                        @foreach ($books as $book)
                                         <ul>
-                                            <li><a href="">{{ $users->username }}</a></li>
+                                            <li><a href="">{{ $book->user->username }}</a></li>
                                         </ul>
                                         @endforeach
-                                    </td>
-                                    {{-- <td><a href="{{ route('titles.show', $title->id) }}" class="btn fa fa-eye"></a></td> --}}
+                                    </td> --}}
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    
+
                 </section>
             </div>
         </div>

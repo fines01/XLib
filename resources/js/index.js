@@ -142,9 +142,7 @@
     //console.log(form);
 
     $("#createModal").removeClass("hidden");
-    //$("#deleteModalLabel").html(form.data("title"));
-    //$("#deleteModalBody").html(form.data("body"));
-  
+      
     $(".dismiss-btn, #close-modal").on("click", function () {
       //console.log("you clicked cancel");
       $("#createModal").addClass("hidden");
@@ -155,8 +153,7 @@
       .on("click", function () {
         
         $("#createModal").addClass("hidden");
-        // console.log("you clicked delete");
-        // console.log(form.serialize());
+
       });
   });
   
