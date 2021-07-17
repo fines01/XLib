@@ -186,9 +186,9 @@
                             <label for="condition" class="form-label">
                                 {{ __('Please describe the condition') }}:
                             </label>
-                            <input id="condition" type="text" class="form-input w-full @error('isbn-10') border-red-500 @enderror"
+                            <textarea id="condition" type="text" class="form-input w-full @error('isbn-10') border-red-500 @enderror"
                                 name="condition" value="{{ old('condition', $book->condition) }}" autocomplete="condition"
-                                placeholder="o.k.">
+                                placeholder="o.k.">o.k.</textarea>
                             @error('condition')
                                 <p class="error-msg">
                                     {{ $message }}

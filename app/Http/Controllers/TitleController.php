@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Title;
+use App\Models\TitleUser;
 use Illuminate\Http\Request;
 
 class TitleController extends Controller
@@ -28,12 +29,15 @@ class TitleController extends Controller
      */
     public function show(Title $title)
     {
-        // alle items eines Titels, inkl. Status (f. Buchung)
         //ev nur auth. User ?
         
-        $title->with('author','category','users')->get();
+        // alle items eines Titels, inkl. Status (f. Buchung)
+        $books= TitleUser::where('title_id', $title->id)->with('title', 'user', 'status')->paginate(10);
+        //dd($title, $books);
+        
+        // $title->with('author','category','users')->get();
         //$books = TitleUser::with('users', 'status')->get();
     
-        return view('titles.show', compact('title'));
+        return view('titles.show', compact('title','books'));
     }
 }

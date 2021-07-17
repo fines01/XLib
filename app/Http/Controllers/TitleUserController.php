@@ -229,8 +229,9 @@ class TitleUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id) 
     {
+        //auch mgl.: $book = TitleUser::findByCompositeKey($id1,$id2)
         $book = TitleUser::where('user_id', $this->userId())->where('title_id',$id);
         $title = Title::find($id); //if title->users->count() < 1 delete oder automatisch?
         //dd($title->author->id);

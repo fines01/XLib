@@ -243,11 +243,11 @@
                         {{-- CONDITION --}}
                         <div class="flex flex-wrap">
                             <label for="condition" class="form-label">
-                                {{ __('Please describe the condition') }}:
+                                {{ __('Short description of the condition or additional Info') }}:
                             </label>
-                            <input id="condition" type="text"
+                            <textarea id="condition" type="text"
                                 class="form-input w-full @error('isbn-10') border-red-500 @enderror" name="condition"
-                                value="{{ old('condition') }}" autocomplete="condition" placeholder="o.k.">
+                                value="{{ old('condition') }}" autocomplete="condition" placeholder="o.k.">o.k.</textarea>
                             @error('condition')
                                 <p class="error-msg">
                                     {{ $message }}
