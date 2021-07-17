@@ -46,6 +46,7 @@
                             <ul class="links-dropdown">
                                 <li><a href="{{ route('books.index') }}">{{ __('My Books') }}</a></li>
                                 <li><a href="{{ route('titles.index') }}">{{ __('All Titles') }}</a></li>
+                                <li><a href="{{ route('authors.index') }}">{{ __('All Authors') }}</a></li>
                             </ul>
                         </div>
                     </div>

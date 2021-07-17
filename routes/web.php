@@ -35,7 +35,7 @@ Route::get('home', 'HomeController@index')->name('home');
 //
 Route::resource('/categories', 'CategoryController')->except('show');
 Route::resource('/books', 'TitleUserController');
-Route::resource('/users','UserController');//->excpt('index'); ? od mit index (für Admin?)
+Route::resource('/users','UserController')->except('create','store'); 
 Route::resource('/authors', 'AuthorController');
 
 
