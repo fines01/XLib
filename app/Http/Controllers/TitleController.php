@@ -44,30 +44,41 @@ class TitleController extends Controller
 
     public function search( Request $request)
     {
-        // Search results for Titles oder Authors (Frage: umständlich? Inkl Autor- Suche, Aufteilung/Struktur ok? besser zB als search Trait ?)
+        // Search results for Titles oder Authors (Umständlich? Inkl Autor- Suche, Aufteilung/Struktur ok? besser zB als search Trait ?)
 
-        dd ($request->input());
+        //dd ($request->input('search'));
+        $search= $request->input('search');
         
-        $query= $request->input('search');
+        //query fkt. n.: * wenn titel plus subtitel gesucht, verschrieben(extra Buchst), *nur gew schlagwörter in titel wie zb "php7 mysql" (dh fkt n be mehreren SW.)
+        $data1= Title::
+        where( function($query) use($search){
+            $query->orWhere('title','like', "%{$search}%")->orWhere('subtitle','like', "%{$search}%");
+        });
+        //--> https://laravel.com/docs/8.x/queries#logical-grouping 
         
-        $data1= Title::where([
-            ['title', '=', $query],
-            ['subtitle', '=', $query],
-        ])
-        ->orWhere('title',$query)->orWhere('subtitle',$query); //query passt? Ev. bessere Mögl??
-
-        $data2= Author::where([
-            ['first_name','=',$query],
-            ['last_name', '=', $query],
-        ])
-        ->orWhere('first_name',$query)->orWhere('last_name',$query);
-
+        // SELECT * from authors WHERE 'title' LIKE %$query%' OR 'subtitle' LIKE %$query% 
+        
+        //fkt n w.o.
+        $data2= Author::
+        // where([
+        //     ['first_name','like',"%{$search}%"], //fkt.n.!!! für ganzen Namen wrm?
+        //     ['last_name', 'like', "%{$search}%"],
+        //     ])
+            where('first_name','like', "%{$search}%")->orWhere('last_name','like',"%{$search}%");
+        
         if ($data1->exists()){
             return $data1->get();//paginate(10);
+            dd($data1);
         }
         else if ($data2->exists()){
             return $data2->get();
+            dd($data2);
         }
+        else {
+            dd('no results found');
+        }
+
+        // return: view mit Tabelle & Links zu den Titeln (titles.show oder authors.show).
 
     }
 }
