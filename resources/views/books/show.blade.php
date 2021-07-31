@@ -26,7 +26,7 @@
                             <table class="m-3 detail-table">
                                 <thead>
                                     <tr>
-                                    {{-- <th> Eins</th>
+                                        {{-- <th> Eins</th>
                                     <th>Zwei</th>
                                     <th>Drei</th>
                                     <th>Vier</th>
@@ -35,110 +35,120 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($title as $title)
+                                    @foreach ($title as $title)
 
-                                    {{-- *** Haha, so funktioniert es auch: (da ->get() Collection liefert, ev find(), würde Objekt liefern) --}}
-                                    @foreach($item as $item)@endforeach
-                                    {{-- *** --}}
+                                        {{-- *** Haha, so funktioniert es auch: (da ->get() Collection liefert, ev find(), würde Objekt liefern) --}}
+                                        @foreach ($item as $item)@endforeach
+                                        {{-- *** --}}
 
                                         <tr>
-                                            <th scope="row">{{ __('Title') }}</th>
+                                            <th scope="row">{{ __('Title') }}:</th>
                                             <td>{{ $title->title }}</td>
                                             <td>{{ $title->subtitle }}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">{{ __('Author') }}</th>
-                                            <td>{{ $title->author->first_name }}</td>
-                                            <td>{{ $title->author->last_name }}</td>
+                                            <th scope="row">{{ __('Author') }}:</th>
+                                            <td colspan="2">{{ $title->author->first_name . ' ' . $title->author->last_name}}</td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">{{ __('Category') }}</th>
-                                            <td colspan="2">{{ $title->category->type . ': ' . $title->category->category_name }}
+                                            <th scope="row">{{ __('Category') }}:</th>
+                                            <td colspan="2">
+                                                {{ $title->category->type . ': ' . $title->category->category_name }}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th scope="row">ISBN</th>
-                                            <td>ISBN-10: {{ $title->isbn_10 }}</td>
-                                            <td>ISBN-13: {{ $title->isbn_13 }}</td>
+                                            <th scope="row">ISBN:</th>
+                                            <th scope="col">ISBN-13</th>
+                                            <th scope="col">ISBN-10</th>
                                         </tr>
 
                                         <tr>
-                                            <th scope="row">{{ __('Puclication') }}</th>
-                                            
-                                            <th scope="col">{{ __('Publisher') }}</th>
-                                            <th scope="col">{{  __('Edition') }}</th>
-                                            <th scope="col">{{ __('Publication format') }}</th>
+                                            <th scope="row"></th>
+                                            <td>{{ $title->isbn_13 }}</td>
+                                            <td>{{ $title->isbn_10 }}</td>
                                         </tr>
-                                        
+
+                                        <tr>
+                                            <th scope="row">{{ __('Publication') }}:</th>
+
+                                            <th scope="col">{{ __('Publisher') }}</th>
+                                            <th scope="col">{{ __('Edition') }}</th>
+                                            <th scope="col">{{ __('Format') }}</th>
+                                        </tr>
+
                                         <tr>
                                             {{-- <th scope="row">{{ __('Puclication') }}</th> --}}
                                             <th scope="row"></th>
                                             <td>{{ $title->publisher }}</td>
-                                            <td>{{ $title->publication_year . '; ' . $title->edition .'.'. __(' Edition') }}</td>
-                                            <td>{{ $title->publication_format  }}</td>
+                                            <td>{{ $title->publication_year . '; ' . $title->edition . '.' . __(' Edition') }}
+                                            </td>
+                                            <td>{{ $title->publication_format }}</td>
                                             {{-- <td>{{ __('Publication format').': ' . $title->publication_format }}</td> --}}
                                         </tr>
 
                                         <tr>
-                                            <th scope="row">{{ 'Info' }}</th>
+                                            <th scope="row">{{ 'Info' }}:</th>
                                             <th scope="col">{{ __('Condition') }}</td>
-                                            <th scope="col"></td>
+                                            <th scope="col">
+                                                </td>
                                         </tr>
 
                                         <tr>
                                             <th scope="row"></th>
                                             <td>{{ $item->condition }}</td>
-                                            <td>{{ $title->description }} 
+                                            <td>{{ $title->description }}
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <th scope="row">{{ __(' Booking status') }}</th>
-                                            <th>{{ __('Status') }}</th>
-                                            <th scope="col">{{ __('Preferred delivery')}} </th>
+                                            <th scope="row">{{ __(' Status') }}:</th>
+                                            <th>{{ __('Availability') }}</th>
+                                            <th scope="col">{{ __('Preferred delivery') }} </th>
                                         </tr>
-                                        
+
                                         <tr>
                                             <th></th>
                                             <td>
-                                            @if ($item->status->available)
-                                                {{ __('available') }} @else {{ __('not available') }} @endif
+                                                @if ($item->status->available)
+                                                {{ __('available') }} @else {{ __('not available') }}
+                                                @endif
                                             </td>
                                             <td>
                                                 {{-- @foreach --}}
-                                            <ul><li>{{ $item->possible_delivery_methods }}</li></ul>
+                                                <ul>
+                                                    <li>{{ $item->possible_delivery_methods }}</li>
+                                                </ul>
                                             </td>
                                         </tr>
 
-                                        @if (!($item->status->available))
+                                        @if (!$item->status->available)
                                             <tr>
-                                                <th scope="row">{{ __('Booking Information') }}</th>
+                                                <th scope="row">{{ __('Booking Information') }}:</th>
                                                 <td>{{ $item }}</td>
                                                 <td>{{ __('Bookind date') }}</td>
                                                 <td>{{ __('Expected return') }}</td>
-                                                <td>{{ __('Delivery')  }}</td>
+                                                <td>{{ __('Delivery') }}</td>
                                             </tr>
-                                            @foreach($item->status() as $item)
-                                            <tr>
-                                                <th scope="row"></th>
-                                                <td>{{ $item }}</td>
-                                                <td>{{ $item->booking_date }}</td>
-                                                <td>{{ $item->return_date }}</td>
-                                                <td>{{ $item->delivery_method }}</td>
-                                            </tr>
+                                            @foreach ($item->status() as $item)
+                                                <tr>
+                                                    <th scope="row"></th>
+                                                    <td>{{ $item }}</td>
+                                                    <td>{{ $item->booking_date }}</td>
+                                                    <td>{{ $item->return_date }}</td>
+                                                    <td>{{ $item->delivery_method }}</td>
+                                                </tr>
                                             @endforeach
-                                        @endif                                       
-                                    @endforeach    
+                                        @endif
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
                         <div class="mt-8">
                             {{-- $item->title_id sn mit title_id üb ??? --}}
-                            <a href="{{ route('books.edit', $title->id) }}"
-                                class="form-button">{{ __('Edit') }}</a>
+                            <a href="{{ route('books.edit', $title->id) }}" class="form-button">{{ __('Edit') }}</a>
 
-                             <form action="{{ route('books.destroy', $title->id) }}" method="POST" ,
-                                class="inline-flex " data-title="{{ $item->title }}"
+                            <form action="{{ route('books.destroy', $title->id) }}" method="POST" , class="inline-flex "
+                                data-title="{{ $item->title }}"
                                 data-body="{{ __('Do you really want to delete the book') }}?">
                                 @csrf
                                 @method('delete')

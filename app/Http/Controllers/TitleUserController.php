@@ -83,8 +83,8 @@ class TitleUserController extends Controller
             'author' => 'required',
             'title' => 'required',
             'subtitle' => 'nullable|min:1',
-            'isbn10' => 'nullable|regex:',
-            'isbn13' => 'nullable|regex:',
+            'isbn10' => 'nullable',//|regex: ^(?= [0-9X]{10}$ | (?=(?:[0-9]+[-\ ]){3}) [-\ 0-9X]{13}$ ) [0-9]{1,5}[-\ ]? [0-9]+[-\ ]?[0-9]+[-\ ]? [0-9X] $',
+            'isbn13' => 'nullable',//|regex: ^(?= [0-9]{13}$ | (?=(?:[0-9]+[-\ ]){4}) [-\ 0-9]{17}$ ) 97[89][-\ ]? [0-9]{1,5}[-\ ]? [0-9]+[-\ ]?[0-9]+[-\ ]? [0-9] $',
             'category' => 'required',
             'publisher' => 'required',
             //'year'=> ['required', 'integer','digits:4','min: 0001' , 'max:'.$currentYear], //SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'publication_year' at row 1 für Daten von zB 1900 !!!

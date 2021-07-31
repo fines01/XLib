@@ -4,7 +4,8 @@
     <main class="sm:container main-container">
         <div class="flex">
             <div class="w-full">
-                <h1><strong>{{ $title->title . ' ' . $title->subtitle }}</strong>{{' ' . __('by') . ' ' . $title->author->first_name . ' ' . $title->author->last_name }}</h1>
+                <h1><strong>{{ $title->title . ' ' . $title->subtitle }}</strong>{{ ' ' . __('by') . ' ' . $title->author->first_name . ' ' . $title->author->last_name }}
+                </h1>
                 <section id="" class="dashboard-container mt-12">
                     <header class="form-header">
                         {{ __('Books') }}
@@ -21,27 +22,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($books as $i => $book)
+                            @foreach ($books as $i => $book)
                                 <tr>
                                     <td>{{ $i + $books->firstItem() }}</td>
                                     <td>{{ $book->condition }}</td>
                                     <td>{{ $book->user->username }}</td>
-                                    <td>@if($book->status->available) {{ __('available') }} @endif</td>
                                     <td>
-                                    @if($book->status->available)
-                                    <a href="{{ route('bookings.store', $book->id) }}"
-                                        class="btn fas fa-cart-plus"></a>
-                                    @else
-                                    {{ __('Expected return date: ') . $book->status->return_date }}
-                                    @endif
+                                        @if ($book->status->available)
+                                            {{ __('available') }} @endif
                                     </td>
-                                    </tr>
+                                    <td>
+                                        @if ($book->status->available)
+                                            <a href="{{ route('bookings.store', $book->id) }}"
+                                                class="btn fas fa-cart-plus"></a>
+                                        @else
+                                            {{ __('Expected return date: ') . $book->status->return_date }}
+                                        @endif
+                                    </td>
+                                </tr>
                             @endforeach
-                           </tbody>
-                          </table>
+                        </tbody>
+                    </table>
                     {{-- Pagination- Links --}}
                     <div class="pagination">
-                    {{ $books->links() }}
+                        {{ $books->links() }}
                     </div>
                 </section>
             </div>
