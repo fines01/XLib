@@ -71,7 +71,7 @@
                 <!-- Searchbar -->
                 <li>
                     <div class="search-container">
-                        <form action="">
+                        <form action="/search">
                             <input type="text" placeholder="Suchen..." name="search">
                             <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
                         </form>

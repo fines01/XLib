@@ -38,6 +38,9 @@ Route::resource('/books', 'TitleUserController');
 Route::resource('/users','UserController')->except('create','store'); 
 Route::resource('/authors', 'AuthorController');
 
+//Search-page:
+Route::get('/search', 'TitleController@search');
+
 
 
 // Autor: **create, store: über item bzw. user_title, **edit, update: über items, **destroy: automatisch wenn keine items mehr vorhanden sind

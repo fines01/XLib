@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\Title;
 use App\Models\TitleUser;
 use Illuminate\Http\Request;
@@ -39,5 +40,34 @@ class TitleController extends Controller
         //$books = TitleUser::with('users', 'status')->get();
     
         return view('titles.show', compact('title','books'));
+    }
+
+    public function search( Request $request)
+    {
+        // Search results for Titles oder Authors (Frage: umständlich? Inkl Autor- Suche, Aufteilung/Struktur ok? besser zB als search Trait ?)
+
+        dd ($request->input());
+        
+        $query= $request->input('search');
+        
+        $data1= Title::where([
+            ['title', '=', $query],
+            ['subtitle', '=', $query],
+        ])
+        ->orWhere('title',$query)->orWhere('subtitle',$query); //query passt? Ev. bessere Mögl??
+
+        $data2= Author::where([
+            ['first_name','=',$query],
+            ['last_name', '=', $query],
+        ])
+        ->orWhere('first_name',$query)->orWhere('last_name',$query);
+
+        if ($data1->exists()){
+            return $data1->get();//paginate(10);
+        }
+        else if ($data2->exists()){
+            return $data2->get();
+        }
+
     }
 }
