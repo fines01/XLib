@@ -51,20 +51,22 @@ class TitleController extends Controller
         
         //query fkt. n.: * wenn titel plus subtitel gesucht, verschrieben(extra Buchst), *nur gew schlagwörter in titel wie zb "php7 mysql" (dh fkt n be mehreren SW.)
         $data1= Title::
+        //where(Title::raw('title + subtitle'), 'like', "%{$search}%")-> 
+        //ACHTUNG ev. SQL Injection mögl. bei Raw Eingabe: schützen
         where( function($query) use($search){
             $query->orWhere('title','like', "%{$search}%")->orWhere('subtitle','like', "%{$search}%");
         });
         //--> https://laravel.com/docs/8.x/queries#logical-grouping 
         
-        // SELECT * from authors WHERE 'title' LIKE %$query%' OR 'subtitle' LIKE %$query% 
+        // SELECT * from titles WHERE 'title' LIKE %$query%' OR 'subtitle' LIKE %$query% 
         
-        //fkt n w.o.
+        //Version 2 fkt auch n. für ganzen Namen:
         $data2= Author::
-        // where([
-        //     ['first_name','like',"%{$search}%"], //fkt.n.!!! für ganzen Namen wrm?
-        //     ['last_name', 'like', "%{$search}%"],
-        //     ])
-            where('first_name','like', "%{$search}%")->orWhere('last_name','like',"%{$search}%");
+        where([
+            ['first_name','like',"%{$search}%"],
+            ['last_name', 'like', "%{$search}%"],
+            ])->
+            orWhere('first_name','like', "%{$search}%")->orWhere('last_name','like',"%{$search}%");
         
         if ($data1->exists()){
             return $data1->get();//paginate(10);
