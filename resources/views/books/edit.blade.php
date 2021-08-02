@@ -32,7 +32,7 @@
                                 border-red-500 @enderror>
                                 <option value="">{{ __('Select...') }}</option>
                                 @foreach ($authors as $author)
-                                    <option value="{{ $author->id }}" @if ($author->id == old('author')) selected @endif>
+                                    <option value="{{ $author->id }}" @if ($author->id == old('author', $book->title->author_id)) selected @endif>
                                         {{ $author->first_name . ' ' . $author->last_name }} </option>
                                 @endforeach
                             </select>
@@ -119,7 +119,7 @@
                                 <option value="">{{ __('Select...') }}</option>
                                 @foreach ($categories as $cat)
                                     <option value="{{ $cat->id }}"
-                                        {{ old('category', $cat->id) == $cat->id ? 'selected' : '' }}>
+                                        {{ old('category', $book->title->category_id) == $cat->id ? 'selected' : '' }}>
                                         {{ $cat->type . ': ' . $cat->category_name }}
                                     </option>
                                 @endforeach

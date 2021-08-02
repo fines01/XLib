@@ -39,9 +39,9 @@ class BookingController extends Controller
      */
     public function create()
     {
-        $book= TitleUser::where()->with('titles','users')->get();
-        dd($book);
-        return view('bookings.create');
+        //$book= TitleUser::where()->with('titles','users')->get();
+        dd('booking form');
+        return view('bookings.create', compact('book'));
     }
     /**
      * Store a newly created resource in storage.

@@ -6,7 +6,7 @@
         <div class="flex">
             <div class="w-full">
 
-                <h1>Einzeltitlel zeigen</h1>
+                <h1>{{ __('Details') }}</h1>
                 <div class="mt-8">
                     <a href="{{ route('books.index') }}" class="form-button">{{ __('Go back') }}</a>
                 </div>
@@ -21,7 +21,7 @@
 
                         <div class="dashboard-container">
                             <header class="form-header">
-                                {{ __('Header blabla') }}
+                                {{ __('Show Details') }}
                             </header>
                             <table class="m-3 detail-table">
                                 <thead>

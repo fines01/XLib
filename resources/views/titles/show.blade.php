@@ -33,8 +33,8 @@
                                     </td>
                                     <td>
                                         @if ($book->status->available)
-                                            <a href="{{ route('bookings.store', $book->id) }}"
-                                                class="btn fas fa-cart-plus"></a>
+                                            <a href="{{ route('bookings.create', $book->id) }}"
+                                                class="btn fas fa-book"></a>
                                         @else
                                             {{ __('Expected return date: ') . $book->status->return_date }}
                                         @endif

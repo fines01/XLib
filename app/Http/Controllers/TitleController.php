@@ -50,13 +50,13 @@ class TitleController extends Controller
         $search= $request->input('search');
         
         //query fkt. n.: * wenn titel plus subtitel gesucht, verschrieben(extra Buchst), *nur gew schlagwörter in titel wie zb "php7 mysql" (dh fkt n be mehreren SW.)
+        
+        //ACHTUNG ev. SQL Injection mögl. bei Raw Eingabe: schützen
         $data1= Title::
         //where(Title::raw('title + subtitle'), 'like', "%{$search}%")-> 
-        //ACHTUNG ev. SQL Injection mögl. bei Raw Eingabe: schützen
         where( function($query) use($search){
             $query->orWhere('title','like', "%{$search}%")->orWhere('subtitle','like', "%{$search}%");
         });
-        //--> https://laravel.com/docs/8.x/queries#logical-grouping 
         
         // SELECT * from titles WHERE 'title' LIKE %$query%' OR 'subtitle' LIKE %$query% 
         
