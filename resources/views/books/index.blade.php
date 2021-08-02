@@ -18,8 +18,9 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">{{ __('Title') }}</th>
+                                <th scope="col"></th>
                                 <th scope="col">{{ __('Author') }}</th>
+                                <th scope="col">{{ __('Title') }}</th>
                                 <th scope="col">{{ __('Category') }}</th>
                                 <th scope="col"></th>
                             </tr>
@@ -29,8 +30,9 @@
                                 <tr>
                                     
                                     <td>{{ $i + $books->firstItem() }}</td>
-                                    <td>{{ $item->title->title . ' ' .$item->title->subtitle}}</td>
+                                    <td><img src="https://picsum.photos/60/100" alt=""></td>
                                     <td>{{ $item->title->author->first_name . ' ' . $item->title->author->last_name }}</td>
+                                    <td><strong>{{ $item->title->title . ' ' .$item->title->subtitle}}</strong></td>
                                     <td>{{ $item->title->category->type . ': ' . $item->title->category->category_name }}</td>
                                     {{--show button, edit und delete in show.blade.php ID: auf pivot verweisen (title_id des jew auth users (==title_id wo user_id == user))--}}
                                     <td><a href="{{ route('books.show', $item->title_id) }}"

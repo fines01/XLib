@@ -13,6 +13,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
+                                <th scope="col"></th>
                                 <th scope="col">{{ __('Author') }}</th>
                                 <th scope="col">{{ __('Title') }}</th>
                                 <th scope="col">{{ __('Edition') }}</th>
@@ -23,6 +24,7 @@
                             @foreach ($titles as $i => $title)
                                 <tr>
                                     <td>{{ $i + $titles->firstItem() }}</td>
+                                    <td><img src="https://picsum.photos/70/100" alt=""></td>
                                     <td>{{ $title->author->first_name . ' ' .  $title->author->last_name}}</td>
                                     <td><strong>{{ $title->title . ' ' . $title->subtitle }}</strong></td>
                                     <td>{{ $title->edition . '. ' . __('Edition') }}</td>

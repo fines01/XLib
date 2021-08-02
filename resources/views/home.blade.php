@@ -44,11 +44,6 @@
                         </tr>
                         <tr>
                             <td><img src="https://picsum.photos/100/150" alt=""></td>
-                            <td>Lorem ipsum dolor sit. Lorem, ipsum.</td>
-                            <td>Autor Autor</td>
-                        </tr>
-                        <tr>
-                            <td><img src="https://picsum.photos/100/150" alt=""></td>
                             <td>Lorem, ipsum dolor.</td>
                             <td>Jane Doe</td>
                         </tr>

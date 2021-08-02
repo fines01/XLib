@@ -18,7 +18,7 @@
                                 <th scope="col">{{ __('Show Titles') }}</th>
                                 @can('admin')
                                 <th scope="col">{{ __('Edit') }}</th>
-                                <th>{{ __('Delete') }}</th>
+                                {{-- <th>{{ __('Delete') }}</th> --}}
                                 @endcan
                             </tr>
                         </thead>
@@ -33,7 +33,7 @@
                                         @can('admin')
                                         <td><a href="{{ route('authors.edit', $author->id) }}"
                                             class="btn fa fa-edit"></a></td>
-                                            <td>
+                                            {{-- <td>
                                                 <form action="{{ route('authors.destroy', $author->id) }}" method="POST" class="delete-form"
                                                     data-title="{{ $author->first_name . ' ' . $author->last_name }}"
                                                     data-body="{{ __('Do you really want to delete the author') }}?">
@@ -41,7 +41,7 @@
                                                 @method('delete')
                                                 <button type="submit" class="btn fa fa-trash"></button>
                                                 </form>
-                                            </td>
+                                            </td> --}}
                                         @endcan
                                     </tr>
                             @endforeach
