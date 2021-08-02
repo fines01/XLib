@@ -44,13 +44,12 @@ class TitleController extends Controller
 
     public function search( Request $request)
     {
-        // Search results for Titles oder Authors (Umständlich? Inkl Autor- Suche, Aufteilung/Struktur ok? besser zB als search Trait ?)
 
         //dd ($request->input('search'));
-        $search= $request->input('search');
+        $searches=explode(" ", $request->input('search'));
         
-        //query fkt. n.: * wenn titel plus subtitel gesucht, verschrieben(extra Buchst), *nur gew schlagwörter in titel wie zb "php7 mysql" (dh fkt n be mehreren SW.)
-        
+        // suche korrigieren !
+        foreach ($searches as $search){
         //ACHTUNG ev. SQL Injection mögl. bei Raw Eingabe: schützen
         $data1= Title::
         //where(Title::raw('title + subtitle'), 'like', "%{$search}%")-> 
@@ -67,6 +66,7 @@ class TitleController extends Controller
             ['last_name', 'like', "%{$search}%"],
             ])->
             orWhere('first_name','like', "%{$search}%")->orWhere('last_name','like',"%{$search}%");
+        }
         
         if ($data1->exists()){
             return $data1->get();//paginate(10);
