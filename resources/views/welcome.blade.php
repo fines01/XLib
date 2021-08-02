@@ -24,7 +24,7 @@
                     Info
                 </header>
                 <div class="w-full p-6">
-                    <h3>Lorem, ipsum? <i class="fas fa-heart"></i></h3>
+                    <h3>Lorem, ipsum? </i></h3>
                     <p>System zum gegenseitigen Teilen und zur Verwaltung von Büchern.
                     </p>
                     <p>Mutual book sharing and book management system. Lorem ipsum, dolor sit amet consectetur adipisicing
@@ -51,22 +51,22 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><img src="https://picsum.photos/100/150" alt=""></td>
+                            <td><img src="https://picsum.photos/90/110" alt=""></td>
                             <td>Lorem ipsum dolor sit.</td>
                             <td>Lorem Ipsum.</td>
                         </tr>
                         <tr>
-                            <td><img src="https://picsum.photos/100/150" alt=""></td>
+                            <td><img src="https://picsum.photos/90/110" alt=""></td>
                             <td>Lorem ipsum dolor sit. Lorem, ipsum.</td>
-                            <td>Autor Autor</td>
+                            <td>Dolor Es Sit</td>
                         </tr>
                         <tr>
-                            <td><img src="https://picsum.photos/100/150" alt=""></td>
+                            <td><img src="https://picsum.photos/90/110" alt=""></td>
                             <td>Lorem, ipsum dolor.</td>
-                            <td>Jane Doe</td>
+                            <td>Jane Doe <i class="fas fa-heart"></td>
                         </tr>
                         <tr>
-                            <td><img src="https://picsum.photos/100/150" alt=""></td>
+                            <td><img src="https://picsum.photos/90/110" alt=""></td>
                             <td>Lorem ipsum dolor sit amet.</td>
                             <td>Joe Doe</td>
                         </tr>
