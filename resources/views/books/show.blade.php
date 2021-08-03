@@ -48,7 +48,8 @@
                                         </tr>
                                         <tr>
                                             <th scope="row">{{ __('Author') }}:</th>
-                                            <td colspan="2">{{ $title->author->first_name . ' ' . $title->author->last_name}}</td>
+                                            <td colspan="2">
+                                                {{ $title->author->first_name . ' ' . $title->author->last_name }}</td>
                                         </tr>
                                         <tr>
                                             <th scope="row">{{ __('Category') }}:</th>
@@ -138,6 +139,18 @@
                                                     <td>{{ $item->delivery_method }}</td>
                                                 </tr>
                                             @endforeach
+                                            <tr>
+                                                <th scope="row">{{ __('Confirmation of return') }}:</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <form action="{{ route('bookings.destroy', $confirmDelete=true) }}" method="POST", class="">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="form-button">{{ __('Book returned') }}</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
                                         @endif
                                     @endforeach
                                 </tbody>

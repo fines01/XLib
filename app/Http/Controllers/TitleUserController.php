@@ -63,8 +63,8 @@ class TitleUserController extends Controller
     public function create()
     {
         $authors=Author::orderBy('last_name')->orderBy('first_name')->get();
-        $books= TitleUser::select()->with('status','title')->get();
         $categories= Category::orderBy('type')->orderBy('category_name')->get();
+        $books= TitleUser::select()->with('status','title')->get();
         return view('books.create', compact('books','categories', 'authors')); 
     }
 
@@ -256,14 +256,7 @@ class TitleUserController extends Controller
             $status='success';
             $msg='Book '.$title->title.' deleted';
         }
-        
-        // if( request()->ajax() ){ //kein ajax über show
-        //     return response()->json([
-        //         'status' => $status,
-        //         'msg' =>$msg
-        //     ]);
-        // }
-        
+                
         return redirect()->route('books.index')->with([$status => $msg]);
     }
 }

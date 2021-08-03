@@ -22,7 +22,7 @@
                                 <th scope="col">{{ __('Author') }}</th>
                                 <th scope="col">{{ __('Title') }}</th>
                                 <th scope="col">{{ __('Category') }}</th>
-                                <th scope="col"></th>
+                                <th scope="col">{{ __('Details') }}</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -7,7 +7,7 @@
             <div class="w-full">
 
                 <div class="mt-8">
-                    <a href="{{ route('books.create') }}" class="form-button">{{ __('Go back') }}</a>
+                    <a href="{{ url()->previous() }}" class="form-button">{{ __('Go back') }}</a>
                     <a href="{{ route('authors.index') }}" class="form-button">{{ __('All authors') }}</a>
                 </div>
 

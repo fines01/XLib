@@ -23,7 +23,7 @@
                         </thead>
                         <tbody>
                             @foreach ($books as $i => $book)
-                                <tr>
+                                <tr @if (Auth::user()->id == $book->user->id) class="text-gray-100" @endif>
                                     <td>{{ $i + $books->firstItem() }}</td>
                                     <td>{{ $book->condition }}</td>
                                     <td>{{ $book->user->username }}</td>
@@ -32,10 +32,10 @@
                                             {{ __('available') }} @endif
                                     </td>
                                     <td>
-                                        @if ($book->status->available)
-                                            <a href="{{ route('bookings.create', $book->id) }}"
+                                        @if ($book->status->available && $book->user->id != Auth::user()->id)
+                                            <a href="{{ route('bookings.place', [$book->title_id, $book->user_id]) }}"
                                                 class="btn fas fa-book"></a>
-                                        @else
+                                        @elseif (!$book->status->available)
                                             {{ __('Expected return date: ') . $book->status->return_date }}
                                         @endif
                                     </td>
@@ -52,3 +52,10 @@
         </div>
     </main>
 @endsection
+
+@if (session('success'))
+    @section('jsScript')
+        myToastr('success','{{ session('success') }}');
+    @endsection
+@endif
+

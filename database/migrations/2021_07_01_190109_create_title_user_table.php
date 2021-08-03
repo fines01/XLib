@@ -26,7 +26,7 @@ class CreateTitleUserTable extends Migration
 
             $table->integer('max_loan_days')->default(60); //max loan period in in days. Später ev vom User selber definierbar.
             $table->string('condition')->default("o.k."); //enum, radio-btns (sher gut, mittel, sehr mitgenommen etc.), oder string mit user- beschreibung? // default ok, ->nullable() entfernen
-            $table->string('possible_delivery_methods')->nullable(); // personal, mail-delivery. personal: nur mögl wenn User Adresse und Namen hinterlegt hat. // Type ÄNDERN auf set(in-person, postal) & nicht nullable!
+            $table->set('possible_delivery_methods',['mail', 'personal']); // personal, mail-delivery. personal: nur mögl wenn User Adresse und Namen hinterlegt hat. // Type ÄNDERN auf set(in-person, postal) & nicht nullable!
             
             $table->timestamps();
         });
