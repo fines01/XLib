@@ -23,13 +23,13 @@
                         </thead>
                         <tbody>
                             @foreach ($books as $i => $book)
-                                <tr @if (Auth::user()->id == $book->user->id) class="text-gray-100" @endif>
+                                {{-- <tr @if (Auth::user()->id == $book->user->id) class="text-gray-100" @endif> --}}
+                                <tr>
                                     <td>{{ $i + $books->firstItem() }}</td>
                                     <td>{{ $book->condition }}</td>
                                     <td>{{ $book->user->username }}</td>
                                     <td>
-                                        @if ($book->status->available)
-                                            {{ __('available') }} @endif
+                                           <strong>{{ $book->status->available ? __('available') : __('not available') }}</strong> 
                                     </td>
                                     <td>
                                         @if ($book->status->available && $book->user->id != Auth::user()->id)

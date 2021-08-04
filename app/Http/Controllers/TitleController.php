@@ -34,7 +34,7 @@ class TitleController extends Controller
         
         // alle items eines Titels, inkl. Status (f. Buchung)
         $books= TitleUser::where('title_id', $title->id)->with('title', 'user', 'status')->paginate(10);
-    
+        
         return view('titles.show', compact('title','books'));
     }
 
@@ -44,24 +44,21 @@ class TitleController extends Controller
         //dd ($request->input('search'));
         $searches=explode(" ", $request->input('search'));
         
-        // suche korrigieren !
         foreach ($searches as $search){
-            //ACHTUNG ev. SQL Injection mögl. bei Raw Eingabe: schützen
-            $data1= Title::
-            //where(Title::raw('title + subtitle'), 'like', "%{$search}%")-> 
-            where( function($query) use($search){
+            $data1= Title::where( function($query) use($search){
                 $query->orWhere('title','like', "%{$search}%")->orWhere('subtitle','like', "%{$search}%");
             });
             
             // SELECT * from titles WHERE 'title' LIKE %$query%' OR 'subtitle' LIKE %$query% 
             
-            //Version 2 fkt auch n. für ganzen Namen:
-            $data2= Author::
-            where([
-                ['first_name','like',"%{$search}%"],
-                ['last_name', 'like', "%{$search}%"],
-                ])->
-                orWhere('first_name','like', "%{$search}%")->orWhere('last_name','like',"%{$search}%");
+            $data2= Author::where( function($query) use ($search){
+                $query->orWhere('first_name','like', "%{$search}%")->orWhere('last_name','like',"%{$search}%");
+            });
+        //     where([
+        //         ['first_name','like',"%{$search}%"],
+        //         ['last_name', 'like', "%{$search}%"],
+        //         ])->
+        //         orWhere('first_name','like', "%{$search}%")->orWhere('last_name','like',"%{$search}%");
         }
         
         if ($data1->exists()){

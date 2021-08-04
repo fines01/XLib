@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingMail;
 use App\Models\Author;
 use App\Models\Booking;
 use App\Models\Status;
@@ -11,6 +12,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -28,11 +30,11 @@ class BookingController extends Controller
     {
         // bookings made by user, past and present. Booking date, end date (return), status, title.
         
-        $bookings= Booking::where('user_id', Auth::id() )->with('statuses')->orderBy('created_at')->paginate(10);
+        $bookings= Booking::where('user_id', Auth::id() )->with('statuses')->orderBy('created_at')->paginate(5);
         // & books w. titles, authors
-        dd($bookings);
+        //return $bookings;
         
-        return view('bookings.index');
+        return view('bookings.index', compact('bookings'));
     }
 
     /**
@@ -60,7 +62,8 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->all();      
+        //return $request->all();  
+            
         $request->validate([
             'delivery' => 'required',
             'address' => 'min:2' // ADDRESS (for now)
@@ -68,9 +71,26 @@ class BookingController extends Controller
         
         // send confirmation mail to user and notice mail to owner. If successful ->DB:
         
-
+        $owner=User::where('id',$request->user)->get(); 
+        $title=Title::where('id',$request->title)->with('author')->get(); //collection
+                
+        $data=[
+        'owner' => $owner->first()->username,
+        'title' => $title->first()->title . ' '.$title->first()->subtitle,
+        'author' => $title->first()->author->first_name . ' '. $title->first()->author->last_name,
+        'booker' => auth()->user()->username,
+        'email' => auth()->user()->email,
+        'address' => $request->address
+        ];
+    
+        //dd($data);
+               
+        Mail::to($owner->first()->email)->send( new BookingMail($data) );
         
-            
+        //Mail::to( auth()->user()->email )->send( new ConfirmationMail($data) ); // Bookingconfirmation user 
+
+        // if (! Mail::failures() ){} 
+           
         // DB: new bookings, update statuses.
         $booking = Booking::create([
             'user_id' => auth()->user()->id,
