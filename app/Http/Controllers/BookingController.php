@@ -60,14 +60,16 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->all();
-                
+        //return $request->all();      
         $request->validate([
             'delivery' => 'required',
             'address' => 'min:2' // ADDRESS (for now)
         ]);
         
         // send confirmation mail to user and notice mail to owner. If successful ->DB:
+        
+
+        
             
         // DB: new bookings, update statuses.
         $booking = Booking::create([
@@ -114,43 +116,47 @@ class BookingController extends Controller
      * @param bool $returnConfirmed
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $returnConfirmed=false)
+    public function destroy($id)
     {
         // besser soft-delete um verg Buchungen sehen zu können, später?
-        // Bei storno (später), wenn nicht vom Besitzer bestätigt (später) &
-        // Nach Ablauf der 2 Monate (momentan, sollte später vom owner bestätigt werden) bzw bei bestätigter Rückgabe (später?)
-        
-        //$returnConfirmed= false;
-        $returnDate = Status::where('booking_id',$id)->select('return_date');
+        // Bei storno (später) & wenn nicht vom Besitzer bestätigt (später) 
+               
         $booking= Booking::find($id);
         $bookStatus= Status::where('booking_id',$id);
-        dd($id, $returnDate,$booking,$bookStatus);
+        //dd($id, $returnDate,$booking,$bookStatus);
         
-        if( $returnConfirmed ){
-            $booking->delete();
+        if( $booking ){
             $bookStatus->update([
-                'available' => true
+                'available' => 1,
+                'booking_date' => NULL,
+                'return_date' => NULL,
+                'notification_sent' => NULL,
+                'delivery_method' => NULL
+                
             ]);
+            $booking->delete();
             $key=200;
             $status='success';
             $msg='Return confirmed';
         }
-        else if (!$booking){
+        else {
             $key=404;
             $status='error';
             $msg='Booking not found';
         }
-        else if ($returnDate <= Carbon::now()){
-            $booking->delete(); // besser notification an user senden und Buchung nicht automatisch löschen.
-            $bookStatus->update([
-                'available' => 1
-            ]);
-            $key=200;
-            $status='warning';
-            $msg='Booking expired.';
-        }
         
-        return redirect()->route('books.index')->with([$status =$msg]);
+        // $returnDate = Status::where('booking_id',$id)->select('return_date');
+        // if ($returnDate <= jetzt (timestamps)){
+        //     $booking->delete(); // besser notification an user senden und Buchung nicht automatisch löschen.
+        //     $bookStatus->update([
+        //         'available' => 1, ...
+        //     ]);
+        //     $key=200;
+        //     $status='warning';
+        //     $msg='Booking expired.';
+        // }
+        
+        return redirect()->route('books.index')->with([$status => $msg]);
         
     }
     

@@ -125,26 +125,26 @@
                                         @if (!$item->status->available)
                                             <tr>
                                                 <th scope="row">{{ __('Booking Information') }}:</th>
-                                                <td>{{ $item }}</td>
-                                                <td>{{ __('Bookind date') }}</td>
-                                                <td>{{ __('Expected return') }}</td>
-                                                <td>{{ __('Delivery') }}</td>
+                                                {{-- <td>{{ $item }}</td> --}}
+                                                <th scope="col">{{ __('Booking date') }}</td>
+                                                <th scope="col">{{ __('Expected return') }}</td>
+                                                <th scpe="col">{{ __('Delivery') }}</td>
                                             </tr>
-                                            @foreach ($item->status() as $item)
+                                            
                                                 <tr>
                                                     <th scope="row"></th>
-                                                    <td>{{ $item }}</td>
-                                                    <td>{{ $item->booking_date }}</td>
-                                                    <td>{{ $item->return_date }}</td>
-                                                    <td>{{ $item->delivery_method }}</td>
+                                                    {{-- <td>{{ $item }}</td> --}}
+                                                    <td>{{ $item->status->booking_date }}</td>
+                                                    <td>{{ $item->status->return_date }}</td>
+                                                    <td>{{ $item->status->delivery_method }}</td>
                                                 </tr>
-                                            @endforeach
+                                            
                                             <tr>
                                                 <th scope="row">{{ __('Confirmation of return') }}:</th>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <form action="{{ route('bookings.destroy', $confirmDelete=true) }}" method="POST", class="">
+                                                    <form action="{{ route('bookings.destroy', $item->status->booking_id) }}" method="POST", class="">
                                                         @csrf
                                                         @method('delete')
                                                         <button type="submit" class="form-button">{{ __('Book returned') }}</button>

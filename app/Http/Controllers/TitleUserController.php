@@ -190,10 +190,10 @@ class TitleUserController extends Controller
             'delivery' => 'required'
         ]);
         
-        // $authorId= Title::find($id)->select('author_id')->first()->author_id; //umständlich? notwendig?
+        // $authorId= Title::find($id)->select('author_id')->first()->author_id; 
         //ddd($authorId);
         
-        // Author::where('id' ,Title::find($id)->select('author_id')->first()->author_id)->update([  //fkt.n.? vorerst Pulldown, später ajax autocomplete, rest in AuthorController
+        // Author::where('id' ,Title::find($id)->select('author_id')->first()->author_id)->update([  //? vorerst Pulldown, später ajax autocomplete, rest in AuthorController
         //     'first_name' => $request->fname,
         //     'last_name' => $request->lname
         // ]);

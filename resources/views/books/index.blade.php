@@ -22,6 +22,7 @@
                                 <th scope="col">{{ __('Author') }}</th>
                                 <th scope="col">{{ __('Title') }}</th>
                                 <th scope="col">{{ __('Category') }}</th>
+                                <th scope="col">{{ __('Status') }}</th>
                                 <th scope="col">{{ __('Details') }}</th>
                             </tr>
                         </thead>
@@ -35,6 +36,7 @@
                                     <td><strong>{{ $item->title->title . ' ' .$item->title->subtitle}}</strong></td>
                                     <td>{{ $item->title->category->type . ': ' . $item->title->category->category_name }}</td>
                                     {{--show button, edit und delete in show.blade.php ID: auf pivot verweisen (title_id des jew auth users (==title_id wo user_id == user))--}}
+                                    <td>{{ $item->status->available ? 'available' : 'not available' }}</td>
                                     <td><a href="{{ route('books.show', $item->title_id) }}"
                                             class="btn fa fa-eye"></a></td>
                                     {{-- <td><a href="{{ route('books.edit', $item->id) }}"
