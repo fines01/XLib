@@ -160,7 +160,7 @@
             <li><a href="#"><i class="fas fa-arrow-up"></i></a></li>
         </ul>
 
-        <!-- <p>&copy fi 2021</p> -->
+        <div class="text-center text-gray-500 text-xs mt-3 hover:text-gray-400">&copy FI 2021</div>
 
     </footer>
     <!-- end footer -->
@@ -169,6 +169,7 @@
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ asset('js/toastr-master/build/toastr.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="/js/test.js"></script>
     {{-- <script src="{{ asset('js/index.js') }}"></script> --}}
 
     @if (View::hasSection('jsScript'))

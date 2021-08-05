@@ -133,12 +133,12 @@ body {
 
 
 /* @media screen and (max-width: 1300px){ */
-  section {
-    /* einzige Mögl dass Inh der Site ganzen Bildschirm bedeckt (trotz: body{ min-height:100vh;} ?????
+  /* section {
+    einzige Mögl dass Inh der Site ganzen Bildschirm bedeckt (trotz: body{ min-height:100vh;} ?????
     aber es entsthehen leere Bereiche/ zu große Abstände in der Site (über leere bereiche scrollen-> macht keinen Sinn). Warum / Wie einfach die ganze Seite /Bildschirm bedecken? */
     /* min-height: 95vh; */
-    /* padding: 4rem 0; */
-  }
+    /* padding: 4rem 0;
+  } */
   
 /* } */
 

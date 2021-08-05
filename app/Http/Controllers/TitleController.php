@@ -44,36 +44,44 @@ class TitleController extends Controller
         //dd ($request->input('search'));
         $searches=explode(" ", $request->input('search'));
         
-        foreach ($searches as $search){
-            $data1= Title::where( function($query) use($search){
-                $query->orWhere('title','like', "%{$search}%")->orWhere('subtitle','like', "%{$search}%");
-            });
+        for($i=0; $i<count($searches); $i++){
             
-            // SELECT * from titles WHERE 'title' LIKE %$query%' OR 'subtitle' LIKE %$query% 
-            
-            $data2= Author::where( function($query) use ($search){
-                $query->orWhere('first_name','like', "%{$search}%")->orWhere('last_name','like',"%{$search}%");
-            });
-        //     where([
-        //         ['first_name','like',"%{$search}%"],
-        //         ['last_name', 'like', "%{$search}%"],
-        //         ])->
-        //         orWhere('first_name','like', "%{$search}%")->orWhere('last_name','like',"%{$search}%");
+                $data1[$i] = Title::where( function($query) use($searches, $i){
+                    $query->orWhere('title','like','%'.$searches[$i].'%')->orWhere('subtitle','like', '%'.$searches[$i].'%');
+                });
+                if ($data1[$i]->exists() ){
+                    if ($i != 0 && $data1[$i] !== $data1[$i-1] ) continue;
+                    $titleSearch[$i] = $data1[$i]->with('author')->get();//paginate(10);
+                };
+                
+                $data2[$i]= Author::where( function($query) use ($searches, $i){
+                    $query->orWhere('first_name','like', '%'.$searches[$i].'%')->orWhere('last_name','like','%'.$searches[$i].'%');
+                });
+
+                 if ($data2[$i]->exists()){
+                    if ($i != 0 && $data2[$i] !== $data2[$i-1] ) continue;
+                    $authorSearch[$i] = $data2[$i]->with('titles')->get();
+                };
+               
         }
+                
+            // }
+            
+            // SELECT * from titles WHERE 'title' LIKE %$query%' OR 'subtitle' LIKE %$query% // // '%'.$search.'%'
+            // for($i=0; $i<Author::count(); $i++){
+            //     $data2[$i]= Author::where( function($query) use ($search){
+            //         $query->orWhere('first_name','like', "%{$search}%")->orWhere('last_name','like',"%{$search}%");
+            //     });
+            // }
+
+        // if ($data2[$i]->exists()){
+        //     $authorSearch = $data2[$i]->with('titles')->get();
+        // };
         
-        if ($data1->exists()){
-            return $data1->get();//paginate(10);
-            dd($data1);
-        }
-        else if ($data2->exists()){
-            return $data2->get();
-            dd($data2);
-        }
-        else {
-            dd('no results found');
-        }
-
-        // return: view mit Tabelle & Links zu den Titeln (titles.show oder authors.show).
-
+       //return $authorSearch;
+        if (isset($titleSearch) && isset($authorSearch)){ return view('searches.index', compact('titleSearch','authorSearch'));}
+        if (isset($titleSearch))  {return view('searches.index', compact('titleSearch'));}
+        if (isset($authorSearch)) {return view('searches.index', compact('authorSearch'));}
+        if(!isset($authorearchS) && !isset($titleSearch)){ return view('searches.index');}
     }
 }
