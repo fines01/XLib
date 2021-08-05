@@ -68,15 +68,6 @@ class TitleController extends Controller
             // }
             
             // SELECT * from titles WHERE 'title' LIKE %$query%' OR 'subtitle' LIKE %$query% // // '%'.$search.'%'
-            // for($i=0; $i<Author::count(); $i++){
-            //     $data2[$i]= Author::where( function($query) use ($search){
-            //         $query->orWhere('first_name','like', "%{$search}%")->orWhere('last_name','like',"%{$search}%");
-            //     });
-            // }
-
-        // if ($data2[$i]->exists()){
-        //     $authorSearch = $data2[$i]->with('titles')->get();
-        // };
         
        //return $authorSearch;
         if (isset($titleSearch) && isset($authorSearch)){ return view('searches.index', compact('titleSearch','authorSearch'));}
