@@ -18,6 +18,7 @@
 
                         {{-- AUTHOR --}}
                         {{-- 1.: Dropdown. Besser über ajax & autocomplete, später --}}
+                        {{-- probl auch bei dten aus API: ein string, nicht unbedingt klar ab wo vornamen -> nachnamen, müsste meine DB anpassen --}}
                         <div class="flex flex-wrap">
                             <label for="author" class="form-label">
                                 {{ __('Author') }}:
@@ -32,9 +33,10 @@
                                 @endforeach
                             </select>
                             {{-- 2.: author --> create NEW: besser in Modal Feld als eig Seite, ajax, später --}}
-                            <p  class="form-link-text font-bold">{{ __('Author not in List?') }}
-                        
-                            <a href="{{ route('authors.create') }}" class="form-link ml-2">{{ __('Register new Author') }}</a>
+                            <p class="form-link-text font-bold">{{ __('Author not in List?') }}
+
+                                <a href="{{ route('authors.create') }}"
+                                    class="form-link ml-2">{{ __('Register new Author') }}</a>
                             </p>
                             @error('author')
                                 <p class="error-msg">
@@ -107,8 +109,8 @@
                                     ISBN-10:
                                 </label>
                                 <input id="isbn10" type="text"
-                                    class="form-input w-full block @error('isbn10') border-red-500 @enderror" name="isbn10"
-                                    value="{{ old('isbn10') }}" autocomplete="isbn10">
+                                    class="isbn form-input w-full block @error('isbn10') border-red-500 @enderror"
+                                    name="isbn10" value="{{ old('isbn10') }}" autocomplete="isbn10">
                                 @error('isbn10')
                                     <p class="error-msg">
                                         {{ $message }}
@@ -120,14 +122,18 @@
                                     ISBN-13:
                                 </label>
                                 <input id="isbn13" type="text"
-                                    class="form-input w-full block @error('isbn13') border-red-500 @enderror" name="isbn13"
-                                    value="{{ old('isbn13') }}" autocomplete="isbn13">
+                                    class="isbn form-input w-full block @error('isbn13') border-red-500 @enderror"
+                                    name="isbn13" value="{{ old('isbn13') }}" autocomplete="isbn13">
                                 @error('isbn13')
                                     <p class="error-msg">
                                         {{ $message }}
                                     </p>
                                 @enderror
                             </div>
+                            {{-- isbn search: besser über ajax autocomplete? später --}}
+                            <p class="form-link-text font-bold">{{ __('Try ISBN Search') }}: <button id="isbn-search"
+                                    class="fas fa-search"></button>
+                            </p>
                         </div>
 
                         {{-- KATEGORIE --}}
@@ -247,7 +253,8 @@
                             </label>
                             <textarea id="condition" type="text"
                                 class="form-input w-full @error('isbn-10') border-red-500 @enderror" name="condition"
-                                value="{{ old('condition') }}" autocomplete="condition" placeholder="o.k.">o.k.</textarea>
+                                value="{{ old('condition') }}" autocomplete="condition"
+                                placeholder="o.k.">o.k.</textarea>
                             @error('condition')
                                 <p class="error-msg">
                                     {{ $message }}
@@ -274,6 +281,9 @@
                                 </p>
                             @enderror
                         </div>
+
+                        {{-- hidden input für title img from API? --}}
+                        <input type="hidden" id="title-img" name="titleImg" value="">
 
                         <div class="flex flex-wrap">
                             <button type="submit" class="form-button mb-12">

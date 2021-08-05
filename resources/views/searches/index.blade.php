@@ -15,7 +15,7 @@
                      <ul class="list-inside">
                         <li><a href="{{ route('titles.show', $title->id) }}" class="text-blue-900">{{ $title->title }}</a></li>
                        </ul>
-                       @endforeach
+                     @endforeach
                     </ul>
                 @endforeach
             @endif

@@ -31,7 +31,7 @@
                                 <tr>
                                     
                                     <td>{{ $i + $books->firstItem() }}</td>
-                                    <td><img src="https://picsum.photos/60/100" alt=""></td>
+                                    <td><img src="{{ ($item->title->title_img) ? url($item->title->title_img) : url('https://picsum.photos/60/100') }}" alt=""></td>
                                     <td>{{ $item->title->author->first_name . ' ' . $item->title->author->last_name }}</td>
                                     <td><strong>{{ $item->title->title . ' ' .$item->title->subtitle}}</strong></td>
                                     <td>{{ $item->title->category->type . ': ' . $item->title->category->category_name }}</td>

@@ -104,6 +104,9 @@
                                     </p>
                                 @enderror
                             </div>
+                            <p class="form-link-text font-bold">{{ __('Try ISBN Search') }}: <button id="isbn-search"
+                                    class="fas fa-search"></button>
+                            </p>
                         </div>
 
                         {{-- KATEGORIE --}}
@@ -225,6 +228,9 @@
                                 </p>
                             @enderror
                         </div>
+
+                        {{-- hidden input für title img from API? --}}
+                        <input type="hidden" id="title-img" name="titleImg" value="">
 
                         <div class="flex flex-wrap">
                             <button type="submit" class="form-button mb-12">

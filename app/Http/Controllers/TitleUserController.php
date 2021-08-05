@@ -114,7 +114,8 @@ class TitleUserController extends Controller
             'isbn_10' => $request->isbn10,
             'isbn_13' => $request->isbn13,
             'author_id' => $request->author,
-            'category_id' => $request->category
+            'category_id' => $request->category,
+            'title_img' => $request->titleImg
         ]);
         
         $statuses = Status::create();
@@ -184,7 +185,7 @@ class TitleUserController extends Controller
             'category' => 'required',
             'publisher' => 'required',
             'year' => ['required','min:0001', 'max:'.$this->currentYear()],
-            'edition'=> 'min:1|integer',
+            'edition'=> 'min:1|integer', //nullable da auch nicht in api, nur erscheinungsjahr
             'format' => 'required',
             'condition' => 'nullable|min:2|string',
             'delivery' => 'required'
@@ -211,7 +212,8 @@ class TitleUserController extends Controller
             'isbn_10' => $request->isbn10,
             'isbn_13' => $request->isbn13,
             'author_id' => $request->author,
-            'category_id' => $request->category
+            'category_id' => $request->category,
+            'title_img' => $request->titleImg
         ]);
         
         TitleUser::where('title_id',$id)->where('user_id', $this->userId())->update([ 

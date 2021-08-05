@@ -54,6 +54,11 @@ class AuthorController extends Controller
             'first_name' => $request->fname,
             'last_name' => $request->lname
         ]);
+
+        if (request()->ajax()){
+            return response()->json(['status'=>200, 'msg'=>'ok']);    
+        }
+        
         return redirect()->route('books.create')->with('success', __('New Author registered').': '. $author->first_name .' '. $author->last_name );
     }
     

@@ -12,9 +12,9 @@
                 </div>
 
                 <section id="" class="flex flex-row mt-12">
-
-                    <div class="w-full sm:w-1/3 m-3">
-                        <img src="https://picsum.photos/300/400" alt="" class="">
+                @foreach ($title as $title)
+                    <div class="w-full sm:w-1/3 m-3 title-img">
+                        <img src="{{ ($title->title_img) ? url($title->title_img) : url('https://picsum.photos/300/400') }}" alt="Title image" class="title-img-lg">
                     </div>
 
                     <div class="w-full sm:w-2/3 m-3">
@@ -35,7 +35,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($title as $title)
+                                    {{-- @foreach ($title as $title) --}}
 
                                         {{-- *** Haha, so funktioniert es auch: (da ->get() Collection liefert, ev find(), würde Objekt liefern) --}}
                                         @foreach ($item as $item)@endforeach
