@@ -45,40 +45,43 @@
       console.log("no results, sorry...");
      }
      else{
-      alert('OK');
+      console.log('Book found!');
       //displayResult(response);
       const book=response.items[0].volumeInfo;
       const title= book.title;
       const subtitle = book.subtitle;
-      const author1= book.authors[0].split(" ");
+      const author1= book.authors[0];
+      //const author1= book.authors[0].split(" ");
       const publisher= book.publisher;
-      const pubDate = book.publishedDate;
+      const pubDate = book.publishedDate; // ACHTUNG ev DATE statt nur YEAR !!
+
+      //pubDate in year-->
+
+      console.log(title, subtitle, author1, publisher);
+      
       if(book.imageLinks){
-       const bookImgSm= book.imageLinks.smallThumbnail;
-       const bookImg= book.imageLinks.thumbnail;
-       $('title-img').attr("src",bookImg);
-       $('title-img-sm').attr("src",bookImgSm);
-
-       // // das Autor Problem:
-       // var n = author1.length;
-       // for (i=0; i<n-2; i++){
-       //  var fnames += author1[i];
-       // }
-       // var lname=author1[n-1];
-
-       // fill in form:
-       $('#title').val(title);
-       $('#subtitle').val(subtitle);
-       $('#publisher').val(publisher);
-       $('#year').val(pubDate);
-       $('#lname').val(author1[author1.length -1]);
-       $('#fname').val(author1.pop());
-      $('#title-img').val(bookImg);
+        const bookImgSm= book.imageLinks.smallThumbnail;
+        const bookImg= book.imageLinks.thumbnail;
+        $('#title-img').val(bookImg);
+        // $('title-img-lg').attr("src",bookImg);
+        // $('title-img-sm').attr("src",bookImgSm);
+        console.log(bookImg);
+      } else {
+        console.log("no images found");
       }
 
-      console.log(title, subtitle, author1, publisher); //check
-     }
-    },
+       // fill in form:
+       if (title) {$('#title').val(title);}
+       if (subtitle) {$('#subtitle').val(subtitle);}
+       if (publisher){ $('#publisher').val(publisher);}
+       //if (year) {$('#year').val(year)};
+
+       if(pubDate) {$('#year').val(pubDate)};
+       //$('#lname').val(author1[author1.length -1]);
+       //$('#fname').val(author1.pop());
+      
+      }
+     },
     error: function() {
      console.log('Oops, sorry. Something went wrong...');
     }
