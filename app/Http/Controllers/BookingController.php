@@ -146,6 +146,7 @@ class BookingController extends Controller
         //dd($id, $returnDate,$booking,$bookStatus);
         
         if( $booking ){
+            dd($booking->available);
             $bookStatus->update([
                 'available' => 1,
                 'booking_date' => NULL,

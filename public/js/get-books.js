@@ -10,8 +10,8 @@
    event.preventDefault();
 
   if($('#isbn13').val().length !== 0 ){
-  //validate
-  console.log('isbn13 ok')
+    //validate
+    console.log('isbn13 ok')
     var isbn = $('#isbn13').val();
   }
   else if($('#isbn10').val() !== 0){
@@ -21,6 +21,7 @@
   }
    
    //console.log( isbn ); //check
+   //or:
    
    if (isbn13 != ''){
     //check validity
@@ -41,8 +42,8 @@
     //type: 'POST';
     success: function(response) {
      console.log(response)
-     if(response.totalItem === 0){
-      console.log("no results, sorry...");
+     if(response.totalItems === 0){
+      console.log("No results, sorry...");
      }
      else{
       console.log('Book found!');
@@ -54,17 +55,12 @@
       //const author1= book.authors[0].split(" ");
       const publisher= book.publisher;
       const pubDate = book.publishedDate; // ACHTUNG ev DATE statt nur YEAR !!
-
-      //pubDate in year-->
-
-      console.log(title, subtitle, author1, publisher);
       
       if(book.imageLinks){
         const bookImgSm= book.imageLinks.smallThumbnail;
         const bookImg= book.imageLinks.thumbnail;
         $('#title-img').val(bookImg);
-        // $('title-img-lg').attr("src",bookImg);
-        // $('title-img-sm').attr("src",bookImgSm);
+
         console.log(bookImg);
       } else {
         console.log("no images found");
@@ -74,13 +70,17 @@
        if (title) {$('#title').val(title);}
        if (subtitle) {$('#subtitle').val(subtitle);}
        if (publisher){ $('#publisher').val(publisher);}
-       //if (year) {$('#year').val(year)};
 
-       if(pubDate) {$('#year').val(pubDate)};
-       //$('#lname').val(author1[author1.length -1]);
-       //$('#fname').val(author1.pop());
-      
+        // !!! pubDate in year-->
+      if(pubDate.length > 4 ){ 
+        const year= pubDate.slice(0,4); 
+        if (year) {$('#year').val(year);}
+        else if (pubDate){ $('#year').val(pubDate); }
       }
+        //$('#lname').val(author1[author1.length -1]);
+        //$('#fname').val(author1.pop());
+        console.log(title, subtitle, author1, publisher, pubDate);
+    }
      },
     error: function() {
      console.log('Oops, sorry. Something went wrong...');
@@ -91,10 +91,3 @@
 
  });
 })(jQuery);
-
-// google API base URL:
-// https://www.googleapis.com/books/v1/volumes
-// isbn search:
-// {{ $baseURL }}?q=isbn:{{ $isbn }}
-
-// item->volumeInfo->imageLinks->smallThumbnail |thumbnail

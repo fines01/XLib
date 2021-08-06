@@ -217,35 +217,6 @@
                             </div>
                         </div>
 
-                        {{-- ASIN --}}
-                        {{-- <div class="flex flex-wrap">
-                            <label for="asin" class="form-label">
-                                ISBN-10:
-                            </label>
-                            <input id="asin" type="text" class="form-input w-full @error('asin') border-red-500 @enderror"
-                                name="asin" value="{{ old('asin') }}" autocomplete="asin">
-                            @error('asin')
-                                <p class="error-msg">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div> --}}
-
-                        {{-- MAX LOAN PERIOD default 60 days --}}
-                        {{-- <div class="flex flex-wrap">
-                            <label for="max-loan" class="form-label">
-                                {{ __('maximum lending time') }}:
-                            </label>
-                            <input id="max-loan" type="text"
-                                class="form-input w-full @error('isbn-10') border-red-500 @enderror" name="max-loan"
-                                value="{{ old('max-loan') }}" autocomplete="max-loan">
-                            @error('max-loan')
-                                <p class="error-msg">
-                                    {{ $message }}
-                                </p>
-                            @enderror
-                        </div> --}}
-
                         {{-- CONDITION --}}
                         <div class="flex flex-wrap">
                             <label for="condition" class="form-label">
@@ -263,15 +234,17 @@
                         </div>
 
                         {{-- POSSIBLE DELIVERY/ TRANSFER METHODS --}}
-
                         <div class="flex flex-wrap">
                             <h3 class="form-label w-full mb-4">{{ __('Choose your possible transfer methods') }}:</h3>
                             <input type="checkbox" id="in-person" name="delivery" class="form-checkbox" value="in-person"
-                                @if (is_array(old('delivery')) && in_array('in-person', old('delivery'))) checked @endif>
+                                {{-- @if (is_array(old('delivery')) && in_array('in-person', old('delivery'))) checked @endif> --}}
+                                @if (old('delivery') == 'in-person' ) checked  @endif>
                             <label for="in-person" class="form-check-label ml-2 mr-4">{{ __('In person') }}</label>
 
                             {{-- @if (isset(Auth::user()->name) && isset(Auth::user()->address)) --}}
-                            <input type="checkbox" id="postal" name="delivery" class="form-checkbox" value="postal" @if (is_array(old('delivery')) && in_array('postal', old('delivery'))) checked @endif>
+                            <input type="checkbox" id="postal" name="delivery" class="form-checkbox" value="postal" 
+                            {{-- @if (is_array(old('delivery')) && in_array('postal', old('delivery'))) checked @endif> --}}
+                             @if (old('delivery') == 'postal' ) checked )  @endif>
                             <label for="postal" class="form-check-label ml-2 mr-4">{{ __('Postal delivery') }}</label>
                             {{-- @endif --}}
 

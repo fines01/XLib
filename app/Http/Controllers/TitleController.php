@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class TitleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +22,7 @@ class TitleController extends Controller
     public function index()
     {
         
-        $titles= Title::with('author','category','users')->paginate(15);
+        $titles= Title::with('author','category','users')->orderBy('title')->paginate(10);
                 
         return view('titles.index', compact('titles'));
     }

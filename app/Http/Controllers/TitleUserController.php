@@ -88,7 +88,7 @@ class TitleUserController extends Controller
             'category' => 'required',
             'publisher' => 'required',
             //'year'=> ['required', 'integer','digits:4','min: 0001' , 'max:'.$currentYear], //SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'publication_year' at row 1 für Daten von zB 1900 !!!
-            'year' => ['required','min:0001', 'max:'.$this->currentYear()], // TEST mit "between": 1 statt 0001, current
+            'year' => ['required','integer','max:'.$this->currentYear()],
             'edition'=> 'min:1|integer',
             'format' => 'required',
             'condition' => 'nullable|min:2|string',

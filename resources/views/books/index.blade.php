@@ -57,9 +57,9 @@
                             {{-- output Pagination- Links (In laravel standardmässig mittels Tailwind gestaltet? ) --}}
                         </tbody>
                     </table>
-                    {{-- <div class="pagination">
+                    <div class="pagination">
                         {{ $books->links() }}
-                    </div> --}}
+                    </div>
                 </section>
 
             </div>
