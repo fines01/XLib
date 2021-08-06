@@ -46,24 +46,34 @@ class TitleController extends Controller
     public function search( Request $request)
     {
         //dd ($request->input('search'));
-        $searches=explode(" ", $request->input('search')); // besser noch mit preg_replace() bereinigen
+        $searches=explode(" ", $request->input('search')); // besser noch mit preg_replace() bereinigen. Bestimmte Wörter wie "am" "das"... ausschließen?
         
+        // $i=0;
         foreach($searches as $search){
             
                 $data1= Title::where( function($query) use($search){
                     $query->orWhere('title','like','%'.$search.'%')->orWhere('subtitle','like', '%'.$search.'%');
                 });
+                
                 if ($data1->exists() ){
-                    $title= $data1->with('author')->get();//paginate(10);
+                    
+                    $title= $data1
+                        ->with('author')
+                        ->orderBy('title')
+                        ->get();//paginate(10);
+                    // if ( ($i > 0 && isset($titleSearch)) && ($titleSearch[$i] == $titleSearch[$i-1]) ){ continue;} // !!! // array_unique()
                     $titleSearch[]=$title;
+                    $titleSearch= array_unique($titleSearch);  // jetzt nur mehr für jeden User doppelt gez
+                    // $i+=1;
                 };
                 
                 $data2= Author::where( function($query) use ($search){
                     $query->orWhere('first_name','like', '%'.$search.'%')->orWhere('last_name','like','%'.$search.'%');
                 });
                 if ($data2->exists()){
-                    $author = $data2->with('titles')->get();
+                    $author = $data2->with('titles')->orderBy('last_name')->get();
                     $authorSearch[]=$author;
+                    $authorSearch= array_unique($authorSearch);
                 };       
         }
         // SELECT * from titles WHERE 'title' LIKE %$query%' OR 'subtitle' LIKE %$query% // oder so // '%'.$search.'%'
