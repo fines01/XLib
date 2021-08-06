@@ -11,7 +11,7 @@ class TitleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('search');
     }
     
     /**
@@ -48,25 +48,22 @@ class TitleController extends Controller
         //dd ($request->input('search'));
         $searches=explode(" ", $request->input('search')); // besser noch mit preg_replace() bereinigen
         
-        // $data1=null; 
-        $titleSearch=array();
-        
-        for($i=0; $i<count($searches); $i++){
+        foreach($searches as $search){
             
-                $data1[$i]= Title::where( function($query) use($searches, $i){
-                    $query->orWhere('title','like','%'.$searches[$i].'%')->orWhere('subtitle','like', '%'.$searches[$i].'%');
+                $data1= Title::where( function($query) use($search){
+                    $query->orWhere('title','like','%'.$search.'%')->orWhere('subtitle','like', '%'.$search.'%');
                 });
-                if ($data1[$i]->exists() ){
-                    if ($i !==0 && $data1[$i] !== $data1[$i-1]){ continue;} // exp.: === nicht !== um nicht x gl resultate zu bekommen.
-                    $titleSearch[$i] = $data1[$i]->with('author')->get();//paginate(10);
+                if ($data1->exists() ){
+                    $title= $data1->with('author')->get();//paginate(10);
+                    $titleSearch[]=$title;
                 };
                 
-                $data2[$i]= Author::where( function($query) use ($searches, $i){
-                    $query->orWhere('first_name','like', '%'.$searches[$i].'%')->orWhere('last_name','like','%'.$searches[$i].'%');
+                $data2= Author::where( function($query) use ($search){
+                    $query->orWhere('first_name','like', '%'.$search.'%')->orWhere('last_name','like','%'.$search.'%');
                 });
-                if ($data2[$i]->exists()){
-                    if ($i != 0 && $data2[$i] !== $data2[$i-1] ) continue;
-                    $authorSearch[$i] = $data2[$i]->with('titles')->get();
+                if ($data2->exists()){
+                    $author = $data2->with('titles')->get();
+                    $authorSearch[]=$author;
                 };       
         }
         // SELECT * from titles WHERE 'title' LIKE %$query%' OR 'subtitle' LIKE %$query% // oder so // '%'.$search.'%'
