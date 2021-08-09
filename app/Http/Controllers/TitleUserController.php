@@ -8,6 +8,7 @@ use App\Models\Status;
 use App\Models\Title;
 use App\Models\TitleUser;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -113,7 +114,9 @@ class TitleUserController extends Controller
             'publication_year'=> $request->year
         ])->get();
         
-        if(empty($request->isbn10) && empty($request->isbn13) && $x){
+        //dd(count($x));
+        
+        if(count($x)>0 && empty($request->isbn10) && empty($request->isbn13)){
             $request->titleImg = $x->first()->title_img;
             $request->subtitle= $x->first()->subtitle;
             $request->isbn10 =  $x->first()->isbn10;

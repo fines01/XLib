@@ -110,7 +110,7 @@ class BookingController extends Controller
             'available' => 0,
             'booking_id' => $booking->id,
             'booking_date' => Carbon::now(),
-            'return_date' => Carbon::now()->addSeconds(60),//->addMonths(2),
+            'return_date' => Carbon::now()->addMonths(3),//->addMonths(2),
             'delivery_method' => $delivery, //$request->delivery,
             'notification_sent' => 1
         ]);
@@ -146,7 +146,7 @@ class BookingController extends Controller
         //dd($id, $returnDate,$booking,$bookStatus);
         
         if( $booking ){
-            dd($booking->available);
+            //dd($booking->available);
             $bookStatus->update([
                 'available' => 1,
                 'booking_date' => NULL,
