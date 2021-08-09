@@ -54,19 +54,17 @@ class TitleController extends Controller
                 $data1= Title::where( function($query) use($search){
                     $query->orWhere('title','like','%'.$search.'%')->orWhere('subtitle','like', '%'.$search.'%');
                 });
-                
                 if ($data1->exists() ){
-                    
-                    $title= $data1
-                        ->with('author')
-                        ->orderBy('title')
-                        ->get();//paginate(10);
+                   
+                    $title= $data1->with('author')->orderBy('title')->get();//paginate(10);
                     // if ( ($i > 0 && isset($titleSearch)) && ($titleSearch[$i] == $titleSearch[$i-1]) ){ continue;} // !!! // array_unique()
                     $titleSearch[]=$title;
-                    $titleSearch= array_unique($titleSearch);  // jetzt nur mehr für jeden User doppelt gez
+                    $titleSearch = array_unique($titleSearch);
+                    //dd($titleSearch);
                     // $i+=1;
                 };
-                
+                // jetzt nur mehr für jeden User doppelt gez
+
                 $data2= Author::where( function($query) use ($search){
                     $query->orWhere('first_name','like', '%'.$search.'%')->orWhere('last_name','like','%'.$search.'%');
                 });
@@ -74,6 +72,7 @@ class TitleController extends Controller
                     $author = $data2->with('titles')->orderBy('last_name')->get();
                     $authorSearch[]=$author;
                     $authorSearch= array_unique($authorSearch);
+                    //dd($authorSearch);
                 };       
         }
         // SELECT * from titles WHERE 'title' LIKE %$query%' OR 'subtitle' LIKE %$query% // oder so // '%'.$search.'%'

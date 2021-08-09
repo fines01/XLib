@@ -95,6 +95,8 @@ class TitleUserController extends Controller
             'delivery' => 'required' ////todo: postal nur wenn adr hinterlegt.
         ]);
         
+        $isbn10=preg_replace("/[^0-9X]/","",$request->isbn10);
+        $isbn13=preg_replace("/[^0-9X]/","",$request->isbn10);
         //dd($request->all());
         
         // nur wenn der Datensatz in der Datenbank noch nicht existiert (firstOrCreate, updateOrCreate, upsert ...?)
@@ -103,25 +105,42 @@ class TitleUserController extends Controller
         //     'last_name' => $request->lname
         // ]);
         
-        // oder mit upsert falls unvollständige db- einträge (fehlende isbn etc) -> n. derweil nicht, später ev durch api ergänzt?
-        $titles= Title::firstOrCreate([
+        // td wenn usr updated mit wng inf! später besser lösen
+        $x=Title::where([
+            'author_id' => $request->author,
+            'title' => $request->title,
+            'publisher' => $request->publisher,
+            'publication_year'=> $request->year
+        ])->get();
+        
+        if(empty($request->isbn10) && empty($request->isbn13) && $x){
+            $request->titleImg = $x->first()->title_img;
+            $request->subtitle= $x->first()->subtitle;
+            $request->isbn10 =  $x->first()->isbn10;
+            $request->isbn13 = $x->first()->isbn13;      
+        };
+        
+        //m schon o
+        $titles= Title::updateOrCreate([
+            'author_id' => $request->author,
             'title' => $request->title, //in Funktionen auslagern?
+            'publisher' => $request->publisher,
+            'publication_year'=> $request->year,            
+        ],
+        [
+            'title_img' => $request->titleImg,
             'subtitle' => $request->subtitle,
             'edition' => $request->edition,
-            'publisher' => $request->publisher,
-            'publication_year'=> $request->year,
-            'publication_format' => $request->format,
+            'category_id' => $request->category, // spkt!
             'isbn_10' => $request->isbn10,
             'isbn_13' => $request->isbn13,
-            'author_id' => $request->author,
-            'category_id' => $request->category,
-            'title_img' => $request->titleImg
+            'publication_format' => $request->format,
         ]);
+
         
         $statuses = Status::create();
         //dd($statuses->id);
-        
-        //momentan kann ein User so nur ein gl. Buch registrieren, ev ändern? Od. counter in tabelle?
+
         //ToDo: alert wenn buch bereits registriert einfügen --> zB wasRecentlyCreated attribut //
         $books= TitleUser::firstOrCreate([ 
             'condition' => $request->condition,
@@ -132,6 +151,7 @@ class TitleUserController extends Controller
         ]);
         // dd oder var_dump($books->wasRecentlyCreated);
         
+        // if ($books->wasChanged() ) ... return with success )
         return redirect()->route('books.index')->with('success', 'New book registered successfully.');
     }
 
@@ -233,7 +253,7 @@ class TitleUserController extends Controller
      */
     public function destroy($id) 
     {
-        //auch mgl.: $book = TitleUser::findByCompositeKey($id1,$id2)
+        //$book = TitleUser::findByCompositeKey($id1,$id2)
         $book = TitleUser::where('user_id', $this->userId())->where('title_id',$id);
         $title = Title::find($id); //if title->users->count() < 1 delete oder automatisch?
         //dd($title->author->id);

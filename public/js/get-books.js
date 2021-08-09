@@ -10,7 +10,7 @@
    event.preventDefault();
 
   if($('#isbn13').val().length !== 0 ){
-    //validate
+    //remove - and validate
     console.log('isbn13 ok')
     var isbn = $('#isbn13').val();
   }
@@ -74,9 +74,9 @@
         // !!! pubDate in year-->
       if(pubDate.length > 4 ){ 
         const year= pubDate.slice(0,4); 
-        if (year) {$('#year').val(year);}
-        else if (pubDate){ $('#year').val(pubDate); }
+        if (year) {$('#year').val(year); console.log('year: ', year);}
       }
+      else if (pubDate){ $('#year').val(pubDate); }
         //$('#lname').val(author1[author1.length -1]);
         //$('#fname').val(author1.pop());
         console.log(title, subtitle, author1, publisher, pubDate);

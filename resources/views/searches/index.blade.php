@@ -24,21 +24,41 @@
             @endif
 
             @if (isset($titleSearch))
+                <p>{{ __('Search result: Titles') }}</p>
+                @foreach ($titleSearch as $titles)
+                    @foreach ($titles as $title)
+                        <ul>
+                            <li>
+                                <a class="text-blue-800 font-bold" href="{{ route('titles.show', $title->id) }}">*
+                                    {{ $title->title . ' ' . $title->subtitle }}: </a>
+                                <a href="{{ route('authors.show', $title->author->id) }}"
+                                    class="text-blue-900">{{ $title->author->first_name . ' ' . $title->author->last_name }}</a>
+                            </li>
+                        </ul>
+                    @endforeach
+                @endforeach
+            @endif
+
+            {{-- @if (isset($titleSearch))
                 <p class="mt-6">{{ __('Search result: Titles') }}</p>
                 @foreach ($titleSearch as $title)
                     <ul>
                         <li>
-                            {{-- @foreach ($title->first()->author as $author) --}}
-                            <a class="text-blue-900 mr-3" href={{ route('authors.show', $title->first()->author->id) }}>*
-                                {{ $title->first()->author->first_name . ' ' . $title->first()->author->last_name }}:
-                            </a>
-                            {{-- @endforeach --}}
                             <a class="text-blue-800 font-bold"
-                                href="{{ route('titles.show', $title->first()->id) }}">{{ $title->first()->title . ' ' . $title->first()->subtitle }}</a>
-                        </li>
-                    </ul>
-                @endforeach
-            @endif
+                                href="{{ route('titles.show', $title->first()->id) }}">{{ $title->first()->title . ' ' . $title->first()->subtitle }}:
+                            </a>
+                            <a href="{{  }}"
+                                class="text-blue-900">{{ $title->first()->author->first_name . ' ' . $title->first()->author->last_name }}</a>
+                            {{-- @foreach ($title->first()->author as $author)
+                                <a class="text-blue-900 mr-3" href={{ route('authors.show', $title[0]->author->id) }}>*
+                                    {{ $title[0]->author['first_name'] . ' ' . $title[0]->author->last_name }}:
+                                </a>
+                            @endforeach --}}
+            {{-- </li>
+            </ul>
+            @endforeach
+            @endif --}}
+
             @if (!isset($titleSearch) && !isset($authorSearch))
                 <div>
                     <p>No results!</p>
