@@ -9,7 +9,7 @@
 
 ## About
 
-A book exchange app that integrates the Google Books API. It allow you to track your own library and share books with friends.  
+A book exchange app that integrates the Google Books API. It allows you to track your own library and share books with friends.  
 But let's be honest, it's probably not the most practical or useful application. This is one of my first (and probably last) PHP projects, created back when I had no idea what I was doing. Expect some spaghetti. Old, outdated, unmaintained and rough. And no, I won’t be finishing it. Use at your own risk - or better yet, don't.
 
 ## About Laravel
